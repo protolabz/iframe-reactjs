@@ -1,0 +1,589 @@
+.fullSection{
+    text-align: center;
+}
+.noPadding{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.Overlay {
+    /* width: 760px; */
+    height: 240px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 87px 0px;
+    background-size: cover;
+  }
+
+
+  .titleText {
+    width: 200px;
+    margin:auto;
+    /* height: 26px; */
+    font-family: Archivo;
+    font-size: 24px;
+    text-align: center;
+    /* font-weight: bold; */
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 12px;
+  }
+  .descriptionText {
+    width: 443px;
+    margin: auto;
+    margin-bottom: 12px;
+    /* height: 16px; */
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+  }
+  .bookNow {
+    width: 106px;
+    height: 30px;
+    font-family: Archivo;
+    border-radius: 4px;
+    border: solid 1px #eeeeee;
+    background-color: transparent;
+    color: #eeeeee;
+    margin: 12px;
+    padding: 7px 16px;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  .bookNow:focus {
+    outline:none;
+  }
+
+  .bookNow:hover {
+    cursor:pointer;
+    text-decoration: none;
+    color:#eeeeee;
+  }
+
+  .OverlayTwoCols {
+    /* width: 760px; */
+    height: 180px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 27px 0px;
+    background-size: cover;
+  }
+  .titleTextTwoCols {
+    /* width: 149px; */
+    margin: auto;
+    margin-bottom: 5px;
+    /* height: 26px; */
+    font-family: Archivo;
+    font-size: 20px;
+    text-align: center;
+    /* font-weight: bold; */
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+  }
+  .descriptionTextTwoCols {
+    width: 310px;
+    margin: auto;
+    margin-bottom: 27px;
+    /* height: 16px; */
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+  }
+  .bookNowTwoCols {
+    width: 106px;
+    height: 30px;
+    font-family: Archivo;
+    border-radius: 4px;
+    border: solid 1px #eeeeee;
+    background-color: transparent;
+    color: #eeeeee;
+    margin: 10px;
+  }
+  .bookNowTwoCols:focus {
+    outline:none;
+  }
+  .bookNowTwoCols:hover {
+    cursor:pointer;
+  }
+  
+  .OverlayThreeCols {
+    /* width: 760px; */
+    height: 160px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 24px 0px;
+    background-size: cover;
+  }
+
+  .titleTextThreeCols {
+    width: 142px;
+    margin: auto;
+    margin-bottom: 5px;
+    /* height: 26px; */
+    font-family: Archivo;
+    font-size: 16px;
+    text-align: center;
+    /* font-weight: bold; */
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    display:-webkit-inline-box;
+    display: inline-block;
+  }
+  .descriptionTextThreeCols {
+    width: 200px;
+    margin: auto;
+    /* height: 16px; */
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    line-height: 17px;
+    margin-bottom: 20px;
+    display: inline-block;
+    
+  }
+  .bookNowThreeCols {
+    width: 106px;
+    height: 30px;
+    font-family: Archivo;
+    border-radius: 4px;
+    border: solid 1px #eeeeee;
+    background-color: transparent;
+    color: #eeeeee;
+    margin: 10px;
+  }
+  .bookNowThreeCols:focus {
+    outline:none;
+  }
+  .bookNowThreeCols:hover {
+    cursor:pointer;
+  }
+
+  .mainOuterDiv{
+    margin-top: 150px;
+    margin-bottom: 50px;
+  }
+  .mainOuterDiv>div>div>h2{
+    text-align: center;
+    margin: 20px;
+  }
+  .cols9-center{
+    margin: auto;
+  }
+  @media screen and(max-width: 767px){
+    .cols9-center{
+      margin: none;
+    }
+  }
+  .rowPadding{
+    padding-left: 40px;
+    padding-left: 40px;
+  }
+  .Location {
+    width: 73px;
+    height: 15px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .View-map {
+    width: 70px;
+    height: 17px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f3804a;
+    text-decoration: underline;
+  }
+  .View-map:hover{
+    color: #f3804a;
+  }
+  .Ubud-Bali-Indonesi {
+    width: 163px;
+    /* height: 17px; */
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .Rates {
+    width: 47px;
+    /* height: 15px; */
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+
+  .participants {
+    /* width: 96px; */
+    width: 115px;
+    /* height: 17px; */
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+
+  .currency {
+    width: 104px;
+    /* height: 17px; */
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    /* text-align: right; */
+    text-align: left;
+    color: #4f4f4f;
+  }
+
+  .incidents {
+    width: 76px;
+    /* height: 15px; */
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .Rectangle-10 {
+    width: 470px;
+    height: 135px;
+    border-radius: 5px;
+    border: solid 1px #cccccc;
+    background-color: #ebfcb4;
+  }
+  .IncidenceText {
+    /* width: 440px; */
+    /* height: 120px; */
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #4f4f4f;
+    padding: 5px;
+    margin: 0px;
+  }
+  .Description {
+    width: 96px;
+    height: 15px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .DescriptionTexts {
+    width: 440px;
+    height: 120px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .Include {
+    width: 63px;
+    height: 15px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .Exclude {
+    width: 67px;
+    height: 15px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .include{
+    list-style: none;
+    text-transform: capitalize;
+  }
+  .include li:before {
+    content: '';
+    display: inline-block;
+    height: 10px;
+    width: 22px;
+    background-image: url('/images/check.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: -42px;
+    
+}
+.exclude{
+  list-style: none;
+  text-transform: capitalize;
+}
+.exclude li:before {
+  content: '';
+  display: inline-block;
+  height: 9px;
+  width: 22px;
+  background-image: url('/images/cross.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: -42px;
+}
+.include>li {
+  width: 103px;
+  height: 17px;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+  margin-top: 10px;
+}
+.exclude>li {
+  width: 103px;
+  height: 17px;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+  margin-top: 10px;
+}
+  .ADDITIONAL-DESCRIPTI {
+    width: 186px;
+    height: 15px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .Tempat {
+    width: 85px;
+    height: 27px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .tempatText {
+    /* width: 224px; */
+    height: 24px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #4f4f4f;
+    text-transform: capitalize;
+  }
+  .Perlengkapan {
+    width: 113px;
+    height: 27px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .pelam{
+    list-style: none;
+    padding-left: 25px;
+  }
+  /* .pelam li:before {
+    content: '';
+    display: inline-block;
+    height: 9px;
+    width: 22px;
+    background-image: url('/images/box.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: -10px;
+  } */
+  .Pelampung {
+    width: 120px;
+    /* height: 17px; */
+    font-family: Archivo;
+    font-size: 16px;
+    /* font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal; */
+    color: #4f4f4f;
+    margin-bottom: 5px;
+  }
+  .placeholderImage{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  .Kendaraan {
+    width: 113px;
+    height: 27px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .Text-Box {
+    width: 456px;
+    height: 50px;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 0 #eeeeee;
+    border: solid 1px #dddddd;
+    background-color: #ffffff;
+    color: #ccc;
+    padding: 10px 20px;
+  }
+  .Select-option {
+    width: 93px;
+    height: 17px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .Special-Notes {
+    width: 113px;
+    height: 15px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .specialText {
+    width: 440px;
+    height: 120px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .locationList{
+    list-style: none;
+  }
+  .locationList li:before {
+    content: '';
+    display: inline-block;
+    height: 15px;
+    width: 20px;
+    background-image: url('/images/lists.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: -42px;
+  }
+  /* .locationList li:first-child:before {
+    content: '';
+    display: inline-block;
+    height: 15px;
+    width: 20px;
+    background-image: url('/images/lists.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: -42px;
+  } */
