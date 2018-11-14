@@ -262,7 +262,7 @@
 
   .participants {
     /* width: 96px; */
-    width: 115px;
+    width: 145px;
     /* height: 17px; */
     font-family: Archivo;
     font-size: 16px;
@@ -272,6 +272,7 @@
     line-height: normal;
     letter-spacing: normal;
     color: #4f4f4f;
+    text-transform: uppercase;
   }
 
   .currency {
@@ -473,6 +474,7 @@
     line-height: 1.5;
     letter-spacing: normal;
     color: #aaaaaa;
+    text-transform: capitalize;
   }
   .pelam{
     list-style: none;
@@ -525,8 +527,9 @@
     box-shadow: 0 1px 0 0 #eeeeee;
     border: solid 1px #dddddd;
     background-color: #ffffff;
-    color: #ccc;
+    color: #aaaaaa;
     padding: 10px 20px;
+    text-transform: capitalize;
   }
   .Select-option {
     width: 93px;
@@ -587,3 +590,6 @@
     background-repeat: no-repeat;
     margin-left: -42px;
   } */
+  .chkBoxLabel{
+    text-transform: capitalize;
+  }

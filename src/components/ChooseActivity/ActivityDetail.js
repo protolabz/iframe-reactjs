@@ -89,7 +89,7 @@ export default class ActivityDetail extends Component {
        rates = (
            rates_pax_package.map((item,index) => (
             <div className='row px-3' key={item.id}>
-                <div className='col-sm-6'><p className='participants'>{item.maximum} Participants</p></div>
+                <div className='col-sm-6'><p className='participants'>{item.pax_type} ({item.age_from}-{item.age_to})</p></div>
                 <div className='col-sm-6'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
             </div>
            ))
@@ -124,13 +124,20 @@ export default class ActivityDetail extends Component {
             ) 
             : ''
         ));
-    addDescList = (
+     addDescCheck = (
         additionalDesc.map(item => 
             item.type === 'check_box' ? (
             <div key={item.heading}>
                 <h5 className='Perlengkapan px-4'>{item.heading}</h5>
                 <ul className='pelam mb-4'>
-                {/* {checkbox} */}
+                {
+                    item.items.map((chk,index) =>(
+                    <div key={chk} className="custom-control custom-checkbox">
+                        <input type="checkbox" className="custom-control-input" value={chk} id={`customCheck${index}`}/>
+                        <label className="custom-control-label chkBoxLabel" htmlFor={`customCheck${index}`}>{chk}</label>
+                    </div>
+                    ))
+                }
                 
                 </ul>
             </div>
@@ -138,9 +145,22 @@ export default class ActivityDetail extends Component {
         ''
         ));
 
-    addDescCheck = (
-        additionalDesc.map(item => 
-            item.type === 'check_box' ? (<li key={item.id}>{item.description}</li>) : 
+    addDescList = (
+        additionalDesc.map((item,index) => 
+            item.type === 'list_box' ? (
+                <div key={index}>
+                    <h5 className='Kendaraan mx-4 mb-3'>{item.heading}</h5>
+                    <div className='selectdiv'>
+                        <select className='Text-Box mx-4'>
+                        {
+                            item.items.map((list,index) =>(
+                            <option key={index}>{list}</option>
+                            ))
+                        }
+                        </select>
+                    </div>
+                </div>  
+                ) : 
         ''
         ));
     }
@@ -171,7 +191,7 @@ export default class ActivityDetail extends Component {
                     </div>         
                     <div className='row px-5 mb-5'>
                         <div className='col-sm-8'>
-                            <h5 className='Rates mb-4'>Rates</h5>
+                            <h5 className='Rates mb-4'>RATES</h5>
                             {rates}
                             <hr />
                         </div>
@@ -231,18 +251,15 @@ export default class ActivityDetail extends Component {
                             {
                                 addDescText?addDescText:''
                             }
-                           {
-                               addDescList
-                           }
-                            <h5 className='Kendaraan mx-4 mb-3'>Kendaraan</h5>
-                            <div className='selectdiv'>
-                                <select className='Text-Box mx-4'>
-                                    <option className='Select-option'>Select Option</option>
-                                    <option className='Select-option'>Select Option</option>
-                                    <option className='Select-option'>Select Option</option>
-                                    <option className='Select-option'>Select Option</option>
-                                </select>
-                            </div>
+                            {
+                                addDescCheck?addDescCheck:''
+                            }
+
+                            {
+                                addDescList?
+                                    addDescList
+                                :''
+                            }
                         </div>
                         <div className='col-sm-4'>
                             {/* <h5>Calendar</h5> */}
