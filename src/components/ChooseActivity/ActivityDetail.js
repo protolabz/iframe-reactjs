@@ -85,10 +85,17 @@ export default class ActivityDetail extends Component {
           }
        rates = (
            rates_pax_package.map((item,index) => (
+               item.amount>0?
             <div className='row px-3' key={item.id}>
-                <div className='col-sm-8 col-xs-8'><p className='participants'>{item.pax_type} (Age {item.age_from}-{item.age_to})</p></div>
+                <div className='col-sm-8 col-xs-8'>
+                <p className='participants'>{item.pax_type} (Age {item.age_from}-{item.age_to})
+                <br/>
+                {item.minimum>0?<span style={{ fontSize:"10px",textTransform:"capitalize" }}>Minimum : {item.minimum} PAX</span>:''}
+                </p>
+                </div>
                 <div className='col-sm-4 col-xs-4'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
             </div>
+            :''
            ))
        )
     }  
@@ -125,7 +132,7 @@ export default class ActivityDetail extends Component {
         additionalDesc.map(item => 
             item.type === 'check_box' ? (
             <div key={item.heading}>
-                <h5 className='Perlengkapan px-4'>{item.heading}</h5>
+                <h5 className='Perlengkapan px-4'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                 <ul className='pelam mb-4'>
                 {
                     item.items.map((chk,index) =>(
@@ -146,7 +153,7 @@ export default class ActivityDetail extends Component {
         additionalDesc.map((item,index) => 
             item.type === 'list_box' ? (
                 <div key={index}>
-                    <h5 className='Kendaraan mx-4 mb-3'>{item.heading}</h5>
+                    <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                     <div className='selectdiv'>
                         <select className='Text-Box mx-4'>
                         {
@@ -162,12 +169,19 @@ export default class ActivityDetail extends Component {
         ));
     }
     return (
-      <div className='container'>
+      <div className='container mt-5 mb-5'>
             <div className='row'>
                 <div className='col-sm-9 cols9-center mainOuterDiv'>
+                <div className='row mb-4'>
+                    <div className='col-sm-12'>
+                        <NavLink to='/' className='Select-another-activ'><i className='fa fa-angle-left'> </i> Select another activity</NavLink>
+                    </div>
+                </div>
                     <div className='row mb-3'>
                         <div className='col-sm-12'>
-                        <h2>{detail_product.name}</h2>
+                        <h4 className='Youre-viewing'>You're viewing</h4>
+                        <p className='productName'>{detail_product.name}</p>
+                        <p className='mb-5 prodDescTop'>{detail_product.brief_description}</p>
                             <div className='row mb-4'>
                                 <div className='col-sm-12'>
                                     <ImageGallery 
@@ -187,13 +201,11 @@ export default class ActivityDetail extends Component {
                             <p className='Ubud-Bali-Indonesi'>{mainCity}</p>
                             <ul className='locationList'>
                             {locs}
-                            <li>Nekta Art Museum</li>
-                            <li>Pura Taman Saraswati</li>
                             </ul>
                             <NavLink className='View-map' to="#">View map</NavLink>
                         </div>
                         <div className='col-sm-6'>
-                            <h5>Calendar</h5>
+                            {/* <h5>Calendar</h5> */}
                         </div>
                     </div>         
                     <div className='row px-5 pt-2 mb-5'>
@@ -203,7 +215,7 @@ export default class ActivityDetail extends Component {
                             <hr />
                         </div>
                         <div className='col-sm-4'>
-                            <h5>CALENDAR DATA</h5>
+                            {/* <h5>CALENDAR DATA</h5> */}
                         </div>
                     </div>   
                     {

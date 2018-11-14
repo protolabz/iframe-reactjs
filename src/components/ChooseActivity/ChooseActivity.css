@@ -207,11 +207,54 @@
     padding-left: 40px;
     padding-left: 40px;
   }
+
+
+.Select-another-activ {
+  width: 157px;
+  height: 17px;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #f3804a;
+  text-decoration: underline;
+}
+.Select-another-activ:hover{
+  color: #f3804a;
+}
   .bannerImages{
     width: 100%;
     height: 240px;
   }
-
+  .Youre-viewing {
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #4f4f4f;
+  }
+.productName{
+    font-family: Merriweather;
+    font-size: 32px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.5px;
+    color: #4f4f4f;
+    text-align: center;
+}
+.prodDescTop{
+  width: 90%;
+  margin: auto;
+}
   .Location {
     width: 73px;
     height: 15px;
@@ -306,17 +349,21 @@
     line-height: normal;
     letter-spacing: normal;
     color: #aaaaaa;
+    
   }
   .Rectangle-10 {
-    width: 470px;
-    height: 135px;
+    /* width: 470px; */
+    /* height: 135px; */
     border-radius: 5px;
-    border: solid 1px #cccccc;
-    background-color: #ebfcb4;
+    /* border: solid 1px #cccccc;
+    background-color: #ebfcb4; */
   }
   .IncidenceText {
     /* width: 440px; */
     /* height: 120px; */
+    border-radius: 5px;
+    border: solid 1px #cccccc;
+    background-color: #ebfcb4;
     font-family: Archivo;
     font-size: 16px;
     font-weight: normal;
@@ -406,8 +453,8 @@
   margin-left: -42px;
 }
 .include>li {
-  width: 103px;
-  height: 17px;
+  /* width: 103px;
+  height: 17px; */
   font-family: Archivo;
   font-size: 16px;
   font-weight: normal;
@@ -419,8 +466,8 @@
   margin-top: 10px;
 }
 .exclude>li {
-  width: 103px;
-  height: 17px;
+  /* width: 103px;
+  height: 17px; */
   font-family: Archivo;
   font-size: 16px;
   font-weight: normal;
@@ -432,8 +479,8 @@
   margin-top: 10px;
 }
   .ADDITIONAL-DESCRIPTI {
-    width: 186px;
-    height: 15px;
+    /* width: 186px;
+    height: 15px; */
     font-family: Archivo;
     font-size: 14px;
     font-weight: bold;
@@ -444,8 +491,8 @@
     color: #aaaaaa;
   }
   .Tempat {
-    width: 85px;
-    height: 27px;
+    /* width: 85px;
+    height: 27px; */
     font-family: Archivo;
     font-size: 16px;
     font-weight: 600;
@@ -457,7 +504,7 @@
   }
   .tempatText {
     /* width: 224px; */
-    height: 24px;
+    /* height: 24px; */
     font-family: Archivo;
     font-size: 16px;
     font-weight: normal;
@@ -469,8 +516,8 @@
     text-transform: capitalize;
   }
   .Perlengkapan {
-    width: 113px;
-    height: 27px;
+    /* width: 113px;
+    height: 27px; */
     font-family: Archivo;
     font-size: 16px;
     font-weight: 600;
@@ -487,7 +534,7 @@
   }
 
   .Pelampung {
-    width: 120px;
+    /* width: 120px; */
     /* height: 17px; */
     font-family: Archivo;
     font-size: 16px;
@@ -500,8 +547,8 @@
     margin-right: 10px;
   }
   .Kendaraan {
-    width: 113px;
-    height: 27px;
+    /* width: 113px;
+    height: 27px; */
     font-family: Archivo;
     font-size: 16px;
     font-weight: 600;
@@ -512,8 +559,8 @@
     color: #aaaaaa;
   }
   .Text-Box {
-    width: 456px;
-    height: 50px;
+     width: 100%;
+    /*height: 50px; */
     border-radius: 4px;
     box-shadow: 0 1px 0 0 #eeeeee;
     border: solid 1px #dddddd;
@@ -523,8 +570,8 @@
     text-transform: capitalize;
   }
   .Select-option {
-    width: 93px;
-    height: 17px;
+    /* width: 93px;
+    height: 17px; */
     font-family: Archivo;
     font-size: 16px;
     font-weight: normal;
@@ -535,8 +582,8 @@
     color: #aaaaaa;
   }
   .Special-Notes {
-    width: 113px;
-    height: 15px;
+    /* width: 113px;
+    height: 15px; */
     font-family: Archivo;
     font-size: 14px;
     font-weight: bold;
@@ -547,8 +594,8 @@
     color: #aaaaaa;
   }
   .specialText {
-    width: 440px;
-    height: 120px;
+    /* width: 440px; */
+    /* height: 120px; */
     font-family: Archivo;
     font-size: 16px;
     font-weight: normal;
@@ -609,7 +656,7 @@
   .image-gallery-thumbnails-wrapper {
     position: absolute !important;
     left: 25px;
-    top: 175px;
+    top: 160px;
   }
   .image-gallery-left-nav{
     display:none !important;
@@ -628,4 +675,8 @@
   }
   .image-gallery-thumbnail-inner>img{
     height: 40px !important;
+  }
+  .requiredField{
+    color:#f89655;
+    font-size: 10px;
   }
