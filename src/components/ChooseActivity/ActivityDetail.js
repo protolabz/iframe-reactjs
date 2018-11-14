@@ -11,6 +11,7 @@ export default class ActivityDetail extends Component {
      include_exclude:[],
      pax_details:[],
      additionalDesc:[],
+     bannerImg:[],
      product:[]     
     }
     componentWillMount(){
@@ -28,7 +29,8 @@ export default class ActivityDetail extends Component {
                     include_exclude:res.data.response.detail_product.include_exclude,
                     locations:res.data.response.detail_product.location,
                     pax_details:res.data.response.product.additional_description.pax_details,
-                    additionalDesc:res.data.response.product.additional_description.description
+                    additionalDesc:res.data.response.product.additional_description.description,
+                    bannerImg:res.data.response.detail_product.image,
                 })
 
             })
@@ -39,7 +41,7 @@ export default class ActivityDetail extends Component {
             });
     }
   render() {
-      let {detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc} = this.state;
+      let {detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg} = this.state;
       let mainCity;
       let locs;
       let rates;
@@ -49,22 +51,13 @@ export default class ActivityDetail extends Component {
       let addDescList;
       let addDescCheck;
       let incidence = product.incidence;
-
-      var items1= Object.assign({},additionalDesc[1])
-
-    // var checkboxlist= [items1.items];
-    // var checkbox= "";
-    // for(var i= 0;i<checkboxlist[0].length; i++){
-    //     checkbox.push(
-    //     <div key={1} className="custom-control custom-checkbox">
-    //         <input type="checkbox" className="custom-control-input" value={1} id={`customCheck${1}`}/>
-    //         <label className="custom-control-label" htmlFor="customCheck1">{1}</label>
-    //     </div>);
-    // }
-      
     
-
-    // console.log(checkboxlist)
+    // Banner Images
+      const bannerimgs = (
+          bannerImg.map((images,index) =>(
+            <img className='bannerImages' key={index} src={`https://res.cloudinary.com/trabo/${images.resource}`} alt={images.id}/>
+          ))
+      )
 
     // Locations Data
     if(locations.length!==0){
@@ -170,9 +163,11 @@ export default class ActivityDetail extends Component {
                 <div className='col-sm-9 cols9-center mainOuterDiv'>
                     <div className='row mb-3'>
                         <div className='col-sm-12'>
-                            <h2>{detail_product.name}</h2>
-                            <div className='jumbotron' style={{ height:"240px" }}>
-                                <h1 style={{ margin:"30px",color:"#a9a8a8",textAlign:"center" }}>Slider Images</h1>
+                        <h2>{detail_product.name}</h2>
+                            <div className='row mb-4'>
+                                <div className='col-sm-12'>
+                                    {bannerimgs}
+                                </div>
                             </div>
                         </div> 
                     </div>
@@ -183,7 +178,7 @@ export default class ActivityDetail extends Component {
                             <ul className='locationList'>
                             {locs}
                             </ul>
-                            <NavLink className='View-map px-4' to="#">view map</NavLink>
+                            <NavLink className='View-map' to="#">view map</NavLink>
                         </div>
                         <div className='col-sm-6'>
                             <h5>Calendar</h5>
