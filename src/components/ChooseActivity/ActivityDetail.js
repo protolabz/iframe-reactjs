@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import './ChooseActivity.css';
 import { NavLink } from 'react-router-dom';
-// import banner from '../../../public/images/place.jpg';
+import ImageGallery from 'react-image-gallery';
 export default class ActivityDetail extends Component {
     state ={
      detail_product:[],
@@ -51,14 +51,18 @@ export default class ActivityDetail extends Component {
       let addDescList;
       let addDescCheck;
       let incidence = product.incidence;
-    
-    // Banner Images
-      const bannerimgs = (
-          bannerImg.map((images,index) =>(
-            <img className='bannerImages' key={index} src={`https://res.cloudinary.com/trabo/${images.resource}`} alt={images.id}/>
-          ))
-      )
+      
+      let images =[];
 
+    // Banner Images
+    if(bannerImg.length>=1){
+        // console.log(bannerImg);
+        for(let i = 0; i < bannerImg.length; i++){
+            let ifs = {original:"https://res.cloudinary.com/trabo/"+bannerImg[0].resource+"",thumbnail:"https://res.cloudinary.com/trabo/"+bannerImg[0].resource+""};
+            images.push(ifs);
+        }
+    }
+  
     // Locations Data
     if(locations.length!==0){
         if(locations.length>1){
@@ -82,8 +86,8 @@ export default class ActivityDetail extends Component {
        rates = (
            rates_pax_package.map((item,index) => (
             <div className='row px-3' key={item.id}>
-                <div className='col-sm-6'><p className='participants'>{item.pax_type} ({item.age_from}-{item.age_to})</p></div>
-                <div className='col-sm-6'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
+                <div className='col-sm-8 col-xs-8'><p className='participants'>{item.pax_type} (Age {item.age_from}-{item.age_to})</p></div>
+                <div className='col-sm-4 col-xs-4'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
             </div>
            ))
        )
@@ -166,25 +170,33 @@ export default class ActivityDetail extends Component {
                         <h2>{detail_product.name}</h2>
                             <div className='row mb-4'>
                                 <div className='col-sm-12'>
-                                    {bannerimgs}
+                                    <ImageGallery 
+                                        useBrowserFullscreen={false} 
+                                        items={images}
+                                        showFullscreenButton={false}
+                                        showPlayButton={false}
+                                        disableArrowKeys={true}
+                                    />
                                 </div>
                             </div>
                         </div> 
                     </div>
-                    <div className='row px-5 mb-5'>
+                    <div className='row px-5 mb-4'>
                         <div className='col-sm-6'>
                             <h5 className="Location mb-4">LOCATION</h5>
                             <p className='Ubud-Bali-Indonesi'>{mainCity}</p>
                             <ul className='locationList'>
                             {locs}
+                            <li>Nekta Art Museum</li>
+                            <li>Pura Taman Saraswati</li>
                             </ul>
-                            <NavLink className='View-map' to="#">view map</NavLink>
+                            <NavLink className='View-map' to="#">View map</NavLink>
                         </div>
                         <div className='col-sm-6'>
                             <h5>Calendar</h5>
                         </div>
                     </div>         
-                    <div className='row px-5 mb-5'>
+                    <div className='row px-5 pt-2 mb-5'>
                         <div className='col-sm-8'>
                             <h5 className='Rates mb-4'>RATES</h5>
                             {rates}

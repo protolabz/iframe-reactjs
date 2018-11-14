@@ -267,7 +267,7 @@
 
   .participants {
     /* width: 96px; */
-    width: 145px;
+    /* width: 145px; */
     /* height: 17px; */
     font-family: Archivo;
     font-size: 16px;
@@ -281,7 +281,7 @@
   }
 
   .currency {
-    width: 104px;
+    /* width: 104px; */
     /* height: 17px; */
     font-family: Archivo;
     font-size: 16px;
@@ -560,7 +560,7 @@
   }
   .locationList{
     list-style: none;
-    padding-left: 15px;
+    padding-left: 25px;
     margin-top: -1px;
     margin-bottom: 0px;
   }
@@ -570,13 +570,26 @@
   .locationList li{
     position: relative;
     margin-bottom: 0;
-    padding-bottom: 10px;
+    padding-bottom: 22px;
+    /* width: 183px;
+    height: 17px; */
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .locationList li:last-child{
+    padding-bottom: 16px;
   }
   .locationList li:before {
     content: "";
     position: absolute;
-    left: -16px;
-    border-left: 1px solid #f89655;
+    left: -17px;
+    border-left: 2px solid #f89655;
     height: 100%;
     width: 1px;
     top:6px;
@@ -589,4 +602,30 @@
   }
   .chkBoxLabel{
     text-transform: capitalize;
+  }
+  .image-gallery-image{
+    height: 240px;
+  }
+  .image-gallery-thumbnails-wrapper {
+    position: absolute !important;
+    left: 25px;
+    top: 175px;
+  }
+  .image-gallery-left-nav{
+    display:none !important;
+  }
+  .image-gallery-right-nav{
+    display:none !important;
+  }
+  .image-gallery-thumbnail{
+    border-radius: 4px !important;
+    border: solid 2px #ffffff !important;
+    width: 60px !important;
+    margin-left: 10px !important;
+  }
+  .image-gallery-thumbnails-container>.active{
+    border: solid 2px orange !important;
+  }
+  .image-gallery-thumbnail-inner>img{
+    height: 40px !important;
   }
