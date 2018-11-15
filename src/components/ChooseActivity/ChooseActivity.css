@@ -681,3 +681,141 @@
     color:#f89655;
     font-size: 10px;
   }
+  .react-datepicker__day--disabled {
+    border-radius: 4px;
+    background-color: #eeeeee;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #aaaaaa;
+  }
+  .react-datepicker__day--disabled:hover{
+    background-color: #eeeeee !important;
+  }
+  .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {
+    background-color:#f89655 !important;
+    color:#FFF;
+    border-radius: 4px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+  }
+  .activeDates{
+    background-color:#f89655;
+    color:#FFF;
+    border-radius: 4px;
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+  }
+  .DayPicker-Day {
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    line-height: 1.3;
+    border-radius: 23px !important;
+    background-color: #eeeeee;
+    color: #aaaaaa !important;
+    margin: 5px !important;
+    border: 10px solid transparent;
+    cursor: default !important;
+  }
+ .DayPicker-Day--selected{
+  font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    line-height: 1.3;
+    border-radius: 23px !important;
+    background-color: #f89655 !important;
+    color: #FFF !important;
+    margin: 5px !important;
+    border: 10px solid transparent;
+    cursor: pointer !important;
+ }
+
+  .DayPicker-Day--outside{
+    background-color: #EEE !important;
+  }
+
+  .card-title{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .card-text{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #7f7f7f;
+  }
+  .boldCardText{
+    color: #4f4f4f;
+  }
+  .timeCard{
+    height:105px;
+  }
+  .timeCard>.card-body>.card-title{
+    margin-bottom: 4px;
+  }
+  .DayPicker{
+    position: relative;
+    top: -119px;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px 0 #eeeeee;
+    border: solid 1px #eeeeee;
+    background-color: #ffffff;
+}
+.DayPicker-NavButton--prev{
+  left: 20px !important;
+}
+.DayPicker-Caption>div{
+  text-align: center !important;
+}
+.DayPicker-NavButton--prev {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAEW0lEQVRoBe1aMUsrSxQ+k81md6ObRJBEBAsLQSGCjQg2Nhb+CYv7GsEiCIJCCAmGEFC0SSHYvFv4AwRvY2FjZWEjGFCwsBDUSCBuVpPdzG7m8dyw8cYkm5vMvuyDTDU7851zvu+cYUNmDyKEwP95uL+TxxhLklQulzVNq1ar3wH/8YrL5XK73YIg+P1+lmUboqOGCuTz+WKx2LDYYNOvR4SQz+cbHR39SuA3AU9PT+VyGSEkiqLP5/N4PAihr+i+zAkhlUqlWCzKskwIEQRhfHzcZFIXkM/nJUlyu92hUIjneRPhnImiKLlcTtM0v99v1sFl8DPOPULIsewBgOf5UCiEEJIkCWNsMK8JkCQJAERRdGbuzVPA87woigBgEAaAmoBSqQQAPp/PhDp2YpA0CNcFaJoGAB6Px7G8TWIGSYNwXYDx3nTCO8ck2mpikDRf9LUj1Art/PWBgH7XaFCBQQV6zMDgCPWYwJ7NBxXoOYU9OhhUoG0Clc/RFtLrpo0VUFV153Ooqtorzdb2dgnAGKdSqbu7u5eXl0Kh0JpArzu2CNA0LZ1OZ7NZURSTyeTY2FivNFvb0xdQrVb39vaur6+Hh4d3dnYmJiZaR6ewQ1lAtVrd39+/urryer3xeHxycpICx7YuaAoghGQymcvLS57nY7HY1NRU29B0NmkKODw8vLi44DguGo3OzMzQIWjlhZqAo6Oj8/NzlmW3t7dnZ2et4lLbb3K524Xvn3//PDs7YxgmEomEw2Hz1snS1ffLWkuTBgAFAcfHx6e/TgFA1/WDg4OGAO0fT05O2gMsd6kdIctINgEoVGB1dVXD2umvU4ZhNjY2FhYWbOLa1C2dCvz468fKyoqu65lMJpvNsh2Pppz+aJGOAABYW1tbXl7GGO/u7t7c3PwRiV7A1AQAwPr6+tLSkqqq6XT69va2F1qd29IUgBCKRCKLi4uKoqRSqfv7+855dI2kKeDfu2KXa3Nzc35+vlQqJZPJh4eHrpl1aEhZgKFha2trbm7u/f09kUg8Pj52SKU7GH0BAOB2u6PRaDgclmU5Ho8/Pz93R64TK1sEAADLsrFYbHp6OhgMjoyMdEKlOwyFH7JWgTmOSyQShBBbv7vZKMD4rthKHq11u44QLX6WfgYCLFNkM2BQAZsTbOl+UAHLFNkMGFTA5gRbuq9VoKEBwdKsj4CGto6aAIZhAKBSqfSRWYehDZIG4Xq3ivFcLBY79NJHmEGyuQBZlhVF6SM5y9CKosiyDACNAgRB4DiOEJLL5RyrwWj6I4RwHCcIgqG21rWIMX59fdV1HWPs8LZLlmUZhgkGg8a9ar3tslAolEolQoit3+QsD0l7AMdxCCGv12v+y6v/oQkEApqmVSoVjuOMm1pd183OrvZ+bd1FCDGfAwAQQh6PJxAImBHrFQAAQsjb25vZEGiCnDPxer2BQOBrb99vAgyiGOOPjw9VVR1VAY7jhoaGvn9PaCLAOfnuhMk/XMunVCiB5KoAAAAASUVORK5CYII=') !important;
+  background-size: 50px !important;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 15px;
+}
+.DayPicker-NavButton--next {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCCAIAAABsNpe/AAAEZklEQVRoBe1aPUjzWhh+T5s2STX9AWmL4ODgIFRwcXFxcXC53+jm8N1FcOgiKEqxWkpBQZAOgsv9dsfvLg4uLoI4KCgoOAgOaqVQ02ibNInncg00MW1tvvYkpNAznb55f57nfU9Oen4Qxhh6v3l6n8L/DKimNGRZ5nm+Wq0qivLx8dFUx0mhx+OhKIpl2VAo5PP5GkOjxkFVLBbL5XKjvNHYeQlCKBgMDg0NmUKbaTw+PlarVYQQx3HBYNDv9yOETDbO/8QY12q1crksCALGmGXZ4eFhI4wvNIrFIs/zFEXFYjGGYYx6LumLolgoFBRFCYVCxpror7j2PiCEXMsBABiGicViCCGe52VZridXp8HzPABwHOfOOtQRMwzDcRwAaIA1uU6jUqkAQDAYrBu4tqOB1ACbaSiKAgB+v9+16OvANJAaYDMNbYZ1w7xUh9uqo4E0fhL0QdXKpifkfRpuKlO/Gv1qEM9Af1ART2kXDvvV6CJ5xE371bCWUvGzWdPtXMveakiStPXZJEnqHKMFS3tplEql5+fn29vbbDZrXKxZAPZnKvbSiMfjmUyG47jr6+tcLmdcIfwZzHba9tIAgJGRka2trcHBwcvLy52dHZt2vWynAQCjo6MbGxuBQOD8/Hx3d9cOJk7QAICxsbFUKsWy7OnpaT6fNy7c2o0XS88dogEA4+Pja2trNE2fnJzs7+9bQmdZyTkaADAxMbG6uurz+Y6Pjw8ODiyDbK9IhoZsuSUSiWQy6fV6j46Ofv3zqz1AaxrNd9St2epa8/Pz+g/Lvd///qZ81MLCgmWLlopkqtHSvVMPyFTj8PDQOuCzs7O9vT1VVX/89YNIKVoe01jHpGk2PTpp6uTi4iKfz6uqOjc39/Pvn011OhA6Oqiurq62t7dlWZ6dnV1cXOwAbisT52jc3NzkcjlJkmZmZpaWlloB6kzuEI27u7tsNiuK4vT0dDKZJL5T7ASN+/v7TCZTqVSmpqaWl5c9HvJByXs0jYqHh4d0Ov329jY5ObmysmIHBwCwl8bT01M6nRYEIZFIrK+vUxSZ+d2UKWITbqNfTRKJRKLRaDweT6VS1iflVt6+kduVHi0kwzCbm5sIIZqmvwHR/SN7aQAAy7Ldo2zrwd53o214Ugp9GqQyScJPvxokskjKR78apDJJwk+/GiSySMqHXo3GixikYhD303i9Rafh9XoBoFarEY9K3KEGUgOsOTfTKJfLxKMSd6iB/I6GIAiiKBIPTNChKIqCIABAcxosy9I0jTEuFAquZaJdmcQY0zRt/O+s3/yUZfnl5UVVVVmWXX6B1efzeb3eaDRaX4rpNACgVCpVKhWMsd0njt2MMZqmEUKBQCASidT9fFk2hcNhRVFqtZq2WFM/G/EjlXps6x2EkPezAQBCyO/3h8Nho/mXagAAxvj19dV4qdKo7YZ+IBAIh8OmnS4zDQ2oLMvv7++SJKmq6p5q0DQ9MDBQfx+MOW1Ow6jRE33989cTcFuB/A/CyMYFRaBVPwAAAABJRU5ErkJggg==') !important;
+  background-size: 50px !important;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 15px;
+}

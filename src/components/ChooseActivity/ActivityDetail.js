@@ -3,6 +3,8 @@ import axios from 'axios';
 import './ChooseActivity.css';
 import { NavLink } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 export default class ActivityDetail extends Component {
     state ={
      detail_product:[],
@@ -12,13 +14,16 @@ export default class ActivityDetail extends Component {
      pax_details:[],
      additionalDesc:[],
      bannerImg:[],
-     product:[]     
+     product:[],
+     dates:[],
+     OperationTime:[]     
     }
     componentWillMount(){
         axios({
             method: 'get',
             // url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.id}`,
-            url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=2018-11-17&time=8:30 AM`,
+            // url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=2018-11-17&time=8:30 AM`,
+            url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
         })
             .then((res) => {
                 // console.log(res.data.response.detail_product.location[0].city)
@@ -31,6 +36,7 @@ export default class ActivityDetail extends Component {
                     pax_details:res.data.response.product.additional_description.pax_details,
                     additionalDesc:res.data.response.product.additional_description.description,
                     bannerImg:res.data.response.detail_product.image,
+                    dates:res.data.response.operationDate
                 })
 
             })
@@ -40,8 +46,38 @@ export default class ActivityDetail extends Component {
                 this.setState({success:'Alert: Something went wrong'});
             });
     }
+
+
+    handleDayClick = (day) =>{
+        let abs = day.toLocaleDateString("en-US").replace(/[/]/g, "-");
+        abs = abs.split('-');
+        let days,month,year;
+            days = abs[1];
+            month = abs[0];
+            year = abs[2];
+            let FullDate = year+'-'+month+'-'+days;
+            axios({
+                method: 'get',
+                url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${FullDate}`,
+            })
+                .then((res) => {
+                    
+                    if(res.data.response.operation_times.length>0){
+                        this.setState({
+                            OperationTime:res.data.response.operation_times
+                        })
+                    }
+
+                })
+                .catch((e) =>
+                {
+                    console.error(e);
+                    this.setState({success:'Alert: Something went wrong'});
+                });
+    }
+   
   render() {
-      let {detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg} = this.state;
+      let {detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;
       let locs;
       let rates;
@@ -51,18 +87,46 @@ export default class ActivityDetail extends Component {
       let addDescList;
       let addDescCheck;
       let incidence = product.incidence;
-      
       let images =[];
-
+      let sDays = [];
+      let oTime;
+    
     // Banner Images
     if(bannerImg.length>=1){
-        // console.log(bannerImg);
         for(let i = 0; i < bannerImg.length; i++){
             let ifs = {original:"https://res.cloudinary.com/trabo/"+bannerImg[0].resource+"",thumbnail:"https://res.cloudinary.com/trabo/"+bannerImg[0].resource+""};
             images.push(ifs);
         }
     }
   
+    // DatesData
+    var d;
+    if(dates.length>0){
+        for(let i = 0; i<=dates.length-1; i++){
+            d = dates[i].from.replace(/-/g, ",");
+            sDays.push(new Date(d));
+        }
+    }
+    if(OperationTime!==''){
+        if(OperationTime.length<=5){
+            oTime =(
+                OperationTime.map((item,index) => (
+                    <div className="card timeCard mb-2" key={index}>
+                        <div className="card-body">
+                            <h5 className="card-title">Thu, 26 Jul 2018</h5>
+                            <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
+                        </div>
+                    </div>
+                ))
+            )
+        }
+        else{
+            console.log('asdf')
+        }
+        
+        
+    }
+    
     // Locations Data
     if(locations.length!==0){
         if(locations.length>1){
@@ -168,6 +232,7 @@ export default class ActivityDetail extends Component {
         ''
         ));
     }
+
     return (
       <div className='container mt-5 mb-5'>
             <div className='row'>
@@ -196,7 +261,7 @@ export default class ActivityDetail extends Component {
                         </div> 
                     </div>
                     <div className='row px-5 mb-4'>
-                        <div className='col-sm-6'>
+                        <div className='col-sm-7'>
                             <h5 className="Location mb-4">LOCATION</h5>
                             <p className='Ubud-Bali-Indonesi'>{mainCity}</p>
                             <ul className='locationList'>
@@ -204,18 +269,23 @@ export default class ActivityDetail extends Component {
                             </ul>
                             <NavLink className='View-map' to="#">View map</NavLink>
                         </div>
-                        <div className='col-sm-6'>
-                            {/* <h5>Calendar</h5> */}
+                        <div className='col-sm-5' style={{ height:"190px" }}>
+                        <span>Pick a Date</span>
+                        <DayPicker 
+                            initialMonth={new Date()} 
+                            selectedDays={sDays}
+                            onDayClick={this.handleDayClick}
+                        />
                         </div>
                     </div>         
                     <div className='row px-5 pt-2 mb-5'>
-                        <div className='col-sm-8'>
+                        <div className='col-sm-7'>
                             <h5 className='Rates mb-4'>RATES</h5>
                             {rates}
                             <hr />
                         </div>
-                        <div className='col-sm-4'>
-                            {/* <h5>CALENDAR DATA</h5> */}
+                        <div className='col-sm-5'>
+                            {oTime}
                         </div>
                     </div>   
                     {
