@@ -16,7 +16,9 @@ export default class ActivityDetail extends Component {
      bannerImg:[],
      product:[],
      dates:[],
-     OperationTime:[]     
+     OperationTime:[],
+     holidaysRows:[],
+     showHolidays:false     
     }
     componentWillMount(){
         axios({
@@ -45,17 +47,44 @@ export default class ActivityDetail extends Component {
                 console.error(e);
                 this.setState({success:'Alert: Something went wrong'});
             });
+            
+            axios({
+                method: 'get',
+                url: `https://www.googleapis.com/calendar/v3/calendars/en.indonesian%23holiday%40group.v.calendar.google.com/events?key=AIzaSyDiaLvDNpNZVX6Vw6QHLqLhYOqgQPeEIsE`,
+            })
+                .then((res) => {
+                    this.setState({
+                        holidaysRows:res.data.items,
+                    })
+    
+                })
+                .catch((e) =>
+                {
+                    console.error(e);
+                    this.setState({success:'Alert: Something went wrong'});
+                });
     }
 
 
     handleDayClick = (day) =>{
         let abs = day.toLocaleDateString("en-US").replace(/[/]/g, "-");
+        let {dates} =this.state;
+        let d;
         abs = abs.split('-');
         let days,month,year;
             days = abs[1];
             month = abs[0];
             year = abs[2];
             let FullDate = year+'-'+month+'-'+days;
+            function checkDate(dateVal){
+                for(let i = 0; i<=dates.length-1; i++){
+                    d = dates[i].from;
+                    if(d===dateVal){
+                        return true;
+                    }
+                }
+            }
+            if(checkDate(FullDate)===true){
             axios({
                 method: 'get',
                 url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${FullDate}`,
@@ -74,10 +103,42 @@ export default class ActivityDetail extends Component {
                     console.error(e);
                     this.setState({success:'Alert: Something went wrong'});
                 });
+            }
+            // else{
+            //     console.log("Not Fine")
+            // }
     }
    
+    handleMouseHover = (day) =>{
+        let abs = day.toLocaleDateString("en-US").replace(/[/]/g, "-");
+        let {holidaysRows} =this.state;
+        let selectedDate;
+        abs = abs.split('-');
+        let days,month,year;
+            days = abs[1];
+            month = abs[0];
+            year = abs[2];
+            let FullDate = year+'-'+month+'-'+days;
+            function checkDate(dateVal){
+                for(let i = 0; i<=holidaysRows.length-1; i++){
+                    selectedDate = holidaysRows[i].start.date;
+                    if(selectedDate===dateVal){
+                        return true;
+                    }
+                }
+               
+            }
+            if(checkDate(FullDate)===true){
+                console.log(checkDate(FullDate))
+            }
+        }
+        toggleHidden =() => {
+            this.setState({
+                showHolidays: !this.state.showHolidays
+            });
+          }
   render() {
-      let {detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
+      let {holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;
       let locs;
       let rates;
@@ -89,8 +150,13 @@ export default class ActivityDetail extends Component {
       let incidence = product.incidence;
       let images =[];
       let sDays = [];
+      let hDays =[];
+      let hNames = [];
       let oTime;
-    
+      var hol;
+      var fullYear = new Date().getFullYear();
+      let lastYear = fullYear - 1;
+     
     // Banner Images
     if(bannerImg.length>=1){
         for(let i = 0; i < bannerImg.length; i++){
@@ -107,16 +173,29 @@ export default class ActivityDetail extends Component {
             sDays.push(new Date(d));
         }
     }
+
+    if(holidaysRows.length>0){
+        for(let i = 0; i<=holidaysRows.length-1; i++){
+            hol =  holidaysRows[i].start.date.replace(/-/g, ",");
+            hDays.push(new Date(hol));
+            if(holidaysRows[i].start.date<=fullYear+'-12-31' && holidaysRows[i].start.date>lastYear+'-12-31'){
+                hNames.push({date:holidaysRows[i].start.date,holidays:holidaysRows[i].summary})
+            }
+                
+
+        }
+    }
     if(OperationTime!==''){
         if(OperationTime.length<=5){
             oTime =(
                 OperationTime.map((item,index) => (
-                    <div className="card timeCard mb-2" key={index}>
-                        <div className="card-body">
-                            <h5 className="card-title">Thu, 26 Jul 2018</h5>
-                            <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
+                        <div className="card timeCard mb-2" key={index}>
+                            <div className="card-body">
+                                <h5 className="card-title">Thu, 26 Jul 2018</h5>
+                                <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
+                            </div>
                         </div>
-                    </div>
+                    
                 ))
             )
         }
@@ -186,7 +265,7 @@ export default class ActivityDetail extends Component {
         additionalDesc.map(item => 
             item.type === 'text' ? (
             <div key={item.heading}>
-                <h5 className='Tempat px-4'>{item.heading}</h5>
+                <h5 className='Tempat px-4 mb-0'>{item.heading}</h5>
                 <p className='tempatText mx-4'>{item.items[0]}</p>
             </div>
             ) 
@@ -196,7 +275,7 @@ export default class ActivityDetail extends Component {
         additionalDesc.map(item => 
             item.type === 'check_box' ? (
             <div key={item.heading}>
-                <h5 className='Perlengkapan px-4'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
+                <h5 className='Perlengkapan px-4 mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                 <ul className='pelam mb-4'>
                 {
                     item.items.map((chk,index) =>(
@@ -268,55 +347,24 @@ export default class ActivityDetail extends Component {
                             {locs}
                             </ul>
                             <NavLink className='View-map' to="#">View map</NavLink>
-                        </div>
-                        <div className='col-sm-5' style={{ height:"190px" }}>
-                        <span>Pick a Date</span>
-                        <DayPicker 
-                            initialMonth={new Date()} 
-                            selectedDays={sDays}
-                            onDayClick={this.handleDayClick}
-                        />
-                        </div>
-                    </div>         
-                    <div className='row px-5 pt-2 mb-5'>
-                        <div className='col-sm-7'>
-                            <h5 className='Rates mb-4'>RATES</h5>
+
+                            <h5 className='Rates mb-4 mt-5'>RATES</h5>
                             {rates}
                             <hr />
-                        </div>
-                        <div className='col-sm-5'>
-                            {oTime}
-                        </div>
-                    </div>   
-                    {
-                        incidence?
-                        <div className='row px-5 mb-5'>
-                        <div className='col-sm-8'>
+
+                            {incidence?
+                            <div>
                             <h5 className='incidents mb-2'>INCIDENTS</h5>
                             <div className='Rectangle-10'>
                                 <p className='IncidenceText'>{incidence}</p>
                             </div>
-                        </div>
-                        <div className='col-sm-4'>
-                            {/* <h5>Calendar</h5> */}
-                        </div>
-                    </div>
-                    :''
-                    }
-                     
-                    <div className='row px-5'>
-                        <div className='col-sm-8'>
-                            <h5 className='Description mb-4'>DESCRIPTION</h5>
+                            </div>
+                            :''}
+
+                             <h5 className='Description mb-4 mt-5'>DESCRIPTION</h5>
                             <p className='DescriptionTexts'>{detail_product.brief_description}</p>
-                        </div>
-                        <div className='col-sm-4'>
-                            {/* <h5>Calendar</h5> */}
-                        </div>
-                    </div> 
-                    <div className='row mb-5'>
-                        <div className='col-sm-8'>
-                            <div className='row px-5'>
-                                <div className='col-sm-6'>
+                            <div className='row mt-4'>
+                             <div className='col-sm-6'>
                                     <h5 className='Include mb-3'>INCLUDE</h5>
                                         <ul className='include'>
                                             {incl}
@@ -328,15 +376,8 @@ export default class ActivityDetail extends Component {
                                         {excl}
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
-                        <div className='col-sm-4'>
-                            {/* <h5>Calendar</h5> */}
-                        </div>
-                    </div>  
-                    <div className='row px-5 mb-5'>
-                        <div className='col-sm-8'>
-                            <h5 className='ADDITIONAL-DESCRIPTI mb-3'>ADDITIONAL DESCRIPTION</h5>
+                             </div>
+                                <h5 className='ADDITIONAL-DESCRIPTI mb-3 mt-4'>ADDITIONAL DESCRIPTION</h5>
                             {
                                 addDescText?addDescText:''
                             }
@@ -349,23 +390,50 @@ export default class ActivityDetail extends Component {
                                     addDescList
                                 :''
                             }
-                        </div>
-                        <div className='col-sm-4'>
-                            {/* <h5>Calendar</h5> */}
-                        </div>
-                    </div>   
-                    <div className='row px-5'>
-                        <div className='col-sm-8'>
-                            <h5 className='Special-Notes'>SPECIAL NOTES</h5>
+
+                             <h5 className='Special-Notes mt-5 mb-3'>SPECIAL NOTES</h5>
                             <p className='specialText'>{product.spesial_note}</p>
+                    </div>
+                   
+                    <div className='col-sm-5 calendarOuter'>
+                        <p className='pickDate'>PICK A DATE</p>
+                        <DayPicker 
+                            initialMonth={new Date()} 
+                            fromMonth={new Date()}
+                            selectedDays={sDays}
+                            onDayClick={this.handleDayClick}
+                            onDayMouseEnter={this.handleMouseHover}
+                            onDayMouseLeave={this.onDayMouseLeave}
+                            disabledDays={hDays}
+                        />
+                        <div className='cardParent'>
+                            {oTime}
                         </div>
-                        <div className='col-sm-4'>
-                            {/* <h5>Calendar</h5> */}
+                           <button className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button>
+                           <button onClick={this.toggleHidden} className='showHolidays mt-2 mb-5'>Show Holidays <i className='fa fa-arrow-down'></i></button>
+                           {
+                               this.state.showHolidays?
+                                <ul>
+                                    {
+                                        hNames.map((item,index) =>(
+                                            <li key={item.date}>{item.date} : {item.holidays}</li>
+                                        ))
+                                    }  
+                                </ul>
+                                :''
+                            }  
                         </div>
-                    </div>                   
+                        </div>
+
+
+                        
+                    </div>         
+
+                   
+                   
                 </div>
             </div>
-      </div>
+
     )
   }
 }

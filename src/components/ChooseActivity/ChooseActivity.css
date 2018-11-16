@@ -198,11 +198,7 @@
   .cols9-center{
     margin: auto;
   }
-  @media screen and(max-width: 767px){
-    .cols9-center{
-      margin: none;
-    }
-  }
+  
   .rowPadding{
     padding-left: 40px;
     padding-left: 40px;
@@ -389,8 +385,8 @@
     color: #aaaaaa;
   }
   .DescriptionTexts {
-    width: 440px;
-    height: 120px;
+    /* width: 440px; */
+    /* height: 120px; */
     font-family: Archivo;
     font-size: 16px;
     font-weight: normal;
@@ -723,6 +719,7 @@
     letter-spacing: normal;
     text-align: center;
   }
+
   .DayPicker-Day {
     font-family: Archivo;
     font-size: 14px;
@@ -737,7 +734,7 @@
     background-color: #eeeeee;
     color: #aaaaaa !important;
     margin: 5px !important;
-    border: 10px solid transparent;
+    border: 10px solid #FFF !important;
     cursor: default !important;
   }
  .DayPicker-Day--selected{
@@ -792,12 +789,17 @@
     margin-bottom: 4px;
   }
   .DayPicker{
-    position: relative;
-    top: -119px;
-    border-radius: 4px;
+    margin-bottom: 40px;
+    /* border-radius: 4px; */
     box-shadow: 0 1px 1px 0 #eeeeee;
     border: solid 1px #eeeeee;
     background-color: #ffffff;
+    /* height: -webkit-fill-available; */
+    width: 100%;
+}
+.calendarOuter{
+  position: relative;
+  top: -119px;
 }
 .DayPicker-NavButton--prev{
   left: 20px !important;
@@ -818,4 +820,89 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 15px;
+}
+.pickDate{
+  position: relative;
+  /* top: -116px; */
+  background-color: #FFF;
+  margin-bottom: 0px;
+  width: 100%;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  font-family: Archivo;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+  padding: 20px 15px 5px 25px;
+}
+.nextStep {
+  width: 280px;
+  height: 50px;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #eeeeee;
+  background-color: #eeeeee;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+  border:none;
+}
+.nextStep:hover{
+  cursor:pointer;
+  background-color: #ccc;
+  color:#FFF;
+}
+.nextStep:focus{
+  outline: none;
+}
+
+.showHolidays {
+  width: 280px;
+  height: 50px;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #eeeeee;
+  background-color: #f89655;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #FFF;
+  border:none;
+}
+.showHolidays:hover{
+  cursor:pointer;
+  background-color: #ffb280;
+  color:#FFF;
+}
+.showHolidays:focus{
+  outline: none;
+}
+
+.cardParent{
+  margin-top: 35px;
+}
+
+@media screen and(max-width: 767px){
+  .cols9-center{
+    margin: none;
+  }
+  .DayPicker{
+    height: unset;
+    top:0px;
+  }
+}
+.DayPicker-Day--disabled {
+  color: #ad0000 !important;
+  cursor: pointer !important;
 }
