@@ -424,7 +424,7 @@ export default class ActivityDetail extends Component {
                             {oTime}
                         </div>
                            <button className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button>
-                           <button onClick={this.toggleHidden} className='showHolidays mt-2 mb-5'>Show Holidays <i className='fa fa-arrow-down'></i></button>
+                           {/* <button onClick={this.toggleHidden} className='showHolidays mt-2 mb-5'>Show Holidays <i className='fa fa-arrow-down'></i></button> */}
                            {/* {
                                this.state.showHolidays?
                                 <ul>
