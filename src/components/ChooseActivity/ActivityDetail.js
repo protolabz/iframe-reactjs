@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import Alert from 'react-s-alert';
 export default class ActivityDetail extends Component {
     state ={
      detail_product:[],
@@ -118,18 +119,36 @@ export default class ActivityDetail extends Component {
             days = abs[1];
             month = abs[0];
             year = abs[2];
+            if(days<10){
+                days = 0+''+days;
+            }
             let FullDate = year+'-'+month+'-'+days;
             function checkDate(dateVal){
                 for(let i = 0; i<=holidaysRows.length-1; i++){
                     selectedDate = holidaysRows[i].start.date;
                     if(selectedDate===dateVal){
-                        return true;
+                        return (
+                          {
+                                result:'true',
+                                date: selectedDate+' '+holidaysRows[i].summary
+                            }
+                        );
                     }
                 }
                
             }
+            let kk =checkDate(FullDate)
+            
+            if(kk){
+                Alert.error(kk.date, {
+                    position: 'bottom-right',
+                    effect: 'jelly',
+                    timeout: 2000
+                });
+            }
             if(checkDate(FullDate)===true){
                 console.log(checkDate(FullDate))
+                
             }
         }
         toggleHidden =() => {
@@ -411,7 +430,7 @@ export default class ActivityDetail extends Component {
                         </div>
                            <button className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button>
                            <button onClick={this.toggleHidden} className='showHolidays mt-2 mb-5'>Show Holidays <i className='fa fa-arrow-down'></i></button>
-                           {
+                           {/* {
                                this.state.showHolidays?
                                 <ul>
                                     {
@@ -421,7 +440,7 @@ export default class ActivityDetail extends Component {
                                     }  
                                 </ul>
                                 :''
-                            }  
+                            }   */}
                         </div>
                         </div>
 
@@ -432,6 +451,7 @@ export default class ActivityDetail extends Component {
                    
                    
                 </div>
+                <Alert stack={{limit: 3}} timeout={2000}/>
             </div>
 
     )
