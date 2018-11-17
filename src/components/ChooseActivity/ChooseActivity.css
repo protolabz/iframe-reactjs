@@ -906,3 +906,149 @@
   color: #ad0000 !important;
   cursor: pointer !important;
 }
+
+
+.goBack{
+  width: 185px;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #eeeeee;
+  background-color: #ffffff;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+  border:1px solid #dddddd;
+  padding: 11px 19px;
+}
+.goBack:hover{
+  text-decoration: none;
+  color: #4f4f4f;
+  cursor: pointer;
+}
+.dayState{
+  opacity: 0.66;
+  font-family: Archivo;
+  font-size: 14px;
+  /* font-weight: bold; */
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+}
+.fullDate{
+  opacity: 0.66;
+  font-family: Archivo;
+  font-size: 16px;
+  /* font-weight: bold; */
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+}
+.bookingCard{
+  border: 1px solid #ddd;
+  padding: 15px 10px 10px 25px;
+  display: flex;
+  border-radius: 4px;
+  opacity: 0.66;
+  box-shadow: 0 1px 0 0 #eeeeee;
+}
+.bookingCard>span{
+  opacity: 0.66;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+  width: 70%;
+  line-height: 30px;
+}
+.hourlyBookBtn{
+  width: 102px;
+  height: 30px;
+  opacity: 0.66;
+  border-radius: 4px;
+  /* box-shadow: 0 1px 0 0 #f3804a; */
+  background-color: #f89655;
+  border: none;
+  color:#FFF;
+  text-align: center;
+  
+}
+.hourlyBookBtn:hover{
+  outline: none;
+}
+
+.dayStateCurrent{
+  /* opacity: 0.66; */
+  font-family: Archivo;
+  font-size: 14px;
+  /* font-weight: bold; */
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+}
+.fullDateCurrent{
+  /* opacity: 0.66; */
+  font-family: Archivo;
+  font-size: 16px;
+  /* font-weight: bold; */
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+}
+.bookingCardCurrent{
+  border: 1px solid #ddd;
+  padding: 15px 10px 10px 25px;
+  display: flex;
+  border-radius: 4px;
+  /* opacity: 0.66; */
+  box-shadow: 0 1px 0 0 #eeeeee;
+}
+.bookingCardCurrent>span{
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+  width: 70%;
+  line-height: 30px;
+}
+.hourlyBookBtnCurrent{
+  width: 102px;
+  height: 30px;
+  /* opacity: 0.66; */
+  border-radius: 4px;
+  /* box-shadow: 0 1px 0 0 #f3804a; */
+  background-color: #f3804a;
+  border: none;
+  color:#FFF;
+  text-align: center;
+  
+}
+.hourlyBookBtnCurrent:hover{
+  outline: none;
+}
+
+.createTimesBox{
+  border-radius: 4px;
+  box-shadow: 0 5px 20px 0 rgb(216, 216, 216);
+  background-color: #ffffff;
+}

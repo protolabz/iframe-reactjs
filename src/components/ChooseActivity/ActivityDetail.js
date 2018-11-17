@@ -18,6 +18,8 @@ export default class ActivityDetail extends Component {
      product:[],
      dates:[],
      OperationTime:[],
+     OperationDate:null,
+     OperationDateNormal:null,
      holidaysRows:[],
      showHolidays:false     
     }
@@ -68,6 +70,14 @@ export default class ActivityDetail extends Component {
 
     handleDayClick = (day) =>{
         let abs = day.toLocaleDateString("en-US").replace(/[/]/g, "-");
+        let dateFormat = day.toGMTString();
+        let dts = (dateFormat.split(' '));
+        let dd,mm,yy,dday;
+        dd = dts[1];
+        mm = dts[2];
+        yy = dts[3];
+        dday = dts[0];
+        dateFormat = dday+ " " +dd+ " " +mm+ " " +yy;
         let {dates} =this.state;
         let d;
         abs = abs.split('-');
@@ -76,6 +86,7 @@ export default class ActivityDetail extends Component {
             month = abs[0];
             year = abs[2];
             let FullDate = year+'-'+month+'-'+days;
+            
             function checkDate(dateVal){
                 for(let i = 0; i<=dates.length-1; i++){
                     d = dates[i].from;
@@ -83,6 +94,10 @@ export default class ActivityDetail extends Component {
                         return true;
                     }
                 }
+            }
+            let nextPgData = {
+                date:FullDate,
+                params:this.props.match.params.id
             }
             if(checkDate(FullDate)===true){
             axios({
@@ -93,7 +108,9 @@ export default class ActivityDetail extends Component {
                     
                     if(res.data.response.operation_times.length>0){
                         this.setState({
-                            OperationTime:res.data.response.operation_times
+                            OperationTime:res.data.response.operation_times,
+                            OperationDate:dateFormat,
+                            OperationDateNormal:nextPgData
                         })
                     }
 
@@ -152,8 +169,15 @@ export default class ActivityDetail extends Component {
                 showHolidays: !this.state.showHolidays
             });
           }
+          reload = ()=>{
+            const current = this.props.location.pathname;
+            this.props.history.replace(`/reload`);
+               setTimeout(() => {
+                 this.props.history.replace(current);
+               });
+           }
   render() {
-      let {holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
+      let {OperationDate,holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;
       let locs;
       let rates;
@@ -200,24 +224,23 @@ export default class ActivityDetail extends Component {
 
         }
     }
+    
     if(OperationTime!==''){
         if(OperationTime.length<=5){
             oTime =(
                 OperationTime.map((item,index) => (
                         <div className="card timeCard mb-2" key={index}>
                             <div className="card-body">
-                                <h5 className="card-title">Thu, 26 Jul 2018</h5>
+                                <h5 className="card-title">{OperationDate}</h5>
                                 <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
                             </div>
                         </div>
-                    
                 ))
             )
         }
         else{
-            console.log('asdf')
+            window.location = `/select-hours/${this.state.OperationDateNormal.params}/${this.state.OperationDateNormal.date}`
         }
-        
         
     }
     
@@ -325,7 +348,7 @@ export default class ActivityDetail extends Component {
         ''
         ));
     }
-
+    
     return (
       <div className='container mt-5 mb-5'>
             <div className='row'>
