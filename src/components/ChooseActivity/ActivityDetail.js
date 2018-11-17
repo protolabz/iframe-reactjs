@@ -446,7 +446,7 @@ export default class ActivityDetail extends Component {
                    
                    
                 </div>
-                <Alert stack={{limit: 3}} timeout={2000}/>
+                <Alert stack={{limit: 1}} timeout={2000}/>
             </div>
 
     )
