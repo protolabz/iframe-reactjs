@@ -29,7 +29,6 @@ export default class ActivityDetail extends Component {
             url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
         })
             .then((res) => {
-                // console.log(res.data.response.detail_product.location[0].city)
                 this.setState({
                     detail_product:res.data.response.detail_product,
                     product:res.data.response.product,
@@ -146,10 +145,7 @@ export default class ActivityDetail extends Component {
                     timeout: 2000
                 });
             }
-            if(checkDate(FullDate)===true){
-                console.log(checkDate(FullDate))
-                
-            }
+
         }
         toggleHidden =() => {
             this.setState({
@@ -279,7 +275,6 @@ export default class ActivityDetail extends Component {
 
     //Additional Description
     if(additionalDesc.length!==''){
-        // console.log(additionalDesc);
     addDescText = (
         additionalDesc.map(item => 
             item.type === 'text' ? (
