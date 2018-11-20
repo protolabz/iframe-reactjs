@@ -18,7 +18,6 @@ export default class MultipleHours extends Component {
             url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${this.props.match.params.date}&&multi=true`,
         })
             .then((res) => {
-                console.log(res)
                     this.setState({
                        dateBefore:res.data.response.date_before,
                        dateAfter:res.data.response.date_after,
@@ -43,7 +42,7 @@ export default class MultipleHours extends Component {
       if(dateBefore!==null){
           preDate = dateBefore.before_date.from;
           preTime = dateBefore.before;
-        console.log(preDate)
+
           let dateFormat = new Date(preDate).toGMTString();
             let dts = (dateFormat.split(' '));
             let dd,mm,yy,dday;
@@ -70,7 +69,6 @@ export default class MultipleHours extends Component {
         //   console.log(dateCurrent);
         curDate = dateCurrent.current_date;
         curTime = dateCurrent.current;
-        console.log(curDate)
         let dateFormat = new Date(curDate).toGMTString();
             let dts = (dateFormat.split(' '));
             let dd,mm,yy,dday;

@@ -3,15 +3,16 @@ import  { BrowserRouter as Router,  Route, Switch} from 'react-router-dom';
 import ChooseActivity from './components/ChooseActivity/ChooseActivity';
 import ActivityDetail from './components/ChooseActivity/ActivityDetail';
 import MultipleHours from './components/ChooseActivity/MultipleHours';
+import Paxdetails from './components/PaxDetails/PaxDetails'
 export default class componentName extends Component {
-  render() {
+  render( ){
     return (
-     
         <Router>
             <Switch>
                 <Route exact path="/" component={ChooseActivity}/>
-                <Route exact path="/product-detail/:id" component={ActivityDetail}/>
-                <Route exact path="/select-hours/:params/:date" component={MultipleHours}/>
+                <Route path="/product-detail/:id" component={ActivityDetail}/>
+                <Route path="/select-hours/:params/:date" component={MultipleHours}/>
+                <Route path="/pax-details/:time/:date/:checked/:selected/:id" component={Paxdetails}/>
             </Switch>
         </Router>
      

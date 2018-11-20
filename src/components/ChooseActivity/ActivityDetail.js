@@ -21,8 +21,16 @@ export default class ActivityDetail extends Component {
      OperationDate:null,
      OperationDateNormal:null,
      holidaysRows:[],
-     showHolidays:false     
+     showHolidays:false,
+     isRequiredSelect:false,
+     isRequiredBox:true,
+     isTimeSelected:false,
+     boxValue:[],
+     selectValue:null,
+     timeValue:null,
+     dateValue:null
     }
+
     componentWillMount(){
         axios({
             method: 'get',
@@ -31,6 +39,18 @@ export default class ActivityDetail extends Component {
             url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
         })
             .then((res) => {
+                // console.log(res);
+                var data = res.data.response.product.additional_description.description;
+                var len = res.data.response.product.additional_description.description.length;
+                    for(let i=0;i<=len-1;i++){
+                        if(data[i].type==='check_box' && data[i].mandatory==='1'){
+                            this.setState({isRequiredBox:false})
+                        }
+                        if(data[i].type==='list_box' && data[i].mandatory==='1'){
+                            this.setState({isRequiredSelect:false})
+                            
+                        }
+                    }
                 this.setState({
                     detail_product:res.data.response.detail_product,
                     product:res.data.response.product,
@@ -66,7 +86,6 @@ export default class ActivityDetail extends Component {
                     this.setState({success:'Alert: Something went wrong'});
                 });
     }
-
 
     handleDayClick = (day) =>{
         let abs = day.toLocaleDateString("en-US").replace(/[/]/g, "-");
@@ -164,19 +183,64 @@ export default class ActivityDetail extends Component {
             }
 
         }
-        toggleHidden =() => {
+        selectTimeFrame = (date,time) => {
             this.setState({
-                showHolidays: !this.state.showHolidays
-            });
-          }
-          reload = ()=>{
-            const current = this.props.location.pathname;
-            this.props.history.replace(`/reload`);
-               setTimeout(() => {
-                 this.props.history.replace(current);
-               });
+                isTimeSelected:true,
+                timeValue:time,
+                dateValue:date
+            })
+        }
+
+        handleSelectBox = (listValue) =>{
+           this.setState({selectValue:listValue})
+           if(this.state.additionalDesc[2].mandatory === '1'){
+                this.setState({
+                    isRequiredSelect: true
+                })
            }
-  render() {
+        }
+        handleCheckbox = (e) => {   
+            let val = e.target.value;    
+            var value = this.state.boxValue;  
+            if(value.includes(val)){          
+                value.pop(val);
+            }else{
+                value.push(val);
+                
+            }
+
+            this.setState({
+                boxValue: value
+            });
+
+            if(!this.state.isRequiredBox){
+                this.setState({
+                    isRequiredBox: true
+                })
+            }   
+
+            
+          }
+        handleNext =() => {
+            let {boxValue,selectValue,timeValue,dateValue} = this.state;
+            timeValue = timeValue.replace(/ /g,'-');
+            if(selectValue===''){
+                selectValue = '0';
+            }
+            if(boxValue.length===0){
+                boxValue = '0';
+            }
+            window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
+
+        }
+  render() {  
+    const nextBtn = (
+        this.state.isRequiredBox && this.state.isRequiredSelect && this.state.isTimeSelected ?
+        <button onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> : 
+        <button disabled={true}
+        onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> 
+    )
+
       let {OperationDate,holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;
       let locs;
@@ -195,7 +259,7 @@ export default class ActivityDetail extends Component {
       var hol;
       var fullYear = new Date().getFullYear();
       let lastYear = fullYear - 1;
-     
+      let quota = product.quota - product.used_quota;
     // Banner Images
     if(bannerImg.length>=1){
         for(let i = 0; i < bannerImg.length; i++){
@@ -229,10 +293,11 @@ export default class ActivityDetail extends Component {
         if(OperationTime.length<=5){
             oTime =(
                 OperationTime.map((item,index) => (
-                        <div className="card timeCard mb-2" key={index}>
+                        <div className="card timeCard mb-2" key={index} onClick={()=>this.selectTimeFrame(this.state.OperationDateNormal.date,item.time)}>
                             <div className="card-body">
                                 <h5 className="card-title">{OperationDate}</h5>
                                 <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
+                                <p className='quota'>{quota} <span className='quota-left'>left</span></p>
                             </div>
                         </div>
                 ))
@@ -317,7 +382,7 @@ export default class ActivityDetail extends Component {
                 {
                     item.items.map((chk,index) =>(
                     <div key={chk} className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" value={chk} id={`customCheck${index}`}/>
+                        <input type="checkbox" onClick={this.handleCheckbox} className="custom-control-input" value={chk} id={`customCheck${index}`}/>
                         <label className="custom-control-label chkBoxLabel" htmlFor={`customCheck${index}`}>{chk}</label>
                     </div>
                     ))
@@ -335,7 +400,8 @@ export default class ActivityDetail extends Component {
                 <div key={index}>
                     <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                     <div className='selectdiv'>
-                        <select className='Text-Box mx-4'>
+                        <select onChange={(e) => this.handleSelectBox(e.target.value)} className='Text-Box mx-4'>
+                        <option disabled={true} selected={true}>Select option</option>
                         {
                             item.items.map((list,index) =>(
                             <option key={index}>{list}</option>
@@ -446,19 +512,8 @@ export default class ActivityDetail extends Component {
                         <div className='cardParent'>
                             {oTime}
                         </div>
-                           <button className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button>
-                           {/* <button onClick={this.toggleHidden} className='showHolidays mt-2 mb-5'>Show Holidays <i className='fa fa-arrow-down'></i></button> */}
-                           {/* {
-                               this.state.showHolidays?
-                                <ul>
-                                    {
-                                        hNames.map((item,index) =>(
-                                            <li key={item.date}>{item.date} : {item.holidays}</li>
-                                        ))
-                                    }  
-                                </ul>
-                                :''
-                            }   */}
+                          {nextBtn}
+                          <p style={{ padding:"10px" }} className='alert-danger mt-4'>Note- Fields with * are mandatory.</p>
                         </div>
                         </div>
 

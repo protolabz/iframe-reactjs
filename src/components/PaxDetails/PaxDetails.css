@@ -1,0 +1,236 @@
+.Select-another-activ {
+    width: 157px;
+    height: 17px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f3804a;
+    text-decoration: underline;
+  }
+  .Select-another-activ:hover{
+    color: #f3804a;
+  }
+  .Youre-viewing {
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #4f4f4f;
+}
+.productName {
+    font-family: Merriweather;
+    font-size: 32px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.5px;
+    color: #4f4f4f;
+    text-align: center;
+}
+.prodDescTop {
+    margin: auto;
+    text-align: center;
+    color: #aaaaaa;
+    font-family: Archivo;
+    font-size:14px;
+}
+.PAX-Details {
+    font-family: Archivo;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .Name {
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .Text-Box{
+    height: 50px;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 0 #eeeeee;
+    background-color: #ffffff;
+  }
+  .ratesDiv{
+    border-radius: 4px;
+    box-shadow: 0 1px 0 0 #eeeeee;
+    background-color: #ffffff;
+    border: 1px solid #dedede;
+    padding: 14px;
+  }
+  .PaxType{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+  }
+  .PaxPrice{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #7f7f7f;
+    margin: 0px;
+  }
+  .PaxAge{
+    font-family: Archivo;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #7f7f7f;
+  margin-bottom: 0px;
+  }
+  .Box{
+    height: 30px !important;
+    border-radius: 4px !important;
+    background-color: #fafafa !important;  
+  }
+  .Box::-webkit-inner-spin-button {
+    opacity: 1;
+  }
+  .CancelationPax{
+    font-family: Archivo;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .CancelationTextBox{
+    height: 50px !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 0 0 #eeeeee !important;
+    background-color: #ffffff !important;
+  }
+  .Meals{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+.btnMinus{
+  width: 40px !important;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  border:1px solid #dddddd !important;
+  margin-right: 2%;
+}
+.btnMinus>i{
+  font-size: 12px;
+    color: #4f4f4f;
+}
+.btnPlus{
+  width: 40px !important;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  border:1px solid #dddddd !important;
+}
+.btnPlus>i{
+  font-size: 12px;
+    color: #4f4f4f;
+}
+.btnMinus:hover{
+  cursor: pointer;
+}
+.btnPlus:hover{
+  cursor: pointer;
+}
+/* .btnMinus:focus{
+  outline:none;
+}
+.btnPlus:focus{
+  outline:none;
+} */
+
+.additoinalTextBox{
+  border:none !important;
+  height:30px !important;
+  text-align: center;
+}
+.additoinalTextBox:focus{
+  box-shadow:none !important;
+}
+.addProductRightHead{
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+  text-transform: capitalize;
+  font-weight: bold;
+  margin: 0px;
+}
+.productAmt{
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+}
+.Remark {
+  font-family: Archivo;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+  text-transform: capitalize;
+}
+.Text-Box{
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #eeeeee;
+  background-color: #ffffff;
+  height: 50px !important;
+}
+.TextArea{
+  height: 100px !important;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #eeeeee;
+  background-color: #ffffff;
+}
