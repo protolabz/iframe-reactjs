@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import './PaxDetails.css';
+import IntlTelInput from 'react-intl-tel-input';
+import '../../../node_modules/react-intl-tel-input/dist/libphonenumber.js';
+import '../../../node_modules/react-intl-tel-input/dist/main.css';
+import AdditionalData from './additionalData';
+var arr =  {};
+var otherPaxArr = {};
+var arrInc = [];
 export default class componentName extends Component {
   state ={
     params:this.props.match.params,
@@ -28,17 +35,39 @@ export default class componentName extends Component {
      cancellation_policy_package:[],
      cancellation_policy_pax:[],
      additional_productsMeals:[],
-     additional_productsFoto:[],
-     addProductsValue:0,
+     additional_productsFoto:[],    
      currency:null,
-     dateValue:null
+     dateValue:null,
+     //ImpData Form
+     name:'',
+     productCode:this.props.match.params.id,
+     paymentType:'',
+     date:'',
+     amount:null,
+     total_amount:null,
+     operation_time:null,
+     phone_code:null,
+     additional:[],
+     user_code:null,
+     refferal:null,
+     phone:'',
+     paxDetailsName:'',
+     standardPax:{},
+     package:[],
+     additional_description:{},
+     addProductsValue:[
+            {id:1, value:0}
+     ],
+     boxValue:[],
+     selectValue:null,
+     commentBox:null
   }
   componentWillMount(){
     axios({
       method: 'get',
-      // url: `https://api.trabo.co/partner/activity/detail/${this.state.id}`,
+      // url: `https://api.trabo.co/partner/activity/detail/${this.state.id}`, A-09229850
       // url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=2018-11-17&time=8:30 AM`,
-      url: `https://api.trabo.co/partner/activity/detail/A-09229850`,
+      url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
       })
       .then((res) => {
           // console.log(res);
@@ -77,7 +106,82 @@ export default class componentName extends Component {
           this.setState({success:'Alert: Something went wrong'});
       });
   }
+  
+  //Handle Name change
+  handleChangeName =(e) =>{
+      this.setState({name:e.target.value})
+    }
+    //Mobile number Codes
+    handler = (status, value, countryData, number, id) =>  {
+        console.log(status, value, countryData, number, id)
+        this.setState({
+            phone:number,
+            phone_code:countryData.dialCode
+        })
+    };
+   
+    handleStandardPax =(e) => {   
+        arr[e.target.name] = e.target.value;
+        this.setState({
+            standardPax: arr
+        })
+    }
+    handleOtherPax = (e) => {
+        otherPaxArr[e.target.name] = e.target.value;
+        this.setState({
+            package: otherPaxArr
+        })
+    }
+    increementByOne = (it) => {
+
+        arrInc[it.id] = this.state.addProductsValue+1;
+
+        console.log(arrInc)
+       
+    }
+    handleIncreement = (id)  => {
+        arrInc.push(id);
+        // this.setState({
+        //     addProductsValue
+        // })
+        console.log(id.id);
+
+    }
+    handleCheckbox = (e) => {   
+        let val = e.target.value;    
+        var value = this.state.boxValue;  
+        if(value.includes(val)){          
+            value.pop(val);
+        }else{
+            value.push(val);
+            
+        }
+
+        this.setState({
+            boxValue: value
+        });
+
+        if(!this.state.isRequiredBox){
+            this.setState({
+                isRequiredBox: true
+            })
+        }   
+      }
+      handleSelectBox = (listValue) =>{
+        this.setState({selectValue:listValue})
+        if(this.state.additionalDesc[2].mandatory === '1'){
+             this.setState({
+                 isRequiredSelect: true
+             })
+        }
+     }
+     handleCommentBox =(e) =>{
+        this.setState({
+            commentBox:e.target.value
+        })
+     }
   render() {
+    //   console.log(this.state.addProductsValue)
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = params.time.replace(/-/g,' '),productDate = new Date(params.date).toGMTString();
@@ -89,7 +193,7 @@ export default class componentName extends Component {
     let preDate = dday+ " " +dd+ " " +mm+ " " +yy;
     let standardPax,otherPax,CancelationPolicy,CancelationPolicyPackage,additonalData,fullYear = new Date().getFullYear();
     let lastYear = fullYear - 1,quota = product.quota - product.used_quota,addDescText,addDescList,addDescCheck,
-    reff;
+    reff, a;
     
  //Rates Data
  if(rates_pax_package.length!==0){
@@ -100,7 +204,7 @@ export default class componentName extends Component {
       }
     standardPax = (
        rates_pax_package.map((item,index) => (
-           item.amount>0 && item.pax_type==='ADULT' || item.pax_type==='CHILD' || item.pax_type==='INFANT'?
+           item.amount>0 && (item.pax_type==='ADULT' || item.pax_type==='CHILD' || item.pax_type==='INFANT')?
         <div className='col-sm-4 mb-3' key={item.id}>
             <div className='row ratesDiv px-0 mx-0'>
                 <div className='col-sm-7 mt-2'>
@@ -109,13 +213,14 @@ export default class componentName extends Component {
                     <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
                 </div>
                 <div className='col-sm-5 mt-3'>
-                    <input type='number' className='form-control Box'/>
+                    <input  min="0" type='number' onChange={this.handleStandardPax} name={item.pax_type.toLowerCase()} className='form-control Box'/>
                 </div>
             </div>
         </div>
         :''
        ))
    )
+   
 
    otherPax = (
     rates_pax_package.map((item,index) => (
@@ -129,7 +234,7 @@ export default class componentName extends Component {
              <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
          </div>
          <div className='col-sm-5 mt-3'>
-             <input type='number' className='form-control Box'/>
+             <input type='number' min='0' onChange={this.handleOtherPax} name={"otherPax-"+item.id} className='form-control Box'/>
          </div>
      </div>
  </div>
@@ -140,7 +245,7 @@ export default class componentName extends Component {
         CancelationPolicy = (
             cancellation_policy_pax.map((item,index) => (
                 <div className='col-sm-10 ' key={index}>
-                    <input className='form-control CancelationTextBox' type="text" value={item} readOnly/>
+                    <input className='form-control CancelationTextBox' name={"cancelationPax"+index} type="text" value={item} readOnly/>
                 </div>
             ))
         )
@@ -149,14 +254,14 @@ export default class componentName extends Component {
         CancelationPolicyPackage = (
             cancellation_policy_pax.map((item,index) => (
                 <div className='col-sm-10 ' key={index}>
-                    <input className='form-control CancelationTextBox' type="text" value={item} readOnly/>
+                    <input className='form-control CancelationTextBox' name={"cancelationPackage"+index} type="text" value={item} readOnly/>
                 </div>
             ))
         )
     }
 
     if(product.additional_products){
-    let a = product.additional_products;
+    a = product.additional_products;
      additonalData = (      
         a.map((item,i) => (
             <div className='col-sm-12' key = {i}>
@@ -168,8 +273,8 @@ export default class componentName extends Component {
                     <div className='col-sm-3'>
                     <label style={{ display:"flex" }}>
                     <button id="subs" className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
-                    <input type="text" value={this.state.addProductsValue} className="additoinalTextBox form-control pull-left" id="noOfRoom" name="noOfRoom" />&nbsp;
-                    <button type="button" id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
+                    <input type="text" name={it.description} value={this.state.addProductsValue} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
+                    <button type="button" onClick={()=>this.increementByOne(it)} id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
                     </label>
                     </div>
                     <div className='col-sm-6'>
@@ -182,7 +287,9 @@ export default class componentName extends Component {
                 </div>         
             )) 
         )
+
         }
+
     function formatThousands(n, dp) {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
         while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
@@ -194,7 +301,7 @@ export default class componentName extends Component {
         addDescText = (
             additionalDesc.map(item => 
                 item.type === 'text' ? (
-                <div key={item.heading}>
+                <div key={item.heading} className='col-sm-12'>
                     <h5 className='Tempat px-4 mb-0'>{item.heading}</h5>
                     <p className='tempatText mx-4'>{item.items[0]}</p>
                 </div>
@@ -204,7 +311,7 @@ export default class componentName extends Component {
          addDescCheck = (
             additionalDesc.map(item => 
                 item.type === 'check_box' ? (
-                <div key={item.heading}>
+                <div key={item.heading} className='col-sm-12'>
                     <h5 className='Perlengkapan px-4 mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                     <ul className='pelam mb-4'>
                     {
@@ -225,7 +332,7 @@ export default class componentName extends Component {
         addDescList = (
             additionalDesc.map((item,index) => 
                 item.type === 'list_box' ? (
-                    <div key={index}>
+                    <div key={index} className='col-sm-12'>
                         <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                         <div className='selectdiv'>
                             <select onChange={(e) => this.handleSelectBox(e.target.value)} className='Text-Box mx-4'>
@@ -249,7 +356,7 @@ export default class componentName extends Component {
             ))
             )
         }
-
+        
 
     return (
       <div className='container mt-5 mb-5'>
@@ -273,16 +380,26 @@ export default class componentName extends Component {
               <h1 className='PAX-Details mb-4'>PAX Details</h1>
                 <label className='Name'>NAME</label>
                 <div className='col-sm-10 px-0 mb-3'>
-                  <input type='text' name='name' className='Text-Box mt-2 mb-3' />
+                  <input onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' />
                 </div>
                 
                 <label className='Name'>PHONE NUMBER</label>
                 <div className='row'>
-                  <div className='col-sm-2 pr-3'>
-                    <input type='text' name='name' className='Text-Box mt-2 mb-3' />
+                  <div className='col-sm-6 pr-3'>
+                        <IntlTelInput 
+                        fieldName='mobile'
+                        value={this.state.mobileNumber}
+                        style={ { width: '100%' } }
+                        onPhoneNumberChange={ this.handler }
+                        onPhoneNumberBlur={ this.handler }
+                            preferredCountries={['id']}
+                            css={ ['intl-tel-input', 'form-control'] }
+                            utilsScript={ 'libphonenumber.js' } 
+                        />
+                    {/* <input type='text' name='name' className='Text-Box mt-2 mb-3' />
                   </div>
                   <div className='col-sm-3 px-0'>
-                    <input type='text' name='name' className='Text-Box mt-2 mb-3' />
+                    <input type='text' name='name' className='Text-Box mt-2 mb-3' /> */}
                   </div>
                 </div>
                  
@@ -306,7 +423,7 @@ export default class componentName extends Component {
 
                  </div>
                   </div>  
-                 <div className='row mt-4'>
+                 <div className='row mt-4'>value
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>CANCELATION POLICY PACKAGE</h2>
                     </div>
@@ -317,11 +434,34 @@ export default class componentName extends Component {
                         <h2 className='CancelationPax'>ADDITIONAL PAX DETAILS</h2>
                         
                     </div>
-                    {additonalData}  
+                    {/* {additonalData} */}
+                    {a?
+                    this.state.currency?
+                    a.map((item,i) => (
+                        <div className='col-sm-12' key = {i}>
+                        <h5 className='Meals mt-4'>{item.name}</h5>
+                        <hr/>
+                        {
+                            item.details.map((it,i) => (
+                                this.state.addProductsValue.map(x=> (
+                                    <AdditionalData key={x.id} it={it} addiValue={x} currency={this.state.currency} data={a}></AdditionalData>  
+                                ))
+                                
+                            ))
+                        }
+                            </div>         
+                        )) 
+                    
+                    :''
+                    :''}
                 </div>
                     
                 <div className='row mt-5'>
-                <h2 className='CancelationPax'>ADDITIONAL PAX DETAILS</h2>
+                    <div className='col-sm-12 px-0'>
+                        <h2 className='CancelationPax'>ADDITIONAL PAX DETAILS</h2>
+                    </div>
+                    <div className='row'>
+                
                             {
                                 addDescText?addDescText:''
                             }
@@ -334,6 +474,7 @@ export default class componentName extends Component {
                                     addDescList
                                 :''
                             }
+                    </div>        
                 </div>      
 
                 <div className='row mt-5'>
@@ -348,7 +489,16 @@ export default class componentName extends Component {
                 <div className='row mt-5'>
                     <div className='col-sm-10'>
                     <h2 className='CancelationPax'>ADDITIONAL COMMENTS (Optional)</h2>
-                        <textarea className='TextArea form-control'></textarea>
+                        <textarea onChange={this.handleCommentBox} className='TextArea form-control'></textarea>
+                    </div>
+                </div>
+                <div className='row mt-5'>
+                    <div className='col-sm-10' style={{ textAlign:"center" }}>
+                        <div className='row'>
+                            <div className='col-sm-6 offset-3'>
+                            <button className='book4thComponent'>Book</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
               </div> 

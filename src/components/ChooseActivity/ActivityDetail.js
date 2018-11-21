@@ -297,7 +297,8 @@ export default class ActivityDetail extends Component {
                             <div className="card-body">
                                 <h5 className="card-title">{OperationDate}</h5>
                                 <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
-                                <p className='quota'>{quota} <span className='quota-left'>left</span></p>
+                                <p className='quota'><button className='inCalBook'>Book</button> {quota} <span className='quota-left'>left</span></p>
+                                
                             </div>
                         </div>
                 ))

@@ -1081,3 +1081,17 @@
   text-align: right;
   color: #aaaaaa;
 }
+
+.inCalBook{
+  border-radius: 4px;
+  float:left;
+  background-color: #f3804a;
+  border: none;
+  color:#FFF;
+  text-align: center;
+  padding: 3px 8px;
+}
+.inCalBook:hover{
+  outline: none;
+  cursor: pointer;
+}
