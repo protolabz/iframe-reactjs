@@ -992,6 +992,7 @@
 }
 .hourlyBookBtn:hover{
   outline: none;
+  cursor: pointer;
 }
 
 .dayStateCurrent{
@@ -1050,6 +1051,7 @@
 }
 .hourlyBookBtnCurrent:hover{
   outline: none;
+  cursor: pointer;
 }
 
 .createTimesBox{

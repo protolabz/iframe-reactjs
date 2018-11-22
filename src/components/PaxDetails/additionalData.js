@@ -1,11 +1,25 @@
 import React,{Component} from 'react'
 import './PaxDetails.css';
+
+var test = [];
+var t =  [];
 class AdditionalData extends Component {
     state = {value: this.props.addiValue.value }
-    handleIncreement = (id)  => {     
+    handleIncreement = (id)  => {   
+        // console.log(id.id);  
         var count = this.state.value;
         count= count +1;
-        this.setState({value:count});
+        this.setState({value:count});       
+    
+        // let test2 = id.id;
+        test.push({id: id.id, value: count});
+        for(let key in test){
+            console.log(test[key].id);
+
+            
+            t.push({id: test[key].id, value: test[key].value});
+        }
+        console.log(t);
     }
     handleDecreement = (id)  => {     
         var count = this.state.value;
@@ -20,17 +34,13 @@ class AdditionalData extends Component {
       }
 
 
-
-
     render(props) {
-
-
         return (
             <div className='row'>
             <div className='col-sm-3'>
             <label style={{ display:"flex" }}>
             <button id="subs" onClick ={ () => this.handleDecreement(this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
-            <input type="text" name={this.props.it.description} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
+            <input type="text" name={this.props.it.id} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
             <button type="button" onClick={()=>this.handleIncreement(this.props.it)} id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
             </label>
             </div>

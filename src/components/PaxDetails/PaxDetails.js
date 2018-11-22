@@ -35,7 +35,8 @@ export default class componentName extends Component {
      cancellation_policy_package:[],
      cancellation_policy_pax:[],
      additional_productsMeals:[],
-     additional_productsFoto:[],    
+     additional_productsFoto:[],
+     additionalPaxValues:null,    
      currency:null,
      dateValue:null,
      //ImpData Form
@@ -71,6 +72,17 @@ export default class componentName extends Component {
       })
       .then((res) => {
           // console.log(res);
+        //   console.log(res.data.response.product.additional_products)
+          let addPr = res.data.response.product.additional_products;
+          let detData;
+          let arr = [];
+          for(let i=0; i < addPr.length; i++){
+                for(let j=0; j<addPr[i].details.length; j++){
+                   detData = addPr[i].details[j];
+                   arr.push(addPr[i].details[j])
+                }
+          }
+          this.setState({additionalPaxValues:arr})
           var data = res.data.response.product.additional_description.description;
           var len = res.data.response.product.additional_description.description.length;
               for(let i=0;i<=len-1;i++){
@@ -105,6 +117,8 @@ export default class componentName extends Component {
           console.error(e);
           this.setState({success:'Alert: Something went wrong'});
       });
+
+      
   }
   
   //Handle Name change
@@ -180,8 +194,13 @@ export default class componentName extends Component {
             commentBox:e.target.value
         })
      }
+     handleRefferal = (slect) =>{
+         this.setState({
+             refferal:slect
+         })
+     }
   render() {
-    //   console.log(this.state.addProductsValue)
+    //   console.log(this.state.additionalPaxValues)
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = params.time.replace(/-/g,' '),productDate = new Date(params.date).toGMTString();
@@ -194,7 +213,6 @@ export default class componentName extends Component {
     let standardPax,otherPax,CancelationPolicy,CancelationPolicyPackage,additonalData,fullYear = new Date().getFullYear();
     let lastYear = fullYear - 1,quota = product.quota - product.used_quota,addDescText,addDescList,addDescCheck,
     reff, a;
-    
  //Rates Data
  if(rates_pax_package.length!==0){
     function formatThousands(n, dp) {
@@ -378,12 +396,12 @@ export default class componentName extends Component {
           <div className='row mb-3'>
               <div className='col-sm-12'>
               <h1 className='PAX-Details mb-4'>PAX Details</h1>
-                <label className='Name'>NAME</label>
+                <label className='Name'>NAME <i className='fa fa-asterisk requiredField'></i></label>
                 <div className='col-sm-10 px-0 mb-3'>
-                  <input onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' />
+                  <input ref={el => this.nameValue=el}  onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' />
                 </div>
                 
-                <label className='Name'>PHONE NUMBER</label>
+                <label className='Name'>PHONE NUMBER <i className='fa fa-asterisk requiredField'></i></label>
                 <div className='row'>
                   <div className='col-sm-6 pr-3'>
                         <IntlTelInput 
@@ -405,7 +423,7 @@ export default class componentName extends Component {
                  
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
-                        <h1 className='PAX-Details mt-4'>Tickets</h1>
+                        <h1 className='PAX-Details mt-4'>Tickets </h1>
                     </div>
                      {standardPax}
                  </div>
@@ -480,7 +498,8 @@ export default class componentName extends Component {
                 <div className='row mt-5'>
                     <div className='col-sm-10'>
                     <h2 className='CancelationPax'>REFERRAL</h2>
-                    <select className='Text-Box form-control'>
+                    <select onChange={(e) => this.handleRefferal(e.target.value)} className='Text-Box'>
+                    <option >select option</option>
                             {reff}
                         </select>
                     </div>
@@ -501,9 +520,120 @@ export default class componentName extends Component {
                         </div>
                     </div>
                 </div>
+                <div className='row mt-5'>
+                    <div className='col-sm-8 offset-md-1'>
+                        <div className='row'>
+                            <div className='col-sm-12'>
+                                <h3 className='Have-a-promo-code mt-4'>HAVE A PROMO CODE</h3>
+                            </div>                        
+                        </div> 
+                        <div className='row'>
+                            <div className='col-sm-9'>
+                                <input type='text' name='promocode' className='promoTextBox form-control' />
+                            </div>
+                            <div className='col-sm-3'>
+                                <button className='applyPromoBtn'>Apply Code</button>
+                            </div>                        
+                        </div>   
+                        <div className='row mt-5'>
+                            <div className='col-6'>
+                                <h5 className='subTotalText'>SUB-TOTAL (<span className='subTotalPax'>2 ADULTS</span>)</h5>
+                            </div>
+                            <div className='col-6'>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;7,00,000</span></h5>
+                            </div>                        
+                        </div>  
+                        <div className='row mt-3'>
+                            <div className='col-6'>
+                                <h5 className='subTotalText'>SERVICE CHARGE </h5>
+                            </div>
+                            <div className='col-6'>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;125,000</span></h5>
+                            </div>                        
+                        </div>    
+                        <div className='row mt-3'>
+                            <div className='col-6'>
+                                <h5 className='subTotalText'>DISCOUNT (<span className='subTotalPax'>15%</span>)</h5>
+                            </div>
+                            <div className='col-6'>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;125,000</span></h5>
+                            </div>                        
+                        </div>
+                        <div className='row mt-3'>
+                            <div className='col-6'>
+                                <h5 className='subTotalText'>PROMO</h5>
+                            </div>
+                            <div className='col-6'>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;50,000</span></h5>
+                            </div>
+                            <div className='col-sm-12'>
+                            <hr/>
+                            </div>                        
+                        </div>  
+                        <div className='row mt-3'>
+                            <div className='col-6'>
+                                <h5 className='subTotalText'>TOTAL</h5>
+                            </div>
+                            <div className='col-6'>
+                                <h5 className='subTotalValLight'>{currency}<span className='totalAmtText'>&nbsp;&nbsp;6,125,000</span></h5>
+                            </div>                        
+                        </div>  
+                        <div className='row mt-4'>
+                            <div className='col-sm-12'>
+                                <h3 className='payment-type mt-4'>How do you want to make the payment?</h3>
+                            </div>                        
+                        </div>
+                        <div className='row mt-3'>
+                            <div className='col-6'>
+                            <label for="defaultUnchecked" className='cstmLabel'>
+                            <div className='row checkBoxDiv'>
+                                <div className='col-3'>
+                                    {/* <input type='radio' name='fullPayment' />     */}
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="defaultUnchecked" value='Full Payment' name="payment" />
+                                        <label class="custom-control-label customLabel" for="defaultUnchecked"></label>
+                                    </div>
+                                </div>
+                                <div className='col-9'>
+                                    <h4>Full Payment</h4>
+                                </div>
+                            </div>  
+                            </label>  
+                            </div>
+                            <div className='col-6'>
+                            <label for="defaultUncheckeds" className='cstmLabel'>
+                                <div className='row checkBoxDiv'>
+                                    <div className='col-3'>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="defaultUncheckeds" value='Deposit' name="payment" />
+                                        <label class="custom-control-label customLabel" ></label>
+                                    </div>
+                                    </div>
+                                    <div className='col-9'>
+                                    <h4>Deposit</h4>
+                                    <p className='payentAddText'><span className='payentAddText'>Min</span> IDR 3,000,000</p>
+                                    </div>
+                                </div>                                    
+                                </label>
+                            </div>      
+                            <div className='row mt-4 mx-2'>
+                                <div className='col-sm-12'>
+                                    <h3 className='Deposit-Payment-Amou mt-4'>Deposit Payment Amount (<span className='depositAmtDark'>IDR 3,000,000</span>)</h3>
+                                </div>                        
+                            </div>      
+                            {/* <div className='row mt-4'> */}
+                                <div className='col-sm-12 mt-3'>
+                                    <button className='proceedToPayment'>Proceed to payment <i className='fa fa-arrow-right'></i></button>
+                                </div>                        
+                            {/* </div>                   */}
+                        </div>  
+                    </div>
+                </div>
               </div> 
           </div>
+
           </div>
+          
       </div>
       </div>    
     )

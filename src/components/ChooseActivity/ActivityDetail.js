@@ -28,7 +28,8 @@ export default class ActivityDetail extends Component {
      boxValue:[],
      selectValue:null,
      timeValue:null,
-     dateValue:null
+     dateValue:null,
+     showError:false
     }
 
     componentWillMount(){
@@ -221,25 +222,45 @@ export default class ActivityDetail extends Component {
 
             
           }
-        handleNext =() => {
-            let {boxValue,selectValue,timeValue,dateValue} = this.state;
-            timeValue = timeValue.replace(/ /g,'-');
-            if(selectValue===''){
-                selectValue = '0';
+        handleBookButton =(timeValue) => {
+
+            let {boxValue,selectValue,dateValue} = this.state;
+            if(this.state.isRequiredBox && this.state.isRequiredSelect){
+                timeValue = timeValue.replace(/ /g,'-');
+                if(selectValue===''){
+                    selectValue = '0';
+                }
+                if(boxValue.length===0){
+                    boxValue = '0';
+                }
+                window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
             }
-            if(boxValue.length===0){
-                boxValue = '0';
+            else{
+                this.setState({showError:true})
             }
-            window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
+
 
         }
+        // handleNext =() => {
+        //     // this.state.isRequiredBox && this.state.isRequiredSelect && this.state.isTimeSelected ?
+        //     let {boxValue,selectValue,timeValue,dateValue} = this.state;
+        //     timeValue = timeValue.replace(/ /g,'-');
+        //     if(selectValue===''){
+        //         selectValue = '0';
+        //     }
+        //     if(boxValue.length===0){
+        //         boxValue = '0';
+        //     }
+        //     window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
+
+        // }
   render() {  
-    const nextBtn = (
-        this.state.isRequiredBox && this.state.isRequiredSelect && this.state.isTimeSelected ?
-        <button onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> : 
-        <button disabled={true}
-        onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> 
-    )
+    // const nextBtn = (
+    //     this.state.isRequiredBox && this.state.isRequiredSelect && this.state.isTimeSelected ?
+    //     <button onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> : 
+    //     <button disabled={true}
+    //     onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> 
+    // )
 
       let {OperationDate,holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;
@@ -297,7 +318,7 @@ export default class ActivityDetail extends Component {
                             <div className="card-body">
                                 <h5 className="card-title">{OperationDate}</h5>
                                 <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
-                                <p className='quota'><button className='inCalBook'>Book</button> {quota} <span className='quota-left'>left</span></p>
+                                <p className='quota'><button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>Book</button> {quota} <span className='quota-left'>left</span></p>
                                 
                             </div>
                         </div>
@@ -513,8 +534,13 @@ export default class ActivityDetail extends Component {
                         <div className='cardParent'>
                             {oTime}
                         </div>
-                          {nextBtn}
-                          <p style={{ padding:"10px" }} className='alert-danger mt-4'>Note- Fields with * are mandatory.</p>
+                          {/* {nextBtn} */}
+                          {
+                              this.state.showError?
+                              <p style={{ padding:"10px" }} className='alert-danger mt-4'>Note- Fields with * are mandatory.</p>
+                              :''
+                          }
+                          
                         </div>
                         </div>
 

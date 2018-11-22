@@ -30,17 +30,34 @@ export default class MultipleHours extends Component {
                 this.setState({success:'Alert: Something went wrong'});
             });
     }
+    handlePreviousDay = (d,t) => {
+        t = t.replace(/ /g,'-');
+        window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
 
+    }
+    handleCurrentDay = (d,t) => {
+        t = t.replace(/ /g,'-');
+        window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
+    }
+    handleNextDay = (d,t) => {
+        t = t.replace(/ /g,'-');
+        window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
+        // `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
+    }
   render() {
       const {dateBefore,dateAfter,dateCurrent} = this.state;
       let preDate;
       let curDate;
+      let CopyPrevDate
+      let CopyCurDate
+      let CopyNexDate
       let nexDate;
       let preTime =[];
       let curTime =[];
       let nexTime =[];
       if(dateBefore!==null){
           preDate = dateBefore.before_date.from;
+          CopyPrevDate = dateBefore.before_date.from;
           preTime = dateBefore.before;
 
           let dateFormat = new Date(preDate).toGMTString();
@@ -54,6 +71,7 @@ export default class MultipleHours extends Component {
       }
       if(dateAfter!==null){
         nexDate = dateAfter.after_date.from;
+        CopyNexDate = dateAfter.after_date.from;
         nexTime = dateAfter.after;
 
         let dateFormat = new Date(nexDate).toGMTString();
@@ -66,8 +84,8 @@ export default class MultipleHours extends Component {
             nexDate = dday+ " " +dd+ " " +mm+ " " +yy;
       }
       if(dateCurrent!==null){
-        //   console.log(dateCurrent);
-        curDate = dateCurrent.current_date;
+        curDate = dateCurrent.current_date.from;
+        CopyCurDate  =dateCurrent.current_date.from;
         curTime = dateCurrent.current;
         let dateFormat = new Date(curDate).toGMTString();
             let dts = (dateFormat.split(' '));
@@ -85,7 +103,7 @@ export default class MultipleHours extends Component {
                     <div className='col-sm-12'>
                         <div className='bookingCard'>
                             <span>{item.time}</span>
-                            <button className='hourlyBookBtn'>Book</button>
+                            <button onClick={() => this.handlePreviousDay(CopyPrevDate,item.time)} className='hourlyBookBtn'>Book</button>
                         </div>
                     </div>
                 </div>
@@ -100,7 +118,7 @@ export default class MultipleHours extends Component {
                   <div className='col-sm-12'>
                       <div className='bookingCardCurrent'>
                           <span>{item.time}</span>
-                          <button className='hourlyBookBtnCurrent'>Book</button>
+                          <button onClick={() => this.handleCurrentDay(CopyCurDate,item.time)} className='hourlyBookBtnCurrent'>Book</button>
                       </div>
                   </div>
               </div>
@@ -115,7 +133,7 @@ export default class MultipleHours extends Component {
                   <div className='col-sm-12'>
                       <div className='bookingCard'>
                           <span>{item.time}</span>
-                          <button className='hourlyBookBtn'>Book</button>
+                          <button onClick={() => this.handleNextDay(CopyNexDate,item.time)} className='hourlyBookBtn'>Book</button>
                       </div>
                   </div>
               </div>
@@ -142,7 +160,7 @@ export default class MultipleHours extends Component {
                             </div>
                             <div className='col-sm-4 mb-4'>
                             <h6 className='dayStateCurrent'>YOU SELECTED</h6>
-                                <h6 className='fullDateCurrent'>{curDate}</h6>
+                                <h6 className='fullDateCurrent'>{curDate?curDate:''} </h6>
                                     {currentTime}
                             </div>
                             <div className='col-sm-4 mb-4'>

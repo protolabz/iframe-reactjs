@@ -253,3 +253,197 @@
   padding: 8px 0px;
   width: 100%;
 }
+.Have-a-promo-code {
+  width: 161px;
+  height: 15px;
+  font-family: Archivo;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+}
+.promoTextBox{
+  height: 50px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 0 0 #eeeeee !important;
+  background-color: #ffffff !important;
+}
+.applyPromoBtn{
+  height: 50px;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #f3804a;
+  background-color: #f89655;
+  border: none;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+.subTotalText{
+  font-family: Archivo;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+}
+.subTotalPax{
+  color: #4f4f4f;
+}
+.subtotalValue{
+  font-family: Archivo;
+  font-size: 12px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #aaaaaa;
+}
+.subTotalValLight{
+  font-family: Archivo;
+  font-size: 12px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #aaaaaa;
+}
+.subTotalValDark{
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #4f4f4f;
+}
+.totalAmtText{
+  font-family: Archivo;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #f89655;
+}
+.payment-type{
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+}
+.checkBoxDiv{
+  height: 60px;
+  border-radius: 4px;
+  border:1px solid #dddddd;
+  /* line-height: 55px; */
+  margin: 0px !important;
+}
+.checkBoxDiv>div{
+  text-align: center;
+}
+.checkBoxDiv>div>h4{
+  padding-top: 18px;
+  text-align: left;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  margin-bottom: 0px;
+  color: #4f4f4f;
+}
+.payentAddText{
+  font-family: Archivo;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+  text-align: left;
+}
+.paymentAddTextMin{
+  text-align: left;
+  font-family: Archivo;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4f4f4f;
+}
+.cstmLabel{
+  width: 100%;
+}
+.cstmLabel:hover{
+  cursor: pointer;
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before {
+  background-color: #f89655 !important;
+}
+.custom-control-input:checked~.custom-control-label::before{
+  background-color: #f89655 !important;
+}
+.Deposit-Payment-Amou {
+  font-family: Archivo;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+}
+.depositAmtDark{
+  color: #4f4f4f;
+}
+.proceedToPayment{
+  height: 50px;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #f3804a;
+  background-color: #f89655;
+  border:none;
+  width: 100%;
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+/* .customLabel::after{
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3LjgzNjczNDY5Mzg3NzU1MyIgaGVpZ2h0PSI4LjEwMjA0MDgxNjMyNjUzIiBzdHlsZT0iIj48cmVjdCBpZD0iYmFja2dyb3VuZHJlY3QiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHg9IjAiIHk9IjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0ibm9uZSIgY2xhc3M9IiIgc3R5bGU9IiIvPjxnIGNsYXNzPSJjdXJyZW50TGF5ZXIiIHN0eWxlPSIiPjx0aXRsZT5MYXllciAxPC90aXRsZT48Y2lyY2xlIHI9IjMuNTMwNjEyNDMzNDM1MDk1NSIgZmlsbD0iI2Y4OTY1NSIgaWQ9InN2Z18xIiBjbGFzcz0iIiBmaWxsLW9wYWNpdHk9IjEiIGN5PSI0LjA4MTYzMjM1NDIxMzE3MjUiIGN4PSIzLjg3NzU1MTM0ODM5NzY5MTYiLz48L2c+PC9zdmc+) !important;
+} */
+/* .customLabel::before{
+  background-color: #FFF !important;
+} */
