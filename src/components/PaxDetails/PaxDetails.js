@@ -585,13 +585,13 @@ export default class componentName extends Component {
                         </div>
                         <div className='row mt-3'>
                             <div className='col-6'>
-                            <label for="defaultUnchecked" className='cstmLabel'>
+                            <label htmlFor="defaultUnchecked" className='cstmLabel'>
                             <div className='row checkBoxDiv'>
                                 <div className='col-3'>
                                     {/* <input type='radio' name='fullPayment' />     */}
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" id="defaultUnchecked" value='Full Payment' name="payment" />
-                                        <label class="custom-control-label customLabel" for="defaultUnchecked"></label>
+                                    <div className="custom-control custom-radio">
+                                        <input type="radio" className="custom-control-input" id="defaultUnchecked" value='Full Payment' name="payment" />
+                                        <label className="custom-control-label customLabel" htmlFor="defaultUnchecked"></label>
                                     </div>
                                 </div>
                                 <div className='col-9'>
@@ -601,12 +601,12 @@ export default class componentName extends Component {
                             </label>  
                             </div>
                             <div className='col-6'>
-                            <label for="defaultUncheckeds" className='cstmLabel'>
+                            <label htmlFor="defaultUncheckeds" className='cstmLabel'>
                                 <div className='row checkBoxDiv'>
                                     <div className='col-3'>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" id="defaultUncheckeds" value='Deposit' name="payment" />
-                                        <label class="custom-control-label customLabel" ></label>
+                                    <div className="custom-control custom-radio">
+                                        <input type="radio" className="custom-control-input" id="defaultUncheckeds" value='Deposit' name="payment" />
+                                        <label className="custom-control-label customLabel" ></label>
                                     </div>
                                     </div>
                                     <div className='col-9'>
