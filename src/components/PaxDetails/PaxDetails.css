@@ -253,6 +253,9 @@
   padding: 8px 0px;
   width: 100%;
 }
+.book4thComponent:hover{
+  cursor: pointer;
+}
 .Have-a-promo-code {
   width: 161px;
   height: 15px;

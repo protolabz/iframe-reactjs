@@ -43,10 +43,10 @@ export default class componentName extends Component {
      name:'',
      productCode:this.props.match.params.id,
      paymentType:'',
-     date:'',
+     date:this.props.match.params.date,
      amount:null,
      total_amount:null,
-     operation_time:null,
+     operation_time:this.props.match.params.time.replace(/-/g,' '),
      phone_code:null,
      additional:[],
      user_code:null,
@@ -57,11 +57,15 @@ export default class componentName extends Component {
      package:[],
      additional_description:{},
      addProductsValue:[
-            {id:1, value:0}
+            {id:1,value:0},
      ],
+     addProductsValue1:[
+        {id:1,value:0},
+    ],
      boxValue:[],
      selectValue:null,
-     commentBox:null
+     commentBox:null,
+     promoCode:false
   }
   componentWillMount(){
     axios({
@@ -120,7 +124,38 @@ export default class componentName extends Component {
 
       
   }
-  
+  incrementCounter = (id,count) => {
+    var addValuesData = [...this.state.addProductsValue1]
+        if(addValuesData.findIndex(x=>x.id===id)>=0){
+            for (var i = 0; i < addValuesData.length; i++){
+                if (addValuesData[i].id ===id){
+                    addValuesData[i]={id:id,value:count};
+                    this.setState({addProductsValue1: addValuesData});
+                }
+            }
+        }
+        else{
+            addValuesData= addValuesData.concat([{id:id,value:count}]);
+        }     
+        this.setState({addProductsValue1: addValuesData});
+  }
+
+  decrementCounter = (id,count) => {
+    var addValuesData = [...this.state.addProductsValue1]
+        if(addValuesData.findIndex(x=>x.id===id)>=0){
+            for (var i = 0; i < addValuesData.length; i++){
+                if (addValuesData[i].id ===id){
+                    addValuesData[i]={id:id,value:count};
+                    this.setState({addProductsValue1: addValuesData});
+                }
+            }
+        }
+        else{
+            addValuesData= addValuesData.concat([{id:id,value:count}]);
+        }     
+        this.setState({addProductsValue1: addValuesData});
+  }
+
   //Handle Name change
   handleChangeName =(e) =>{
       this.setState({name:e.target.value})
@@ -199,8 +234,30 @@ export default class componentName extends Component {
              refferal:slect
          })
      }
+
+     handleBook = () =>{
+        const {productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
+            standardPax,additional_description,addProductsValue1,boxValue,selectValue,
+            commentBox} =this.state;
+            const packg = this.state.package;
+            console.log(productCode+","+date+","+operation_time+","+phone_code+","+phone+","+refferal+","+
+            paxDetailsName+","+standardPax+","+additional_description+","+addProductsValue1+","+boxValue+","
+            +selectValue+","+commentBox+","+packg);
+            var aaa = Object.assign([],standardPax);
+            // const staArr = function(aaa){
+            //     for(let i=0;i<aaa.length;i++){
+            //         return aaa[i]
+            //     }
+            // }
+            console.log(aaa[0]);
+           var data = {
+               "token":"aadsfasdf",
+                
+           }
+           console.log(data);
+
+     }
   render() {
-    //   console.log(this.state.additionalPaxValues)
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = params.time.replace(/-/g,' '),productDate = new Date(params.date).toGMTString();
@@ -252,7 +309,7 @@ export default class componentName extends Component {
              <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
          </div>
          <div className='col-sm-5 mt-3'>
-             <input type='number' min='0' onChange={this.handleOtherPax} name={"otherPax-"+item.id} className='form-control Box'/>
+             <input type='number' min='0' onChange={this.handleOtherPax} name={item.pax_type} className='form-control Box'/>
          </div>
      </div>
  </div>
@@ -449,7 +506,7 @@ export default class componentName extends Component {
                 </div>   
                 <div className='row mt-5'>
                     <div className='col-sm-12 px-0'>
-                        <h2 className='CancelationPax'>ADDITIONAL PAX DETAILS</h2>
+                        <h2 className='CancelationPax'>ADDITIONAL PRODUCT</h2>
                         
                     </div>
                     {/* {additonalData} */}
@@ -462,7 +519,7 @@ export default class componentName extends Component {
                         {
                             item.details.map((it,i) => (
                                 this.state.addProductsValue.map(x=> (
-                                    <AdditionalData key={x.id} it={it} addiValue={x} currency={this.state.currency} data={a}></AdditionalData>  
+                                    <AdditionalData myFun={this.incrementCounter} decrement={this.decrementCounter} key={x.id} it={it} addiValue={x} currency={this.state.currency} data={a}></AdditionalData>  
                                 ))
                                 
                             ))
@@ -515,11 +572,12 @@ export default class componentName extends Component {
                     <div className='col-sm-10' style={{ textAlign:"center" }}>
                         <div className='row'>
                             <div className='col-sm-6 offset-3'>
-                            <button className='book4thComponent'>Book</button>
+                            <button className='book4thComponent' onClick={this.handleBook}>Book</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                {this.state.promoCode?
                 <div className='row mt-5'>
                     <div className='col-sm-8 offset-md-1'>
                         <div className='row'>
@@ -629,6 +687,7 @@ export default class componentName extends Component {
                         </div>  
                     </div>
                 </div>
+                :''}
               </div> 
           </div>
 

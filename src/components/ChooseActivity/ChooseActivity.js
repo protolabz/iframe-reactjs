@@ -20,10 +20,10 @@ export default class ChooseActivity extends Component {
         })
             .then((res) => {
                 this.setState({
-                    listProducts:res.data,
-                    firstProduct:res.data[0],
-                    secondProduct:res.data[1],
-                    thirdProduct:res.data[2]
+                    listProducts:res.data.response,
+                    firstProduct:res.data.response[0],
+                    secondProduct:res.data.response[1],
+                    thirdProduct:res.data.response[2]
                 })
 
             })

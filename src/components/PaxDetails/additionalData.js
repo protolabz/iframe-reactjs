@@ -1,30 +1,22 @@
 import React,{Component} from 'react'
 import './PaxDetails.css';
 
-var test = [];
-var t =  [];
 class AdditionalData extends Component {
     state = {value: this.props.addiValue.value }
     handleIncreement = (id)  => {   
-        // console.log(id.id);  
         var count = this.state.value;
         count= count +1;
+        
         this.setState({value:count});       
+        this.props.myFun(id.id,count);
     
-        // let test2 = id.id;
-        test.push({id: id.id, value: count});
-        for(let key in test){
-            console.log(test[key].id);
-
-            
-            t.push({id: test[key].id, value: test[key].value});
-        }
-        console.log(t);
     }
+
     handleDecreement = (id)  => {     
         var count = this.state.value;
         count= count -1;
         this.setState({value:count});
+        this.props.decrement(id.id,count)
     }
 
     formatThousands =(n, dp) => {
@@ -35,6 +27,7 @@ class AdditionalData extends Component {
 
 
     render(props) {
+        // console.log(this.state);
         return (
             <div className='row'>
             <div className='col-sm-3'>
