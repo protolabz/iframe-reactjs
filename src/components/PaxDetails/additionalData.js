@@ -8,15 +8,22 @@ class AdditionalData extends Component {
         count= count +1;
         
         this.setState({value:count});       
-        this.props.myFun(id.id,count);
+        this.props.myFun(id.id,count,id.max_per_booking);
     
     }
 
-    handleDecreement = (id)  => {     
+    handleDecreement = (id)  => {    
+        
         var count = this.state.value;
-        count= count -1;
+        if(count<1){
+            count = 0
+        } 
+        else{
+            count= count -1;
+        }
+
         this.setState({value:count});
-        this.props.decrement(id.id,count)
+        this.props.decrement(id.id,count,id.max_per_booking)
     }
 
     formatThousands =(n, dp) => {
@@ -27,7 +34,6 @@ class AdditionalData extends Component {
 
 
     render(props) {
-        // console.log(this.state);
         return (
             <div className='row'>
             <div className='col-sm-3'>
@@ -48,34 +54,3 @@ class AdditionalData extends Component {
 
 export default AdditionalData
 
-
-// let additonalData = (      
-//     a.map((item,i) => (
-//         <div className='col-sm-12' key = {i}>
-//         <h5 className='Meals mt-4'>{item.name}</h5>
-//         <hr/>
-//         {
-//             item.details.map((it,i) => (
-//                <div className='row' key={i}>
-//                 <div className='col-sm-3'>
-//                 <label style={{ display:"flex" }}>
-//                 <button id="subs" className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
-//                 <input type="text" name={it.description} value={this.props.addiValue.counters[0].value} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
-//                 <button type="button" onClick={()=>this.handleIncreement(it)} id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
-//                 </label>
-//                 </div>
-//                 <div className='col-sm-6'>
-//                     <h5 className='addProductRightHead'>{it.description} <span className='productAmt'> ({this.props.currency} {this.formatThousands(it.amount)}) </span></h5>
-//                     <p className='Remark'>Remark:{it.remark} </p>
-//                 </div>
-//                 </div>
-//             ))
-//         }
-//             </div>         
-//         )) 
-//     )
-//     return (
-//         {additonalData}
-//     )
-// }
-// }

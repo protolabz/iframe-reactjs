@@ -8,7 +8,7 @@ import '../../../node_modules/react-intl-tel-input/dist/main.css';
 import AdditionalData from './additionalData';
 var arr =  {};
 var otherPaxArr = {};
-var arrInc = [];
+
 export default class componentName extends Component {
   state ={
     params:this.props.match.params,
@@ -26,7 +26,7 @@ export default class componentName extends Component {
      OperationDateNormal:null,
      holidaysRows:[],
      showHolidays:false,
-     isRequiredSelect:false,
+     isRequiredSelect:true,
      isRequiredBox:true,
      isTimeSelected:false,
      boxValue:[],
@@ -39,10 +39,15 @@ export default class componentName extends Component {
      additionalPaxValues:null,    
      currency:null,
      dateValue:null,
+     max_per_booking:0,
+     min_per_booking:0,
+     quota:0,
+     used_quota:0,
      //ImpData Form
-     name:'',
+     name:null,
+     email:null,
      productCode:this.props.match.params.id,
-     paymentType:'',
+     paymentType:null,
      date:this.props.match.params.date,
      amount:null,
      total_amount:null,
@@ -51,8 +56,8 @@ export default class componentName extends Component {
      additional:[],
      user_code:null,
      refferal:null,
-     phone:'',
-     paxDetailsName:'',
+     phone:null,
+     paxDetailsName:null,
      standardPax:{},
      package:[],
      additional_description:{},
@@ -62,10 +67,17 @@ export default class componentName extends Component {
      addProductsValue1:[
         {id:1,value:0},
     ],
-     boxValue:[],
-     selectValue:null,
+    addProductsValueQuota:[
+        {id:1,value:0,max_per_booking:0},
+    ],
      commentBox:null,
-     promoCode:false
+     promoCode:false,
+     //Errors
+     quotaE:false,
+     reqiredE:false,
+     standardPaxE:false,
+     otherPaxE:false,
+
   }
   componentWillMount(){
     axios({
@@ -87,8 +99,8 @@ export default class componentName extends Component {
                 }
           }
           this.setState({additionalPaxValues:arr})
-          var data = res.data.response.product.additional_description.description;
-          var len = res.data.response.product.additional_description.description.length;
+          var data = res.data.response.product.additional_description.pax_details;
+          var len = res.data.response.product.additional_description.pax_details.length;
               for(let i=0;i<=len-1;i++){
                   if(data[i].type==='check_box' && data[i].mandatory==='1'){
                       this.setState({isRequiredBox:false})
@@ -107,12 +119,16 @@ export default class componentName extends Component {
               include_exclude:res.data.response.detail_product.include_exclude,
               locations:res.data.response.detail_product.location,
               pax_details:res.data.response.product.additional_description.pax_details,
-              additionalDesc:res.data.response.product.additional_description.description,
+              additionalDesc:res.data.response.product.additional_description.pax_details,
               bannerImg:res.data.response.detail_product.image,
               dates:res.data.response.operationDate,
               cancellation_policy_pax:res.data.response.product.cancellation_policy.cancellation_policy_pax,
               cancellation_policy_package:res.data.response.product.cancellation_policy.cancellation_policy_package,
-              currency:res.data.diagnostic.currency
+              currency:res.data.diagnostic.currency,
+              max_per_booking:res.data.response.product.max_per_booking,
+              min_per_booking:res.data.response.product.min_per_booking,
+              quota:res.data.response.product.quota,
+              used_quota:res.data.response.product.used_quota,
           })
 
       })
@@ -124,8 +140,9 @@ export default class componentName extends Component {
 
       
   }
-  incrementCounter = (id,count) => {
-    var addValuesData = [...this.state.addProductsValue1]
+  incrementCounter = (id,count,maxB) => {
+    var addValuesData = [...this.state.addProductsValue1];
+    var addProBooking = [...this.state.addProductsValueQuota];
         if(addValuesData.findIndex(x=>x.id===id)>=0){
             for (var i = 0; i < addValuesData.length; i++){
                 if (addValuesData[i].id ===id){
@@ -134,14 +151,28 @@ export default class componentName extends Component {
                 }
             }
         }
+        if(addProBooking.findIndex(x=>x.id===id)>=0){
+            for (var j = 0; j < addProBooking.length; j++){
+                if (addProBooking[j].id ===id){
+                    addProBooking[j]={id:id,value:count,max_per_booking:maxB};
+                    this.setState({addProductsValueQuota: addProBooking});
+                }
+            }
+        }
         else{
             addValuesData= addValuesData.concat([{id:id,value:count}]);
+            addProBooking= addProBooking.concat([{id:id,value:count,max_per_booking:maxB}]);
         }     
-        this.setState({addProductsValue1: addValuesData});
+        this.setState({
+            addProductsValue1: addValuesData,
+            addProductsValueQuota:addProBooking,
+            quotaE:false
+        });
   }
 
-  decrementCounter = (id,count) => {
-    var addValuesData = [...this.state.addProductsValue1]
+  decrementCounter = (id,count,maxB) => {
+    var addValuesData = [...this.state.addProductsValue1];
+    var addProBooking = [...this.state.addProductsValueQuota];
         if(addValuesData.findIndex(x=>x.id===id)>=0){
             for (var i = 0; i < addValuesData.length; i++){
                 if (addValuesData[i].id ===id){
@@ -150,15 +181,32 @@ export default class componentName extends Component {
                 }
             }
         }
+        if(addProBooking.findIndex(x=>x.id===id)>=0){
+            for (var j = 0; j < addProBooking.length; j++){
+                if (addProBooking[j].id ===id){
+                    addProBooking[j]={id:id,value:count,max_per_booking:maxB};
+                    this.setState({addProductsValueQuota: addProBooking});
+                }
+            }
+        }
         else{
             addValuesData= addValuesData.concat([{id:id,value:count}]);
+            addProBooking= addProBooking.concat([{id:id,value:count,max_per_booking:maxB}]);
         }     
-        this.setState({addProductsValue1: addValuesData});
+        this.setState({
+            addProductsValue1: addValuesData, 
+            addProductsValueQuota:addProBooking,
+            quotaE:false
+        });
   }
 
   //Handle Name change
   handleChangeName =(e) =>{
       this.setState({name:e.target.value})
+    }
+    //Email
+    handleChangeEmail = (e) =>{
+        this.setState({email:e.target.value})
     }
     //Mobile number Codes
     handler = (status, value, countryData, number, id) =>  {
@@ -169,11 +217,11 @@ export default class componentName extends Component {
         })
     };
    
-    handleStandardPax =(e) => {   
-        arr[e.target.name] = e.target.value;
-        this.setState({
-            standardPax: arr
-        })
+    handleStandardPax =(e) => { 
+            arr[e.target.name] = e.target.value;
+            this.setState({
+                standardPax: arr
+            })
     }
     handleOtherPax = (e) => {
         otherPaxArr[e.target.name] = e.target.value;
@@ -181,21 +229,7 @@ export default class componentName extends Component {
             package: otherPaxArr
         })
     }
-    increementByOne = (it) => {
 
-        arrInc[it.id] = this.state.addProductsValue+1;
-
-        console.log(arrInc)
-       
-    }
-    handleIncreement = (id)  => {
-        arrInc.push(id);
-        // this.setState({
-        //     addProductsValue
-        // })
-        console.log(id.id);
-
-    }
     handleCheckbox = (e) => {   
         let val = e.target.value;    
         var value = this.state.boxValue;  
@@ -236,28 +270,92 @@ export default class componentName extends Component {
      }
 
      handleBook = () =>{
-        const {productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
+        const {name,email,productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
             standardPax,additional_description,addProductsValue1,boxValue,selectValue,
-            commentBox} =this.state;
+            commentBox,product,isRequiredBox,isRequiredSelect,quota,used_quota,max_per_booking,
+            addProductsValueQuota} =this.state;
             const packg = this.state.package;
-            console.log(productCode+","+date+","+operation_time+","+phone_code+","+phone+","+refferal+","+
-            paxDetailsName+","+standardPax+","+additional_description+","+addProductsValue1+","+boxValue+","
-            +selectValue+","+commentBox+","+packg);
-            var aaa = Object.assign([],standardPax);
-            // const staArr = function(aaa){
-            //     for(let i=0;i<aaa.length;i++){
-            //         return aaa[i]
-            //     }
+
+            let adult=0,children=0,other=0;
+
+            if(standardPax.adult){
+                adult=standardPax.adult
+            }
+            if(standardPax.child){
+                children=standardPax.child;
+            }
+            if(standardPax.child){
+                other=standardPax.child
+            }
+            //Validations Related to Pax
+            // if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!==false && isRequiredSelect!==false){
+                if(addProductsValueQuota.length>1){
+                    for(let i=0;i<=addProductsValueQuota.length-1;i++){
+                        if(addProductsValueQuota[i].value>addProductsValueQuota[i].max_per_booking){
+                            this.setState({quotaE:true});
+                        }
+                        else{
+                            let quotaDiff = quota - used_quota,finalQuota;
+                            if(max_per_booking<quotaDiff){
+                                finalQuota = max_per_booking;
+                            }
+                            else{
+                                finalQuota = quotaDiff;
+                            }
+                            let tUsedQuota = parseInt(adult)+parseInt(children)+parseInt(other);
+                            if(tUsedQuota>finalQuota){
+                                this.setState({standardPaxE:true})
+                            }
+                            else{
+                                const pack = this.state.package;
+                                var result = pack.map(a => a.foo);
+                                console.log(result);
+                                if(this.state.package.length>1){
+                                    let keys = [];
+                                    let pax = this.state.rates_pax_package;
+                                    pax = pax.splice(3,pax.length);
+                                    for(let i =0; i<pax.length;i++){
+                                    keys.push(pax[i].pax_type); 
+                                        for(let j=0; j<this.state.package.length;j++){
+                                            console.log(this.statel.package);
+                                        }
+                                    }
+
+                                }
+                                else{
+
+                                }
+                                                                
+                            }
+                        }
+                    }
+                }
+                else{
+                    var data = {
+                        "token":"aadsfasdf",
+                        "date":date,
+                        "product_id":product.product_id,
+                        "product_code":productCode,
+                        "additional":[addProductsValue1],
+                        "package":[this.state.package],
+                        "adult":adult,
+                        "children":children,
+                        "infant":other
+                   }
+                }
+            // }   
+            // else{
+            //     this.setState({reqiredE:true})
+            //     console.log('Error is still there');
             // }
-            console.log(aaa[0]);
-           var data = {
-               "token":"aadsfasdf",
-                
-           }
-           console.log(data);
+
+            
+
+        //    console.log(data);
 
      }
   render() {
+      console.log(this.state.package);
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = params.time.replace(/-/g,' '),productDate = new Date(params.date).toGMTString();
@@ -270,6 +368,15 @@ export default class componentName extends Component {
     let standardPax,otherPax,CancelationPolicy,CancelationPolicyPackage,additonalData,fullYear = new Date().getFullYear();
     let lastYear = fullYear - 1,quota = product.quota - product.used_quota,addDescText,addDescList,addDescCheck,
     reff, a;
+
+    //Get Quota Value
+    let quotaDiff = quota - this.state.used_quota,finalQuota;
+    if(this.state.max_per_booking<quotaDiff){
+        finalQuota = this.state.max_per_booking;
+    }
+    else{
+        finalQuota = quotaDiff;
+    }
  //Rates Data
  if(rates_pax_package.length!==0){
     function formatThousands(n, dp) {
@@ -284,11 +391,18 @@ export default class componentName extends Component {
             <div className='row ratesDiv px-0 mx-0'>
                 <div className='col-sm-7 mt-2'>
                     <h5 className='PaxType'>{item.pax_type}</h5>
-                    <p className='PaxPrice'>IDR {formatThousands(item.amount)}</p>
+                    <p className='PaxPrice'>{currency} {formatThousands(item.amount)}</p>
                     <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
                 </div>
                 <div className='col-sm-5 mt-3'>
-                    <input  min="0" type='number' onChange={this.handleStandardPax} name={item.pax_type.toLowerCase()} className='form-control Box'/>
+                    <input 
+                    min={item.minimum} 
+                    max={item.maximum} 
+                    type='number' 
+                    onChange={this.handleStandardPax} 
+                    name={item.pax_type.toLowerCase()} 
+                    className='form-control Box'
+                    />
                 </div>
             </div>
         </div>
@@ -301,20 +415,38 @@ export default class componentName extends Component {
     rates_pax_package.map((item,index) => (
         item.amount>0 && (item.pax_type==='ADULT' || item.pax_type==='CHILD' || item.pax_type==='INFANT')?
      ''
-     :<div className='col-sm-4 mb-3' key={index}>
+     :<div className='col-sm-6 mb-3' key={index}>
      <div className='row ratesDiv px-0 mx-0'>
          <div className='col-sm-7 mt-2'>
              <h5 className='PaxType'>{item.pax_type}</h5>
-             <p className='PaxPrice'>IDR {formatThousands(item.amount)}</p>
+             <p className='PaxPrice'>{currency} {formatThousands(item.amount)}</p>
              <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
          </div>
          <div className='col-sm-5 mt-3'>
-             <input type='number' min='0' onChange={this.handleOtherPax} name={item.pax_type} className='form-control Box'/>
+             <input type='number' min={item.minimum} max={item.maximum} onChange={this.handleOtherPax} name={item.pax_type} className='form-control Box'/>
          </div>
      </div>
  </div>
     ))
 )
+// otherPax = (
+//     rates_pax_package.map((item,index) => (
+//         item.amount>0 && (item.pax_type==='ADULT' || item.pax_type==='CHILD' || item.pax_type==='INFANT')?
+//      ''
+//      :<div className='col-sm-4 mb-3' key={index}>
+//      <div className='row ratesDiv px-0 mx-0'>
+//          <div className='col-sm-7 mt-2'>
+//              <h5 className='PaxType'>{item.pax_type}</h5>
+//              <p className='PaxPrice'>IDR {formatThousands(item.amount)}</p>
+//              <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
+//          </div>
+//          <div className='col-sm-5 mt-3'>
+//              <input type='number' min='0' onChange={this.handleOtherPax} name={item.pax_type} className='form-control Box'/>
+//          </div>
+//      </div>
+//  </div>
+//     ))
+// )
 }  
     if(cancellation_policy_pax){
         CancelationPolicy = (
@@ -453,11 +585,16 @@ export default class componentName extends Component {
           <div className='row mb-3'>
               <div className='col-sm-12'>
               <h1 className='PAX-Details mb-4'>PAX Details</h1>
+                <div className='row'>
+                <div className='col-sm-5  mb-3'>
                 <label className='Name'>NAME <i className='fa fa-asterisk requiredField'></i></label>
-                <div className='col-sm-10 px-0 mb-3'>
                   <input ref={el => this.nameValue=el}  onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' />
                 </div>
-                
+                <div className='col-sm-5  mb-3'>
+                <label className='Name'>E-MAIL <i className='fa fa-asterisk requiredField'></i></label>
+                  <input ref={el => this.nameValue=el}  onChange={this.handleChangeEmail} type='email' name='email' className='Text-Box mt-2 mb-3' />
+                </div>
+                </div>
                 <label className='Name'>PHONE NUMBER <i className='fa fa-asterisk requiredField'></i></label>
                 <div className='row'>
                   <div className='col-sm-6 pr-3'>
@@ -471,16 +608,12 @@ export default class componentName extends Component {
                             css={ ['intl-tel-input', 'form-control'] }
                             utilsScript={ 'libphonenumber.js' } 
                         />
-                    {/* <input type='text' name='name' className='Text-Box mt-2 mb-3' />
-                  </div>
-                  <div className='col-sm-3 px-0'>
-                    <input type='text' name='name' className='Text-Box mt-2 mb-3' /> */}
                   </div>
                 </div>
                  
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
-                        <h1 className='PAX-Details mt-4'>Tickets </h1>
+                        <h1 className='PAX-Details mt-4'>Tickets (Max {finalQuota})</h1>
                     </div>
                      {standardPax}
                  </div>
@@ -498,7 +631,7 @@ export default class componentName extends Component {
 
                  </div>
                   </div>  
-                 <div className='row mt-4'>value
+                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>CANCELATION POLICY PACKAGE</h2>
                     </div>
@@ -509,7 +642,7 @@ export default class componentName extends Component {
                         <h2 className='CancelationPax'>ADDITIONAL PRODUCT</h2>
                         
                     </div>
-                    {/* {additonalData} */}
+
                     {a?
                     this.state.currency?
                     a.map((item,i) => (
@@ -575,6 +708,30 @@ export default class componentName extends Component {
                             <button className='book4thComponent' onClick={this.handleBook}>Book</button>
                             </div>
                         </div>
+                        {this.state.reqiredE?
+                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                                <strong>Error!</strong> Fields indicates with * are mandatory.
+                            </div>
+                            :''
+                        }
+                        {this.state.quotaE?
+                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                               <strong>Error!</strong> Maximum quota limit Exceeds for Additional Product.
+                            </div>
+                            :''
+                        }
+                        {this.state.standardPaxE?
+                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                               <strong>Error!</strong> Maximum quota limit Exceeds for Tickets.
+                            </div>
+                            :''
+                        }
+                        {this.state.otherPaxE?
+                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                               <strong>Error!</strong> Maximum quota limit Exceeds for Package.
+                            </div>
+                            :''
+                        }
                     </div>
                 </div>
                 {this.state.promoCode?

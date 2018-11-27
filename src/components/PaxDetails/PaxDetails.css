@@ -255,6 +255,7 @@
 }
 .book4thComponent:hover{
   cursor: pointer;
+  outline: none !important;
 }
 .Have-a-promo-code {
   width: 161px;

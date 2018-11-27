@@ -97,6 +97,7 @@ export default class ActivityDetail extends Component {
         mm = dts[2];
         yy = dts[3];
         dday = dts[0];
+
         dateFormat = dday+ " " +dd+ " " +mm+ " " +yy;
         let {dates} =this.state;
         let d;
@@ -105,8 +106,13 @@ export default class ActivityDetail extends Component {
             days = abs[1];
             month = abs[0];
             year = abs[2];
+            if(days<10){
+                days = "0"+days;
+            }
+            if(month<10){
+                month = "0"+month;
+            }
             let FullDate = year+'-'+month+'-'+days;
-            
             function checkDate(dateVal){
                 for(let i = 0; i<=dates.length-1; i++){
                     d = dates[i].from;
@@ -141,9 +147,7 @@ export default class ActivityDetail extends Component {
                     this.setState({success:'Alert: Something went wrong'});
                 });
             }
-            // else{
-            //     console.log("Not Fine")
-            // }
+ 
     }
    
     handleMouseHover = (day) =>{
@@ -255,12 +259,6 @@ export default class ActivityDetail extends Component {
 
         // }
   render() {  
-    // const nextBtn = (
-    //     this.state.isRequiredBox && this.state.isRequiredSelect && this.state.isTimeSelected ?
-    //     <button onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> : 
-    //     <button disabled={true}
-    //     onClick={this.handleNext} className='nextStep mt-4 mb-1'>Next Step <i className='fa fa-arrow-right'></i></button> 
-    // )
 
       let {OperationDate,holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;

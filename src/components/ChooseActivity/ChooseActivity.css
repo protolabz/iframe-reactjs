@@ -498,6 +498,7 @@
     line-height: 1.5;
     letter-spacing: normal;
     color: #aaaaaa;
+    text-transform: capitalize;
   }
   .tempatText {
     /* width: 224px; */
@@ -554,6 +555,7 @@
     line-height: 1.5;
     letter-spacing: normal;
     color: #aaaaaa;
+    text-transform: capitalize;
   }
   .Text-Box {
      width: 100%;
