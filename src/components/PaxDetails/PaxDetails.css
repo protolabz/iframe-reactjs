@@ -221,6 +221,7 @@
   letter-spacing: normal;
   color: #4f4f4f;
   text-transform: capitalize;
+  margin: 0px;
 }
 .Text-Box{
   border-radius: 4px;
@@ -256,6 +257,11 @@
 .book4thComponent:hover{
   cursor: pointer;
   outline: none !important;
+}
+.paxCountClass{
+  margin: 0px !important;
+  font-size: 10px;
+  color: #4f4f4f;
 }
 .Have-a-promo-code {
   width: 161px;

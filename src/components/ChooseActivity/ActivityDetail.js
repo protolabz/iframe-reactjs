@@ -5,7 +5,10 @@ import { NavLink } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import PaxDetails from '../PaxDetails/PaxDetails';
+import MultipleHours from './MultipleHours';
 import Alert from 'react-s-alert';
+
 export default class ActivityDetail extends Component {
     state ={
      detail_product:[],
@@ -29,7 +32,9 @@ export default class ActivityDetail extends Component {
      selectValue:null,
      timeValue:null,
      dateValue:null,
-     showError:false
+     showError:false,
+     showPaxPage:false,
+     showMultipleHrs:false
     }
 
     componentWillMount(){
@@ -68,7 +73,7 @@ export default class ActivityDetail extends Component {
             .catch((e) =>
             {
                 console.error(e);
-                this.setState({success:'Alert: Something went wrong'});
+                // this.setState({success:'Alert: Something went wrong'});
             });
             
             axios({
@@ -84,7 +89,7 @@ export default class ActivityDetail extends Component {
                 .catch((e) =>
                 {
                     console.error(e);
-                    this.setState({success:'Alert: Something went wrong'});
+                    // this.setState({success:'Alert: Something went wrong'});
                 });
     }
 
@@ -131,7 +136,6 @@ export default class ActivityDetail extends Component {
                 url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${FullDate}`,
             })
                 .then((res) => {
-                    
                     if(res.data.response.operation_times.length>0){
                         this.setState({
                             OperationTime:res.data.response.operation_times,
@@ -144,7 +148,7 @@ export default class ActivityDetail extends Component {
                 .catch((e) =>
                 {
                     console.error(e);
-                    this.setState({success:'Alert: Something went wrong'});
+                    // this.setState({success:'Alert: Something went wrong'});
                 });
             }
  
@@ -197,10 +201,11 @@ export default class ActivityDetail extends Component {
         }
 
         handleSelectBox = (listValue) =>{
-           this.setState({selectValue:listValue})
+        //    this.setState({selectValue:listValue})
            if(this.state.additionalDesc[2].mandatory === '1'){
                 this.setState({
-                    isRequiredSelect: true
+                    isRequiredSelect: true,
+                    selectValue:listValue
                 })
            }
         }
@@ -227,23 +232,47 @@ export default class ActivityDetail extends Component {
             
           }
         handleBookButton =(timeValue) => {
-
             let {boxValue,selectValue,dateValue} = this.state;
-            if(this.state.isRequiredBox && this.state.isRequiredSelect){
-                timeValue = timeValue.replace(/ /g,'-');
-                if(selectValue===''){
-                    selectValue = '0';
+            if(timeValue===null){
+                if(this.state.isRequiredBox && this.state.isRequiredSelect){
+                    // timeValue = timeValue.replace(/ /g,'-');
+                    if(selectValue===''){
+                        selectValue = '0';
+                    }
+                    if(boxValue.length===0){
+                        boxValue = '0';
+                    }
+                    if(this.state.showMultipleHrs===false){
+                        this.setState({showMultipleHrs:true})
+                    }
+                    // window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
                 }
-                if(boxValue.length===0){
-                    boxValue = '0';
+                else{
+                    // console.log("else");
+                    if(this.state.showError===false){
+                        this.setState({showError:true})
+                    }
+                    
                 }
-                window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
             }
             else{
-                this.setState({showError:true})
+                if(this.state.isRequiredBox && this.state.isRequiredSelect){
+                    timeValue = timeValue.replace(/ /g,'-');
+                    if(selectValue===''){
+                        selectValue = '0';
+                    }
+                    if(boxValue.length===0){
+                        boxValue = '0';
+                    }
+                    this.setState({
+                        showPaxPage:true,
+                        timeValue:timeValue})
+                    // window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
+                }
+                else{
+                    this.handleBookButton(null); 
+                }
             }
-
-
         }
         // handleNext =() => {
         //     // this.state.isRequiredBox && this.state.isRequiredSelect && this.state.isTimeSelected ?
@@ -258,8 +287,8 @@ export default class ActivityDetail extends Component {
         //     window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
 
         // }
-  render() {  
 
+  render() {  
       let {OperationDate,holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;
       let locs;
@@ -312,19 +341,25 @@ export default class ActivityDetail extends Component {
         if(OperationTime.length<=5){
             oTime =(
                 OperationTime.map((item,index) => (
-                        <div className="card timeCard mb-2" key={index} onClick={()=>this.selectTimeFrame(this.state.OperationDateNormal.date,item.time)}>
-                            <div className="card-body">
-                                <h5 className="card-title">{OperationDate}</h5>
-                                <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
-                                <p className='quota'><button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>Book</button> {quota} <span className='quota-left'>left</span></p>
-                                
-                            </div>
+                    <div className="card timeCard mb-2" key={index} onClick={()=>this.selectTimeFrame(this.state.OperationDateNormal.date,item.time)}>
+                        <div className="card-body">
+                            <h5 className="card-title">{OperationDate}</h5>
+                            <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
+                            <p className='quota'><button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>Book</button> {quota} <span className='quota-left'>left</span></p>
+                            
                         </div>
+                    </div>
                 ))
             )
         }
         else{
-            window.location = `/select-hours/${this.state.OperationDateNormal.params}/${this.state.OperationDateNormal.date}`
+            // window.location = `/select-hours/${this.state.OperationDateNormal.params}/${this.state.OperationDateNormal.date}`
+            oTime = (
+                    <div>
+                        {this.state.showMultipleHrs===false?this.handleBookButton(null):''}
+                    </div>
+            )
+            // this.setState({showMultipleHrs:true})
         }
         
     }
@@ -433,9 +468,15 @@ export default class ActivityDetail extends Component {
                 ) : 
         ''
         ));
+        // let {boxValue,selectValue,dateValue,timeValue} = this.state;
     }
     
     return (
+        this.state.showPaxPage?
+            <PaxDetails productId={this.props.match.params.id} boxValue={this.state.boxValue} selectValue={this.state.selectValue} dateValue={this.state.dateValue} timeValue={this.state.timeValue}/>
+        : (this.state.showMultipleHrs?
+            <MultipleHours boxValue={this.state.boxValue} productId={this.props.match.params.id} dateValue={this.state.OperationDateNormal.date} selectValue={this.state.selectValue} />
+            :
       <div className='container mt-5 mb-5'>
             <div className='row'>
                 <div className='col-sm-9 cols9-center mainOuterDiv'>
@@ -551,6 +592,7 @@ export default class ActivityDetail extends Component {
                 </div>
                 <Alert stack={{limit: 1}} timeout={2000}/>
             </div>
+            )
 
     )
   }

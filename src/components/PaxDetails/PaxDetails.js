@@ -5,13 +5,15 @@ import './PaxDetails.css';
 import IntlTelInput from 'react-intl-tel-input';
 import '../../../node_modules/react-intl-tel-input/dist/libphonenumber.js';
 import '../../../node_modules/react-intl-tel-input/dist/main.css';
+// import {ActivityDetail} from '../ChooseActivity/ActivityDetail';
 import AdditionalData from './additionalData';
+import ActivityDetail from '../ChooseActivity/ActivityDetail';
 var arr =  {};
 var otherPaxArr = {};
 
 export default class componentName extends Component {
   state ={
-    params:this.props.match.params,
+    // params:this.props.match.params,
     detail_product:[],
      locations:[],
      rates_pax_package:[],
@@ -43,15 +45,16 @@ export default class componentName extends Component {
      min_per_booking:0,
      quota:0,
      used_quota:0,
+     packageValues:[],
      //ImpData Form
      name:null,
      email:null,
-     productCode:this.props.match.params.id,
+     productCode:this.props.productId,
      paymentType:null,
-     date:this.props.match.params.date,
+     date:this.props.dateValue,
      amount:null,
      total_amount:null,
-     operation_time:this.props.match.params.time.replace(/-/g,' '),
+     operation_time:this.props.timeValue,
      phone_code:null,
      additional:[],
      user_code:null,
@@ -62,13 +65,13 @@ export default class componentName extends Component {
      package:[],
      additional_description:{},
      addProductsValue:[
-            {id:1,value:0},
+            {id:1,qty:0},
      ],
      addProductsValue1:[
-        {id:1,value:0},
+        {id:1,qty:0},
     ],
     addProductsValueQuota:[
-        {id:1,value:0,max_per_booking:0},
+        {id:1,qty:0,max_per_booking:0},
     ],
      commentBox:null,
      promoCode:false,
@@ -77,6 +80,17 @@ export default class componentName extends Component {
      reqiredE:false,
      standardPaxE:false,
      otherPaxE:false,
+    // Promo API states
+     product_code:null,
+     sub_total_pax:null,
+     sub_total_package:null,
+     sub_total_additions:null,
+     sub_total_frontend:null,
+     discount:null,
+     commission:null,
+     service:null,
+     total_frontend:null,
+     minimum_depos:null,
 
   }
   componentWillMount(){
@@ -135,7 +149,7 @@ export default class componentName extends Component {
       .catch((e) =>
       {
           console.error(e);
-          this.setState({success:'Alert: Something went wrong'});
+        //   this.setState({success:'Alert: Something went wrong'});
       });
 
       
@@ -146,7 +160,7 @@ export default class componentName extends Component {
         if(addValuesData.findIndex(x=>x.id===id)>=0){
             for (var i = 0; i < addValuesData.length; i++){
                 if (addValuesData[i].id ===id){
-                    addValuesData[i]={id:id,value:count};
+                    addValuesData[i]={id:id,qty:count};
                     this.setState({addProductsValue1: addValuesData});
                 }
             }
@@ -154,14 +168,14 @@ export default class componentName extends Component {
         if(addProBooking.findIndex(x=>x.id===id)>=0){
             for (var j = 0; j < addProBooking.length; j++){
                 if (addProBooking[j].id ===id){
-                    addProBooking[j]={id:id,value:count,max_per_booking:maxB};
+                    addProBooking[j]={id:id,qty:count,max_per_booking:maxB};
                     this.setState({addProductsValueQuota: addProBooking});
                 }
             }
         }
         else{
-            addValuesData= addValuesData.concat([{id:id,value:count}]);
-            addProBooking= addProBooking.concat([{id:id,value:count,max_per_booking:maxB}]);
+            addValuesData= addValuesData.concat([{id:id,qty:count}]);
+            addProBooking= addProBooking.concat([{id:id,qty:count,max_per_booking:maxB}]);
         }     
         this.setState({
             addProductsValue1: addValuesData,
@@ -176,7 +190,7 @@ export default class componentName extends Component {
         if(addValuesData.findIndex(x=>x.id===id)>=0){
             for (var i = 0; i < addValuesData.length; i++){
                 if (addValuesData[i].id ===id){
-                    addValuesData[i]={id:id,value:count};
+                    addValuesData[i]={id:id,qty:count};
                     this.setState({addProductsValue1: addValuesData});
                 }
             }
@@ -184,14 +198,14 @@ export default class componentName extends Component {
         if(addProBooking.findIndex(x=>x.id===id)>=0){
             for (var j = 0; j < addProBooking.length; j++){
                 if (addProBooking[j].id ===id){
-                    addProBooking[j]={id:id,value:count,max_per_booking:maxB};
+                    addProBooking[j]={id:id,qty:count,max_per_booking:maxB};
                     this.setState({addProductsValueQuota: addProBooking});
                 }
             }
         }
         else{
-            addValuesData= addValuesData.concat([{id:id,value:count}]);
-            addProBooking= addProBooking.concat([{id:id,value:count,max_per_booking:maxB}]);
+            addValuesData= addValuesData.concat([{id:id,qty:count}]);
+            addProBooking= addProBooking.concat([{id:id,qty:count,max_per_booking:maxB}]);
         }     
         this.setState({
             addProductsValue1: addValuesData, 
@@ -202,18 +216,25 @@ export default class componentName extends Component {
 
   //Handle Name change
   handleChangeName =(e) =>{
-      this.setState({name:e.target.value})
+      this.setState({
+          name:e.target.value,
+          reqiredE:false
+        })
     }
     //Email
     handleChangeEmail = (e) =>{
-        this.setState({email:e.target.value})
+        this.setState({
+            email:e.target.value,
+            reqiredE:false
+        })
     }
     //Mobile number Codes
     handler = (status, value, countryData, number, id) =>  {
-        console.log(status, value, countryData, number, id)
+        // console.log(status, value, countryData, number, id)
         this.setState({
-            phone:number,
-            phone_code:countryData.dialCode
+            phone:value,
+            phone_code:countryData.dialCode,
+            reqiredE:false
         })
     };
    
@@ -225,6 +246,21 @@ export default class componentName extends Component {
     }
     handleOtherPax = (e) => {
         otherPaxArr[e.target.name] = e.target.value;
+        let packageValues = [...this.state.packageValues]
+        if(packageValues.findIndex(x=>x.id===e.target.name)>=0){
+            for (var j = 0; j < packageValues.length; j++){
+                if (packageValues[j].id ===e.target.name){
+                    packageValues[j]={id:e.target.name,qty:e.target.value};
+                    this.setState({packageValues: packageValues});
+                }
+            }
+        }
+        else{
+            this.setState({
+                package: otherPaxArr,
+                packageValues:this.state.packageValues.concat({id:e.target.name,qty:e.target.value})
+            })
+        }
         this.setState({
             package: otherPaxArr
         })
@@ -236,17 +272,17 @@ export default class componentName extends Component {
         if(value.includes(val)){          
             value.pop(val);
         }else{
-            value.push(val);
-            
+            value.push(val);   
         }
-
         this.setState({
-            boxValue: value
+            boxValue: value,
+            reqiredE:false
         });
 
         if(!this.state.isRequiredBox){
             this.setState({
-                isRequiredBox: true
+                isRequiredBox: true,
+                reqiredE:false
             })
         }   
       }
@@ -288,77 +324,85 @@ export default class componentName extends Component {
                 other=standardPax.child
             }
             //Validations Related to Pax
-            // if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!==false && isRequiredSelect!==false){
+            // console.log(name+ " !=null && "+email+" !=null && "+phone+" !=null && "+phone_code+" !=null  && "+isRequiredBox+" !== "+false+" && "+isRequiredSelect+ " !== " +false);
+            if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!=false && isRequiredSelect!=false){
+                let quotaDiff = quota - used_quota,finalQuota;
+                let tUsedQuota =0;
+                    if(max_per_booking<quotaDiff){
+                        finalQuota = max_per_booking;
+                    }
+                    else{
+                        finalQuota = quotaDiff;
+                    }
                 if(addProductsValueQuota.length>1){
                     for(let i=0;i<=addProductsValueQuota.length-1;i++){
                         if(addProductsValueQuota[i].value>addProductsValueQuota[i].max_per_booking){
                             this.setState({quotaE:true});
                         }
                         else{
-                            let quotaDiff = quota - used_quota,finalQuota;
-                            if(max_per_booking<quotaDiff){
-                                finalQuota = max_per_booking;
-                            }
-                            else{
-                                finalQuota = quotaDiff;
-                            }
-                            let tUsedQuota = parseInt(adult)+parseInt(children)+parseInt(other);
+                            tUsedQuota = parseInt(adult)+parseInt(children)+parseInt(other);
                             if(tUsedQuota>finalQuota){
                                 this.setState({standardPaxE:true})
                             }
                             else{
-                                const pack = this.state.package;
-                                var result = pack.map(a => a.foo);
-                                console.log(result);
-                                if(this.state.package.length>1){
-                                    let keys = [];
-                                    let pax = this.state.rates_pax_package;
-                                    pax = pax.splice(3,pax.length);
-                                    for(let i =0; i<pax.length;i++){
-                                    keys.push(pax[i].pax_type); 
-                                        for(let j=0; j<this.state.package.length;j++){
-                                            console.log(this.statel.package);
-                                        }
-                                    }
-
+                                const pack = this.state.packageValues;
+                                var packageQ = 0; 
+                                for(let p = 0; p<pack.length; p++){
+                                    packageQ = packageQ + parseInt(pack[p].qty);
                                 }
-                                else{
-
-                                }
+                                  tUsedQuota = parseInt(tUsedQuota) + parseInt(packageQ); 
                                                                 
                             }
                         }
                     }
+                    if(tUsedQuota>finalQuota){
+                    this.setState({standardPaxE:true})
+                    }
+                    else{
+                        this.setState({reqiredE:false})
+                        var databook = {
+                            "token":"aadsfasdf",
+                            "date":date,
+                            "product_id":product.product_id,
+                            // "product_code":productCode,
+                            "product_code":"A-09213790",
+                            "additional":addProductsValue1.splice(1),
+                            "package":this.state.packageValues,
+                            "adult":adult,
+                            "children":children,
+                            "toddlers":other,
+                            "user_code":"10"
+                       }
+                       databook = JSON.stringify(databook);
+                       axios({
+                        method: 'post',
+                        url: `https://api.trabo.co/partner/activity/total`,
+                        headers: {
+                            "Content-Type" : "application/json",
+                            "Accept" : "application/json",
+                            "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQxNjk0ZjljMzkzZDJmMzRlOTkwNzViMGUyOWI4MWJlZjYwMmNmOTVlYzA2ZGZkOWNkZGVlMzNmYmJjZGMzOGEyZDk5MzhmNzc1ODlkYTFlIn0.eyJhdWQiOiI4IiwianRpIjoiNDE2OTRmOWMzOTNkMmYzNGU5OTA3NWIwZTI5YjgxYmVmNjAyY2Y5NWVjMDZkZmQ5Y2RkZWUzM2ZiYmNkYzM4YTJkOTkzOGY3NzU4OWRhMWUiLCJpYXQiOjE1MzQ3NDgxNjEsIm5iZiI6MTUzNDc0ODE2MSwiZXhwIjoxNTk3OTA2NTYxLCJzdWIiOiIxMCIsInNjb3BlcyI6W119.PTJDSvnkPoCmfR19HF5JFf7IZik8JqZg0CNTCUaiDmaXZqx8QTyTjktH2MUgG6TUQC1kDlUKscIW6yDkEOFfr2HgvFKvsmj09qjrk06L0ClaQax3uoPaMVo88DD3ucruWAw34yrRi9DXAZTWm4KpgaSBv3bnuMSUlLK496XXrkBUY6rDKOk2GT9f5qPYmZLG-rl1CTv3Yvz7CjXFO5AJasWKGvnx7YCE8bRSt3jw-DUClyT4AzB24VorD_02wxz00vcTffApdWuv7-3LMq-mhk5m8E3NJH_6zBsP_knGUVihXleScmopPeinaMToNo9mUFMSVTSUV4jAHHWwetoCrFzLpIoTSNUfUPQUay902g8icPMh8qMFYMUB0GDh0iIm7jkFCxuhSzYFc3IeSpZ9y-_SIVrA3Ayc5d4rV4aluvK22xDsc-9eCcqJ76ANpZSPRULd5eQ6hQuSORuF0brg-VzC-kjkr34Z2OAS416-PCtZ6VFxqhab6HhuHYUGlNj9Rz13WJWJjYG8F_p3TdphjaIkHEEWu14-5jjFReYa4Eb0y5mJuqxKMGgvjALUAewG40T6dA10Lyq8YZrLRB6Fy2L7JyF0sPHdmFDJoQW9ZDLDGXmvJ2feLQDcuxDWMT1XQaAmLdBek3q3AR2Edx1DQB7852TC9mvk5ZkjAlTfe04"
+                          },
+                          data:databook
+                        })
+                        .then((res) => {
+                            console.log(res);
+                        })
+                    }
                 }
-                else{
-                    var data = {
-                        "token":"aadsfasdf",
-                        "date":date,
-                        "product_id":product.product_id,
-                        "product_code":productCode,
-                        "additional":[addProductsValue1],
-                        "package":[this.state.package],
-                        "adult":adult,
-                        "children":children,
-                        "infant":other
-                   }
-                }
-            // }   
-            // else{
-            //     this.setState({reqiredE:true})
-            //     console.log('Error is still there');
-            // }
 
-            
-
-        //    console.log(data);
+            }   
+            else{
+                this.setState({reqiredE:true})
+            }
 
      }
+     refreshRoute =() =>{
+        window.location.reload()
+     }
   render() {
-      console.log(this.state.package);
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
-    let time = params.time.replace(/-/g,' '),productDate = new Date(params.date).toGMTString();
+    let time = this.state.operation_time,productDate = new Date(this.state.date).toGMTString();
     let dts = (productDate.split(' ')),dd,mm,yy,dday;
     dd = dts[1];
     mm = dts[2];
@@ -419,11 +463,12 @@ export default class componentName extends Component {
      <div className='row ratesDiv px-0 mx-0'>
          <div className='col-sm-7 mt-2'>
              <h5 className='PaxType'>{item.pax_type}</h5>
+             <p className="paxCountClass">Minimum {item.minimum} PAX</p>
              <p className='PaxPrice'>{currency} {formatThousands(item.amount)}</p>
              <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
          </div>
          <div className='col-sm-5 mt-3'>
-             <input type='number' min={item.minimum} max={item.maximum} onChange={this.handleOtherPax} name={item.pax_type} className='form-control Box'/>
+             <input type='number' min={item.minimum} max={item.maximum} onChange={this.handleOtherPax} name={item.id} className='form-control Box'/>
          </div>
      </div>
  </div>
@@ -571,7 +616,7 @@ export default class componentName extends Component {
           <div className='col-sm-9 cols9-center mainOuterDiv'>
           <div className='row mb-4'>
               <div className='col-sm-12'>
-                  <NavLink to='#'  onClick={this.props.history.goBack} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</NavLink>
+                  <a href="#" onClick={this.refreshRoute} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</a>
               </div>
           </div>
           <div className='row mb-3'>
