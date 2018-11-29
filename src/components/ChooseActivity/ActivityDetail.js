@@ -29,6 +29,8 @@ export default class ActivityDetail extends Component {
      isRequiredBox:true,
      isTimeSelected:false,
      boxValue:[],
+     boxValHeading:null,
+     selectValHeading:null,
      selectValue:null,
      timeValue:null,
      dateValue:null,
@@ -73,7 +75,6 @@ export default class ActivityDetail extends Component {
             .catch((e) =>
             {
                 console.error(e);
-                // this.setState({success:'Alert: Something went wrong'});
             });
             
             axios({
@@ -89,7 +90,6 @@ export default class ActivityDetail extends Component {
                 .catch((e) =>
                 {
                     console.error(e);
-                    // this.setState({success:'Alert: Something went wrong'});
                 });
     }
 
@@ -200,16 +200,19 @@ export default class ActivityDetail extends Component {
             })
         }
 
-        handleSelectBox = (listValue) =>{
-        //    this.setState({selectValue:listValue})
+        handleSelectBox = (listValue,head) =>{
+           this.setState({
+               selectValue:listValue,
+               selectValHeading:{heading:head,content:[listValue]}
+            })
            if(this.state.additionalDesc[2].mandatory === '1'){
                 this.setState({
                     isRequiredSelect: true,
-                    selectValue:listValue
+                    selectValue:listValue,
                 })
            }
         }
-        handleCheckbox = (e) => {   
+        handleCheckbox = (e,heading) => {   
             let val = e.target.value;    
             var value = this.state.boxValue;  
             if(value.includes(val)){          
@@ -220,7 +223,8 @@ export default class ActivityDetail extends Component {
             }
 
             this.setState({
-                boxValue: value
+                boxValue: value,
+                boxValHeading:{heading:heading,content:value}
             });
 
             if(!this.state.isRequiredBox){
@@ -245,7 +249,6 @@ export default class ActivityDetail extends Component {
                     if(this.state.showMultipleHrs===false){
                         this.setState({showMultipleHrs:true})
                     }
-                    // window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
                 }
                 else{
                     // console.log("else");
@@ -267,26 +270,13 @@ export default class ActivityDetail extends Component {
                     this.setState({
                         showPaxPage:true,
                         timeValue:timeValue})
-                    // window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
                 }
                 else{
                     this.handleBookButton(null); 
                 }
             }
         }
-        // handleNext =() => {
-        //     // this.state.isRequiredBox && this.state.isRequiredSelect && this.state.isTimeSelected ?
-        //     let {boxValue,selectValue,timeValue,dateValue} = this.state;
-        //     timeValue = timeValue.replace(/ /g,'-');
-        //     if(selectValue===''){
-        //         selectValue = '0';
-        //     }
-        //     if(boxValue.length===0){
-        //         boxValue = '0';
-        //     }
-        //     window.location = `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
 
-        // }
 
   render() {  
       let {OperationDate,holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
@@ -437,7 +427,7 @@ export default class ActivityDetail extends Component {
                 {
                     item.items.map((chk,index) =>(
                     <div key={chk} className="custom-control custom-checkbox">
-                        <input type="checkbox" onClick={this.handleCheckbox} className="custom-control-input" value={chk} id={`customCheck${index}`}/>
+                        <input type="checkbox" onClick={(e)=>this.handleCheckbox(e,item.heading)} className="custom-control-input" value={chk} id={`customCheck${index}`}/>
                         <label className="custom-control-label chkBoxLabel" htmlFor={`customCheck${index}`}>{chk}</label>
                     </div>
                     ))
@@ -455,7 +445,7 @@ export default class ActivityDetail extends Component {
                 <div key={index}>
                     <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                     <div className='selectdiv'>
-                        <select onChange={(e) => this.handleSelectBox(e.target.value)} className='Text-Box mx-4'>
+                        <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box mx-4'>
                         <option disabled={true} selected={true}>Select option</option>
                         {
                             item.items.map((list,index) =>(
@@ -473,9 +463,9 @@ export default class ActivityDetail extends Component {
     
     return (
         this.state.showPaxPage?
-            <PaxDetails productId={this.props.match.params.id} boxValue={this.state.boxValue} selectValue={this.state.selectValue} dateValue={this.state.dateValue} timeValue={this.state.timeValue}/>
+            <PaxDetails productId={this.props.match.params.id} boxValue={this.state.boxValHeading} selectValue={this.state.selectValHeading} dateValue={this.state.dateValue} timeValue={this.state.timeValue}/>
         : (this.state.showMultipleHrs?
-            <MultipleHours boxValue={this.state.boxValue} productId={this.props.match.params.id} dateValue={this.state.OperationDateNormal.date} selectValue={this.state.selectValue} />
+            <MultipleHours boxValue={this.state.boxValHeading} productId={this.props.match.params.id} dateValue={this.state.OperationDateNormal.date} selectValue={this.state.selectValHeading} />
             :
       <div className='container mt-5 mb-5'>
             <div className='row'>

@@ -33,6 +33,8 @@ export default class componentName extends Component {
      isTimeSelected:false,
      boxValue:[],
      selectValue:null,
+     selectValHeading:null,
+     boxValHeading:null,
      timeValue:null,
      cancellation_policy_package:[],
      cancellation_policy_pax:[],
@@ -46,11 +48,12 @@ export default class componentName extends Component {
      quota:0,
      used_quota:0,
      packageValues:[],
+     depositAmt:0,
+     paymentType:'full payment',
      //ImpData Form
      name:null,
      email:null,
      productCode:this.props.productId,
-     paymentType:null,
      date:this.props.dateValue,
      amount:null,
      total_amount:null,
@@ -73,24 +76,30 @@ export default class componentName extends Component {
     addProductsValueQuota:[
         {id:1,qty:0,max_per_booking:0},
     ],
+     rawAddPR:null,
+     rawPackage:null,
      commentBox:null,
-     promoCode:false,
+     promoCode:0,
+     promoAmount:0,
      //Errors
      quotaE:false,
      reqiredE:false,
      standardPaxE:false,
      otherPaxE:false,
+     promoE:false,
+     bookingE:false,
     // Promo API states
      product_code:null,
-     sub_total_pax:null,
-     sub_total_package:null,
-     sub_total_additions:null,
-     sub_total_frontend:null,
-     discount:null,
-     commission:null,
-     service:null,
-     total_frontend:null,
-     minimum_depos:null,
+     sub_total_pax:0,
+     sub_total_package:0,
+     sub_total_additions:0,
+     sub_total_frontend:0,
+     discount:0,
+     commission:0,
+     service:0,
+     total_frontend:0,
+     minimum_depos:0,
+     promoResponse:false
 
   }
   componentWillMount(){
@@ -124,8 +133,28 @@ export default class componentName extends Component {
                       
                   }
               }
+              var addppAll = res.data.response.product.additional_products;
+              var rawAddProduct =[];
+              for(var ap = 0; ap<addppAll.length; ap++){
+                    for(var det = 0; det<addppAll[ap].details.length; det++){
+                        rawAddProduct.push({id:addppAll[ap].details[det].id,qty:0})
+                    }
+                    
+              }
+              var paxDet =res.data.response.detail_product.rates_pax_package;
+              var paxxArr = [];
+              for(var a = 0; a<paxDet.length; a++){
+                  if(paxDet[a].pax_type==='ADULT' || paxDet[a].pax_type==='CHILD' || paxDet[a].pax_type==='INFANT'){
+                    // paxxArr.push({id:paxDet[a].id, qty:0})
+                  }
+                  else{
+                    paxxArr.push({id:paxDet[a].id, qty:0})
+                  }
+              }
           this.setState({
               detail_product:res.data.response.detail_product,
+              rawPackage:paxxArr,
+              depositAmt:res.data.response.detail_product.deposit.amount,
               product:res.data.response.product,
               additional_productsMeals:res.data.response.product.additional_products[0],
               additional_productsFoto:res.data.response.product.additional_products[1],
@@ -143,6 +172,7 @@ export default class componentName extends Component {
               min_per_booking:res.data.response.product.min_per_booking,
               quota:res.data.response.product.quota,
               used_quota:res.data.response.product.used_quota,
+              rawAddPR:rawAddProduct
           })
 
       })
@@ -266,7 +296,7 @@ export default class componentName extends Component {
         })
     }
 
-    handleCheckbox = (e) => {   
+    handleCheckbox = (e,heading) => {   
         let val = e.target.value;    
         var value = this.state.boxValue;  
         if(value.includes(val)){          
@@ -276,7 +306,8 @@ export default class componentName extends Component {
         }
         this.setState({
             boxValue: value,
-            reqiredE:false
+            reqiredE:false,
+            boxValHeading:{heading:heading,content:value}
         });
 
         if(!this.state.isRequiredBox){
@@ -286,8 +317,11 @@ export default class componentName extends Component {
             })
         }   
       }
-      handleSelectBox = (listValue) =>{
-        this.setState({selectValue:listValue})
+      handleSelectBox = (listValue,head) =>{
+        this.setState({
+            selectValue:listValue,
+            selectValHeading:{heading:head,content:[listValue]}
+        })
         if(this.state.additionalDesc[2].mandatory === '1'){
              this.setState({
                  isRequiredSelect: true
@@ -306,23 +340,37 @@ export default class componentName extends Component {
      }
 
      handleBook = () =>{
-        const {name,email,productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
+        let {name,email,productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
             standardPax,additional_description,addProductsValue1,boxValue,selectValue,
             commentBox,product,isRequiredBox,isRequiredSelect,quota,used_quota,max_per_booking,
             addProductsValueQuota} =this.state;
-            const packg = this.state.package;
+            // let packg = this.state.package;
+            let packg;
+        
 
-            let adult=0,children=0,other=0;
-
+            let adult=0,children=0,other=0,prodadd;
+            if(addProductsValue1.length<2){
+                prodadd = this.state.rawAddPR
+            }
+            else{
+                prodadd = addProductsValue1
+            }
+            if(this.state.packageValues.length<1){
+                packg = this.state.rawPackage;
+            }
+            else{
+                packg = this.state.packageValues;
+            }
             if(standardPax.adult){
                 adult=standardPax.adult
             }
             if(standardPax.child){
                 children=standardPax.child;
             }
-            if(standardPax.child){
-                other=standardPax.child
+            if(standardPax.infant){
+                other=standardPax.infant
             }
+
             //Validations Related to Pax
             // console.log(name+ " !=null && "+email+" !=null && "+phone+" !=null && "+phone_code+" !=null  && "+isRequiredBox+" !== "+false+" && "+isRequiredSelect+ " !== " +false);
             if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!=false && isRequiredSelect!=false){
@@ -338,13 +386,16 @@ export default class componentName extends Component {
                     for(let i=0;i<=addProductsValueQuota.length-1;i++){
                         if(addProductsValueQuota[i].value>addProductsValueQuota[i].max_per_booking){
                             this.setState({quotaE:true});
-                        }
-                        else{
-                            tUsedQuota = parseInt(adult)+parseInt(children)+parseInt(other);
-                            if(tUsedQuota>finalQuota){
-                                this.setState({standardPaxE:true})
+                            console.log(addProductsValueQuota[i].value+">"+addProductsValueQuota[i].max_per_booking);
+                                }
                             }
-                            else{
+                        }
+                        // else{
+                            tUsedQuota = parseInt(adult)+parseInt(children)+parseInt(other);
+                            // if(tUsedQuota>finalQuota){
+                            //     this.setState({standardPaxE:true})
+                            // }
+                            // else{
                                 const pack = this.state.packageValues;
                                 var packageQ = 0; 
                                 for(let p = 0; p<pack.length; p++){
@@ -352,13 +403,14 @@ export default class componentName extends Component {
                                 }
                                   tUsedQuota = parseInt(tUsedQuota) + parseInt(packageQ); 
                                                                 
-                            }
-                        }
-                    }
+                            // }
+                        // }
+                    
                     if(tUsedQuota>finalQuota){
                     this.setState({standardPaxE:true})
                     }
                     else{
+                        addProductsValue1.splice(0,1);
                         this.setState({reqiredE:false})
                         var databook = {
                             "token":"aadsfasdf",
@@ -366,8 +418,8 @@ export default class componentName extends Component {
                             "product_id":product.product_id,
                             // "product_code":productCode,
                             "product_code":"A-09213790",
-                            "additional":addProductsValue1.splice(1),
-                            "package":this.state.packageValues,
+                            "additional":prodadd,
+                            "package":packg,
                             "adult":adult,
                             "children":children,
                             "toddlers":other,
@@ -385,21 +437,169 @@ export default class componentName extends Component {
                           data:databook
                         })
                         .then((res) => {
-                            console.log(res);
+                            if(res.data.status){
+                                this.setState({bookingE:true})
+                            }
+                            else{
+                                this.setState({
+                                    promoResponse:true,
+                                    product_code:res.data.product_code,
+                                    sub_total_pax:res.data.sub_total_pax,
+                                    sub_total_package:res.data.sub_total_package,
+                                    sub_total_additions:res.data.sub_total_additions,
+                                    sub_total_frontend:res.data.sub_total_frontend,
+                                    discount:res.data.discount,
+                                    commission:res.data.commission,
+                                    service:res.data.service,
+                                    total_frontend:res.data.total_frontend,
+                                    minimum_deposit:res.data.minimum_deposit
+                                })
+                            }
                         })
                     }
-                }
-
+                
             }   
             else{
                 this.setState({reqiredE:true})
             }
 
      }
+
+     handlePromo =(e) =>{
+        this.setState({
+            promoCode:e.target.value,
+            promoE:false
+        })
+     }
+     handlePayMethod = (e) =>{
+         this.setState({
+             paymentType:e.target.value
+         })
+     }
+     applyPromoCode =() =>{
+         var promo = this.state.promoCode;
+         if(promo===0){
+             this.setState({promoE:true})
+         }
+         else{
+            var dataProm =
+            {
+               "token": "popo11",
+               "product_code": "A-09213790",
+               // "promo_code" : "MUSIAMO",
+               "promo_code":promo,
+               // "date" : "2018-12-01",
+               "date": this.props.date,
+               // "customer_code" : "a01-001a",
+               "amount" : this.state.total_frontend
+             }
+            axios({
+               method: 'post',
+               url: `https://api.trabo.co/partner/activity/promo`,
+               headers: {
+                   "Content-Type" : "application/json",
+                   "Accept" : "application/json",
+                   "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQxNjk0ZjljMzkzZDJmMzRlOTkwNzViMGUyOWI4MWJlZjYwMmNmOTVlYzA2ZGZkOWNkZGVlMzNmYmJjZGMzOGEyZDk5MzhmNzc1ODlkYTFlIn0.eyJhdWQiOiI4IiwianRpIjoiNDE2OTRmOWMzOTNkMmYzNGU5OTA3NWIwZTI5YjgxYmVmNjAyY2Y5NWVjMDZkZmQ5Y2RkZWUzM2ZiYmNkYzM4YTJkOTkzOGY3NzU4OWRhMWUiLCJpYXQiOjE1MzQ3NDgxNjEsIm5iZiI6MTUzNDc0ODE2MSwiZXhwIjoxNTk3OTA2NTYxLCJzdWIiOiIxMCIsInNjb3BlcyI6W119.PTJDSvnkPoCmfR19HF5JFf7IZik8JqZg0CNTCUaiDmaXZqx8QTyTjktH2MUgG6TUQC1kDlUKscIW6yDkEOFfr2HgvFKvsmj09qjrk06L0ClaQax3uoPaMVo88DD3ucruWAw34yrRi9DXAZTWm4KpgaSBv3bnuMSUlLK496XXrkBUY6rDKOk2GT9f5qPYmZLG-rl1CTv3Yvz7CjXFO5AJasWKGvnx7YCE8bRSt3jw-DUClyT4AzB24VorD_02wxz00vcTffApdWuv7-3LMq-mhk5m8E3NJH_6zBsP_knGUVihXleScmopPeinaMToNo9mUFMSVTSUV4jAHHWwetoCrFzLpIoTSNUfUPQUay902g8icPMh8qMFYMUB0GDh0iIm7jkFCxuhSzYFc3IeSpZ9y-_SIVrA3Ayc5d4rV4aluvK22xDsc-9eCcqJ76ANpZSPRULd5eQ6hQuSORuF0brg-VzC-kjkr34Z2OAS416-PCtZ6VFxqhab6HhuHYUGlNj9Rz13WJWJjYG8F_p3TdphjaIkHEEWu14-5jjFReYa4Eb0y5mJuqxKMGgvjALUAewG40T6dA10Lyq8YZrLRB6Fy2L7JyF0sPHdmFDJoQW9ZDLDGXmvJ2feLQDcuxDWMT1XQaAmLdBek3q3AR2Edx1DQB7852TC9mvk5ZkjAlTfe04"
+                 },
+                 data:dataProm
+               })
+               .then((res) => {
+                   this.setState({
+                       total_frontend:res.data.response.total,
+                       promoAmount:res.data.response.promo_amount
+                   })
+               })
+         }
+
+     }
+
+     handleProceedToPay =() =>{
+       let {name,email,productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
+            standardPax,total_frontend,additional_description,addProductsValue1,boxValue,selectValue,
+            commentBox,product,isRequiredBox,isRequiredSelect,quota,used_quota,max_per_booking,
+            addProductsValueQuota,promoCode,paymentType,depositAmt} =this.state;
+            let packg;
+
+            let adult=0,children=0,other=0,prodadd;
+            if(addProductsValue1.length<2){
+                prodadd = this.state.rawAddPR
+            }
+            else{
+                prodadd = addProductsValue1
+            }
+            if(this.state.packageValues.length<1){
+                packg = this.state.rawPackage;
+            }
+            else{
+                packg = this.state.packageValues;
+            }
+            if(standardPax.adult){
+                adult=standardPax.adult
+            }
+            if(standardPax.child){
+                children=standardPax.child;
+            }
+            if(standardPax.infant){
+                other=standardPax.infant
+            }
+            if(paymentType==='full payment'){
+                depositAmt=0
+            }
+            var dataProceeed = 
+            {
+                "token": "popo11",
+                "name": name,
+                "phone" : phone,
+                "email" : email,
+                "comment" : commentBox,
+                "adult" : adult,
+                "children" : children,
+                "toddlers" : other,
+                "promo_code" : promoCode,
+                "product_code" : "A-09231721",
+                "payment_type" : paymentType,
+                "date" : date,
+                "customer_code" : "",
+                "amount" : depositAmt,
+                "total_amount" : total_frontend,
+                "operation_time" : operation_time,
+                "phone_code" : phone_code,
+                "additional":prodadd,
+                "package":packg,
+                "user_code":"12345678",
+                "referral" : refferal,
+                "additional_description":{
+                    "description":[this.props.selectValue,this.props.boxValue],
+                    "pax_details":[this.state.selectValHeading,this.state.boxValHeading]
+                  }
+              }
+
+              axios({
+                method: 'post',
+                url: `https://api.trabo.co/partner/activity/booking`,
+                headers: {
+                    "Content-Type" : "application/json",
+                    "Accept" : "application/json"
+                  },
+                  data:dataProceeed
+                })
+                .then((res) => {
+                    console.log(res);
+                    // this.setState({
+                    //     total_frontend:res.data.response.total,
+                    //     promoAmount:res.data.response.promo_amount
+                    // })
+                })
+
+              console.log(dataProceeed);
+
+     }
+
      refreshRoute =() =>{
         window.location.reload()
      }
   render() {
+      console.log(this.state.boxValHeading)
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = this.state.operation_time,productDate = new Date(this.state.date).toGMTString();
@@ -474,24 +674,7 @@ export default class componentName extends Component {
  </div>
     ))
 )
-// otherPax = (
-//     rates_pax_package.map((item,index) => (
-//         item.amount>0 && (item.pax_type==='ADULT' || item.pax_type==='CHILD' || item.pax_type==='INFANT')?
-//      ''
-//      :<div className='col-sm-4 mb-3' key={index}>
-//      <div className='row ratesDiv px-0 mx-0'>
-//          <div className='col-sm-7 mt-2'>
-//              <h5 className='PaxType'>{item.pax_type}</h5>
-//              <p className='PaxPrice'>IDR {formatThousands(item.amount)}</p>
-//              <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
-//          </div>
-//          <div className='col-sm-5 mt-3'>
-//              <input type='number' min='0' onChange={this.handleOtherPax} name={item.pax_type} className='form-control Box'/>
-//          </div>
-//      </div>
-//  </div>
-//     ))
-// )
+
 }  
     if(cancellation_policy_pax){
         CancelationPolicy = (
@@ -569,7 +752,7 @@ export default class componentName extends Component {
                     {
                         item.items.map((chk,index) =>(
                         <div key={chk} className="custom-control custom-checkbox">
-                            <input type="checkbox" onClick={this.handleCheckbox} className="custom-control-input" value={chk} id={`customCheck${index}`}/>
+                            <input type="checkbox" onClick={(e) => this.handleCheckbox(e,item.heading)} className="custom-control-input" value={chk} id={`customCheck${index}`}/>
                             <label className="custom-control-label chkBoxLabel" htmlFor={`customCheck${index}`}>{chk}</label>
                         </div>
                         ))
@@ -587,7 +770,7 @@ export default class componentName extends Component {
                     <div key={index} className='col-sm-12'>
                         <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                         <div className='selectdiv'>
-                            <select onChange={(e) => this.handleSelectBox(e.target.value)} className='Text-Box mx-4'>
+                            <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box mx-4'>
                             <option disabled={true} selected={true}>Select option</option>
                             {
                                 item.items.map((list,index) =>(
@@ -608,7 +791,11 @@ export default class componentName extends Component {
             ))
             )
         }
-        
+        function formatThousands(n, dp) {
+            var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
+            while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
+            return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
+          }
 
     return (
       <div className='container mt-5 mb-5'>
@@ -751,6 +938,11 @@ export default class componentName extends Component {
                         <div className='row'>
                             <div className='col-sm-6 offset-3'>
                             <button className='book4thComponent' onClick={this.handleBook}>Book</button>
+                            {this.state.bookingE?  
+                           <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                               <strong>Error!</strong> Quota limit exceeds.
+                            </div>:''
+                            }
                             </div>
                         </div>
                         {this.state.reqiredE?
@@ -779,7 +971,7 @@ export default class componentName extends Component {
                         }
                     </div>
                 </div>
-                {this.state.promoCode?
+                {this.state.promoResponse?
                 <div className='row mt-5'>
                     <div className='col-sm-8 offset-md-1'>
                         <div className='row'>
@@ -789,18 +981,26 @@ export default class componentName extends Component {
                         </div> 
                         <div className='row'>
                             <div className='col-sm-9'>
-                                <input type='text' name='promocode' className='promoTextBox form-control' />
+                                <input type='text' name='promocode' onChange={this.handlePromo} className='promoTextBox form-control' />
                             </div>
                             <div className='col-sm-3'>
-                                <button className='applyPromoBtn'>Apply Code</button>
-                            </div>                        
+                                <button className='applyPromoBtn' onClick={this.applyPromoCode}>Apply Code</button>
+                            </div> 
+                            {this.state.promoE?
+                            <div className='col-sm-12'>
+                                <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                                <strong>Error!</strong> Promo Code Can't be empty.
+                                </div>
+                            </div>
+                            :''
+                             }                       
                         </div>   
                         <div className='row mt-5'>
                             <div className='col-6'>
-                                <h5 className='subTotalText'>SUB-TOTAL (<span className='subTotalPax'>2 ADULTS</span>)</h5>
+                                <h5 className='subTotalText'>SUB-TOTAL {/*(<span className='subTotalPax'>2 ADULTS</span>)*/}</h5>
                             </div>
                             <div className='col-6'>
-                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;7,00,000</span></h5>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;{formatThousands(this.state.sub_total_frontend)}</span></h5>
                             </div>                        
                         </div>  
                         <div className='row mt-3'>
@@ -808,15 +1008,15 @@ export default class componentName extends Component {
                                 <h5 className='subTotalText'>SERVICE CHARGE </h5>
                             </div>
                             <div className='col-6'>
-                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;125,000</span></h5>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;{formatThousands(this.state.service)}</span></h5>
                             </div>                        
                         </div>    
                         <div className='row mt-3'>
                             <div className='col-6'>
-                                <h5 className='subTotalText'>DISCOUNT (<span className='subTotalPax'>15%</span>)</h5>
+                                <h5 className='subTotalText'>DISCOUNT {/*(<span className='subTotalPax'>15%</span>)*/}</h5>
                             </div>
                             <div className='col-6'>
-                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;125,000</span></h5>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;{formatThousands(this.state.discount)}</span></h5>
                             </div>                        
                         </div>
                         <div className='row mt-3'>
@@ -824,7 +1024,7 @@ export default class componentName extends Component {
                                 <h5 className='subTotalText'>PROMO</h5>
                             </div>
                             <div className='col-6'>
-                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;50,000</span></h5>
+                                <h5 className='subTotalValLight'>{currency}<span className='subTotalValDark'>&nbsp;&nbsp;{this.state.promoAmount}</span></h5>
                             </div>
                             <div className='col-sm-12'>
                             <hr/>
@@ -835,7 +1035,7 @@ export default class componentName extends Component {
                                 <h5 className='subTotalText'>TOTAL</h5>
                             </div>
                             <div className='col-6'>
-                                <h5 className='subTotalValLight'>{currency}<span className='totalAmtText'>&nbsp;&nbsp;6,125,000</span></h5>
+                                <h5 className='subTotalValLight'>{currency}<span className='totalAmtText'>&nbsp;&nbsp;{formatThousands(this.state.total_frontend)}</span></h5>
                             </div>                        
                         </div>  
                         <div className='row mt-4'>
@@ -850,40 +1050,45 @@ export default class componentName extends Component {
                                 <div className='col-3'>
                                     {/* <input type='radio' name='fullPayment' />     */}
                                     <div className="custom-control custom-radio">
-                                        <input type="radio" className="custom-control-input" id="defaultUnchecked" value='Full Payment' name="payment" />
+                                        <input type="radio" onClick={this.handlePayMethod} checked={this.state.paymentType === "full payment"} className="custom-control-input" id="defaultUnchecked" value='full payment' name="payment" />
                                         <label className="custom-control-label customLabel" htmlFor="defaultUnchecked"></label>
                                     </div>
                                 </div>
                                 <div className='col-9'>
                                     <h4>Full Payment</h4>
+                                    <p className='payentAddText'><span className='payentAddText'></span> {currency} {formatThousands(this.state.total_frontend)}</p>
                                 </div>
                             </div>  
                             </label>  
                             </div>
                             <div className='col-6'>
+                            {this.state.depositAmt>0?
                             <label htmlFor="defaultUncheckeds" className='cstmLabel'>
                                 <div className='row checkBoxDiv'>
                                     <div className='col-3'>
                                     <div className="custom-control custom-radio">
-                                        <input type="radio" className="custom-control-input" id="defaultUncheckeds" value='Deposit' name="payment" />
+                                        <input type="radio" onClick={this.handlePayMethod} checked={this.state.paymentType === "deposit"} className="custom-control-input" id="defaultUncheckeds" value='deposit' name="payment" />
                                         <label className="custom-control-label customLabel" ></label>
                                     </div>
                                     </div>
                                     <div className='col-9'>
                                     <h4>Deposit</h4>
-                                    <p className='payentAddText'><span className='payentAddText'>Min</span> IDR 3,000,000</p>
+                                    <p className='payentAddText'><span className='payentAddText'>Min</span> {currency} {formatThousands(this.state.depositAmt)}</p>
                                     </div>
                                 </div>                                    
                                 </label>
-                            </div>      
+                                :''}
+                            </div>  
+                            {this.state.depositAmt>0?    
                             <div className='row mt-4 mx-2'>
                                 <div className='col-sm-12'>
-                                    <h3 className='Deposit-Payment-Amou mt-4'>Deposit Payment Amount (<span className='depositAmtDark'>IDR 3,000,000</span>)</h3>
+                                    <h3 className='Deposit-Payment-Amou mt-4'>Deposit Payment Amount (<span className='depositAmtDark'>{currency} {formatThousands(this.state.depositAmt)}</span>)</h3>
                                 </div>                        
                             </div>      
+                            :''}
                             {/* <div className='row mt-4'> */}
                                 <div className='col-sm-12 mt-3'>
-                                    <button className='proceedToPayment'>Proceed to payment <i className='fa fa-arrow-right'></i></button>
+                                    <button onClick={this.handleProceedToPay} className='proceedToPayment'>Proceed to payment <i className='fa fa-arrow-right'></i></button>
                                 </div>                        
                             {/* </div>                   */}
                         </div>  
