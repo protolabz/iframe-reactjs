@@ -236,10 +236,30 @@ export default class ActivityDetail extends Component {
             
           }
         handleBookButton =(timeValue) => {
-            let {boxValue,selectValue,dateValue} = this.state;
+            let {boxValue,selectValue} = this.state;
+            var selectHead, boxHead;
+            var add_pax = this.state.additionalDesc;
+            for(let i=0;i<add_pax.length;i++){
+                if(add_pax[i].type==='list_box'){
+                    selectHead = add_pax[i].heading;
+                }
+                if(add_pax[i].type==='check_box'){
+                    boxHead = add_pax[i].heading;
+                }
+            }
             if(timeValue===null){
                 if(this.state.isRequiredBox && this.state.isRequiredSelect){
                     // timeValue = timeValue.replace(/ /g,'-');
+                    if(this.state.boxValHeading===null){
+                        this.setState({
+                            boxValHeading:{heading:boxHead,content:[null]}
+                         }) 
+                    }
+                    if(this.state.selectValHeading===null){
+                        this.setState({
+                            selectValHeading:{heading:selectHead,content:[null]}
+                         }) 
+                    }
                     if(selectValue===''){
                         selectValue = '0';
                     }
@@ -260,6 +280,16 @@ export default class ActivityDetail extends Component {
             }
             else{
                 if(this.state.isRequiredBox && this.state.isRequiredSelect){
+                    if(this.state.boxValHeading===null){
+                        this.setState({
+                            boxValHeading:{heading:boxHead,content:[null]}
+                         }) 
+                    }
+                    if(this.state.selectValHeading===null){
+                        this.setState({
+                            selectValHeading:{heading:selectHead,content:[null]}
+                         }) 
+                    }
                     timeValue = timeValue.replace(/ /g,'-');
                     if(selectValue===''){
                         selectValue = '0';
@@ -269,7 +299,8 @@ export default class ActivityDetail extends Component {
                     }
                     this.setState({
                         showPaxPage:true,
-                        timeValue:timeValue})
+                        timeValue:timeValue
+                    })
                 }
                 else{
                     this.handleBookButton(null); 
@@ -336,7 +367,6 @@ export default class ActivityDetail extends Component {
                             <h5 className="card-title">{OperationDate}</h5>
                             <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
                             <p className='quota'><button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>Book</button> {quota} <span className='quota-left'>left</span></p>
-                            
                         </div>
                     </div>
                 ))

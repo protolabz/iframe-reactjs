@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import './PaxDetails.css';
 import IntlTelInput from 'react-intl-tel-input';
 import '../../../node_modules/react-intl-tel-input/dist/libphonenumber.js';
 import '../../../node_modules/react-intl-tel-input/dist/main.css';
 // import {ActivityDetail} from '../ChooseActivity/ActivityDetail';
 import AdditionalData from './additionalData';
-import ActivityDetail from '../ChooseActivity/ActivityDetail';
+import Payment from '../PaymentProcess/Payment'
 var arr =  {};
 var otherPaxArr = {};
 
@@ -78,7 +78,7 @@ export default class componentName extends Component {
     ],
      rawAddPR:null,
      rawPackage:null,
-     commentBox:null,
+     commentBox:'No Comment',
      promoCode:0,
      promoAmount:0,
      //Errors
@@ -88,6 +88,8 @@ export default class componentName extends Component {
      otherPaxE:false,
      promoE:false,
      bookingE:false,
+     proceedE:false,
+     zeroAmount:false,
     // Promo API states
      product_code:null,
      sub_total_pax:0,
@@ -99,8 +101,8 @@ export default class componentName extends Component {
      service:0,
      total_frontend:0,
      minimum_depos:0,
-     promoResponse:false
-
+     promoResponse:false,
+     showPaymentPage:false
   }
   componentWillMount(){
     axios({
@@ -372,7 +374,6 @@ export default class componentName extends Component {
             }
 
             //Validations Related to Pax
-            // console.log(name+ " !=null && "+email+" !=null && "+phone+" !=null && "+phone_code+" !=null  && "+isRequiredBox+" !== "+false+" && "+isRequiredSelect+ " !== " +false);
             if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!=false && isRequiredSelect!=false){
                 let quotaDiff = quota - used_quota,finalQuota;
                 let tUsedQuota =0;
@@ -390,12 +391,7 @@ export default class componentName extends Component {
                                 }
                             }
                         }
-                        // else{
                             tUsedQuota = parseInt(adult)+parseInt(children)+parseInt(other);
-                            // if(tUsedQuota>finalQuota){
-                            //     this.setState({standardPaxE:true})
-                            // }
-                            // else{
                                 const pack = this.state.packageValues;
                                 var packageQ = 0; 
                                 for(let p = 0; p<pack.length; p++){
@@ -403,8 +399,6 @@ export default class componentName extends Component {
                                 }
                                   tUsedQuota = parseInt(tUsedQuota) + parseInt(packageQ); 
                                                                 
-                            // }
-                        // }
                     
                     if(tUsedQuota>finalQuota){
                     this.setState({standardPaxE:true})
@@ -514,10 +508,9 @@ export default class componentName extends Component {
      }
 
      handleProceedToPay =() =>{
-       let {name,email,productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
-            standardPax,total_frontend,additional_description,addProductsValue1,boxValue,selectValue,
-            commentBox,product,isRequiredBox,isRequiredSelect,quota,used_quota,max_per_booking,
-            addProductsValueQuota,promoCode,paymentType,depositAmt} =this.state;
+       let {name,email,date,operation_time,phone_code,phone,refferal,
+            standardPax,total_frontend,addProductsValue1,
+            commentBox,promoCode,paymentType,depositAmt} =this.state;
             let packg;
 
             let adult=0,children=0,other=0,prodadd;
@@ -545,6 +538,24 @@ export default class componentName extends Component {
             if(paymentType==='full payment'){
                 depositAmt=0
             }
+            var selectHead, boxHead;
+            var add_pax = this.state.additionalDesc;
+            for(let i=0;i<add_pax.length;i++){
+                if(add_pax[i].type==='list_box'){
+                    selectHead = add_pax[i].heading;
+                }
+                if(add_pax[i].type==='check_box'){
+                    boxHead = add_pax[i].heading;
+                }
+            }
+            var pax_box =this.state.boxValHeading, pax_select = this.state.selectValHeading;
+            if(pax_box===null){
+                pax_box ={heading:boxHead,content:[null]}
+            }
+            if(pax_select===null){
+                pax_select = {heading:selectHead,content:[null]}
+                
+            }
             var dataProceeed = 
             {
                 "token": "popo11",
@@ -570,28 +581,40 @@ export default class componentName extends Component {
                 "referral" : refferal,
                 "additional_description":{
                     "description":[this.props.selectValue,this.props.boxValue],
-                    "pax_details":[this.state.selectValHeading,this.state.boxValHeading]
+                    "pax_details":[pax_select,pax_box]
                   }
               }
-
-              axios({
-                method: 'post',
-                url: `https://api.trabo.co/partner/activity/booking`,
-                headers: {
-                    "Content-Type" : "application/json",
-                    "Accept" : "application/json"
-                  },
-                  data:dataProceeed
+              if(total_frontend<1){
+                this.setState({
+                    zeroAmount:true
                 })
-                .then((res) => {
-                    console.log(res);
-                    // this.setState({
-                    //     total_frontend:res.data.response.total,
-                    //     promoAmount:res.data.response.promo_amount
-                    // })
-                })
-
-              console.log(dataProceeed);
+              }else{
+                axios({
+                    method: 'post',
+                    url: `https://api.trabo.co/partner/activity/booking`,
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "Accept" : "application/json"
+                      },
+                      data:dataProceeed
+                    })
+                    .then((res) => {
+                        if(res.data.status==="00"){
+                            this.setState({
+                                finalAmount:res.data.amount,
+                                transaction_code:res.data.response,
+                                showPaymentPage:true
+                            })
+                        }
+                        else{
+                            this.setState({
+                                proceedE:true
+                            })
+                        }
+                        
+                    })
+              }
+             
 
      }
 
@@ -599,10 +622,10 @@ export default class componentName extends Component {
         window.location.reload()
      }
   render() {
-      console.log(this.state.boxValHeading)
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = this.state.operation_time,productDate = new Date(this.state.date).toGMTString();
+    
     let dts = (productDate.split(' ')),dd,mm,yy,dday;
     dd = dts[1];
     mm = dts[2];
@@ -798,6 +821,20 @@ export default class componentName extends Component {
           }
 
     return (
+        this.state.showPaymentPage?
+        <Payment 
+            productId={this.state.productCode} 
+            operationDate={preDate} 
+            operationTime={time} 
+            productName={detail_product.name} 
+            phoneNumber={this.state.phone_code+" "+this.state.phone}
+            email={this.state.email}
+            amount={this.state.finalAmount}
+            transaction_code={this.state.transaction_code}
+            paymentType={this.state.paymentType}
+            currency={currency}
+        />
+        :
       <div className='container mt-5 mb-5'>
       <div className='row'>
           <div className='col-sm-9 cols9-center mainOuterDiv'>
@@ -1091,6 +1128,22 @@ export default class componentName extends Component {
                                     <button onClick={this.handleProceedToPay} className='proceedToPayment'>Proceed to payment <i className='fa fa-arrow-right'></i></button>
                                 </div>                        
                             {/* </div>                   */}
+                            {this.state.zeroAmount?
+                            <div className='col-sm-12'>
+                                <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                                <strong>Error!</strong> Cannot proceed with Amount 0.
+                                </div>
+                            </div>
+                            :''
+                             }   
+                              {this.state.proceedE?
+                            <div className='col-sm-12'>
+                                <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                                <strong>Error!</strong> The form data is not correct.
+                                </div>
+                            </div>
+                            :''
+                             }   
                         </div>  
                     </div>
                 </div>

@@ -3,7 +3,8 @@ import  { BrowserRouter as Router,  Route, Switch} from 'react-router-dom';
 import ChooseActivity from './components/ChooseActivity/ChooseActivity';
 import ActivityDetail from './components/ChooseActivity/ActivityDetail';
 import MultipleHours from './components/ChooseActivity/MultipleHours';
-import Paxdetails from './components/PaxDetails/PaxDetails'
+import Paxdetails from './components/PaxDetails/PaxDetails';
+import Payment from './components/PaymentProcess/Payment'
 export default class componentName extends Component {
   render( ){
     return (
@@ -13,9 +14,11 @@ export default class componentName extends Component {
                 <Route path="/product-detail/:id" component={ActivityDetail}/>
                 <Route path="/select-hours/:params/:date" component={MultipleHours}/>
                 <Route path="/pax-details/:time/:date/:checked/:selected/:id" component={Paxdetails}/>
+                <Route path="/payment" component={Payment}/>
             </Switch>
         </Router>
      
     )
   }
 }
+

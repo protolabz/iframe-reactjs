@@ -18,7 +18,7 @@ export default class MultipleHours extends Component {
         axios({
             method: 'get',
             // url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.params}?date=${this.props.match.params.date}&&multi=true`,
-            url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${this.props.dateValue}&&multi=true`,
+            url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${this.props.dateValue}&multi=true`,
         })
             .then((res) => {
                     this.setState({
