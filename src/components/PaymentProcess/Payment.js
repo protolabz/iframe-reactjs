@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import './payment.css';
 import CreditCardInput from 'react-credit-card-input';
+import Xendit from 'xendit-js-node';
+import Modal from 'react-responsive-modal';
+const EX_API_KEY = 'xnd_public_development_NImDfL511rH6wMJgKrcdT2PFZdWnpIR8xXOx+Rxg+mHV8LegCQR0hQ==';
+
 export default class componentName extends Component {
 
     state ={
@@ -26,15 +30,20 @@ export default class componentName extends Component {
         cardNumber:null,
         expiry:null,
         cvc:null,
-        cardHolderName:null
+        cardHolderName:null,
+        bank_code:'',
+        showModal:false,
+        redirectedUrl:null,
+        paymentMethodType:'BankTransfer'
     }
 
     componentWillMount(){
         var data = {
             // transaction_code:this.props.transaction_code,
-            transaction_code:"56713178-01/12/2018-9059",
+            transaction_code:"56713178-03/12/2018-5470",
             bank_code:"BRI"
         }
+        
         axios({
             method: 'post',
             url: `https://api.trabo.co/payment/xendit/client/invoice`,
@@ -129,9 +138,143 @@ export default class componentName extends Component {
                     })
                 }
             })
+        
+    }
+    onCloseModal = () => {
+        this.setState({ showModal: false });
+      };
+    handleBankClick = (code) =>{
+        this.setState({
+            bank_code:code
+        })
+    }
+    selectPaymentMethod = (method) =>{
+        this.setState({
+            bank_code:'ALFAMART',
+            paymentMethodType:method
+        })
+
+    }
+    handleCardNumberChange = (e) =>{
+        this.setState({
+            cardNumber:e.target.value
+        })
+    }
+    handleCardCVCChange = (e) =>{
+        let cvv = e.target.value;
+        this.setState({
+            cvc:e.target.value
+        })
+    }
+    handleCardExpiryChange = (e) =>{
+        let dt = e.target.value;
+        // dt = dt.replace(/ /g,'');
+        // dt.split('/');
+        this.setState({
+          expiry:dt  
+        })
+    }
+    handleHolderName = (e) =>{
+        this.setState({
+            cardHolderName:e.target.value
+        })
+    }
+        // paymentForm = () => {
+        // Xendit.setPublishableKey(EX_API_KEY);
+
+        // // Request a token from Xendit:
+        // var tokenData = this.getTokenData();
+        // var fraudData = this.getFraudData();
+
+        // if (this.state.should_use_meta) {
+        //     Xendit.card.createToken(tokenData, fraudData, this.xenditResponseHandler.bind(this));
+        // } else {
+        //     Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+        // }
+    // }
+    displaySuccess (creditCardToken) {
+        var requestData = Object.assign({}, this.getTokenData());
+
+        // if (this.state.should_use_meta) {
+        //     requestData["meta_enabled"] = true;
+        // } else {
+        //     requestData["meta_enabled"] = false;
+        // }
+
+        console.log(
+            'RESPONSE: \n' +
+            JSON.stringify(creditCardToken, null, 4) +
+            '\n\n' +
+            'Request Data: \n' +
+            JSON.stringify(requestData, null, 4)
+        );
+    }
+
+    getTokenData () {
+        let {cardNumber,expiry,cvc,cardHolderName} = this.state;
+            let dt = expiry.split('/'),mm,yy;
+            mm = dt[0];
+            yy = dt[1];
+            yy = "20"+yy;
+        return {        
+            "amount": "10000",        
+            // "amount": this.props.amount,
+            "card_number": "4000000000000002",
+            // "card_number": cardNumber,        
+            "card_exp_month": "12",
+            // "card_exp_month": mm,        
+            "card_exp_year": "2023",
+            // "card_exp_year": yy,        
+            "card_cvn": "123",
+            // "card_cvn": cvc,
+            "is_multiple_use": false,
+            "should_authenticate": true
+        };
+    }
+    xenditResponseHandler (err, creditCardToken) {
+        if (err) {
+            this.setState({ isLoading: false });
+            return this.displayError(err);
+        }
+        this.setState({ creditCardToken: creditCardToken })
+
+        if (creditCardToken.status === 'APPROVED' || creditCardToken.status === 'VERIFIED') {
+            this.displaySuccess(creditCardToken);
+            console.log(this.displaySuccess(creditCardToken));
+        } 
+        else if (creditCardToken.status === 'IN_REVIEW') {
+            this.setState({ 
+                redirectedUrl: creditCardToken.payer_authentication_url,
+                showModal:true
+             })
+            console.log(creditCardToken.status);
+        }
+        
+         else if (creditCardToken.status === 'FAILED') {
+            // this.displayError(creditCardToken);
+            console.log(creditCardToken.status);
+        }
+    }
+    handleConfirmPayment =() => {
+        let {bank_code,paymentMethodType} = this.state;
+        let transaction_code = this.props.transaction_code;
+        if(paymentMethodType==='CreditCard'){
+            Xendit.setPublishableKey(EX_API_KEY);
+            // Request a token from Xendit:
+            var tokenData = this.getTokenData();
+            // var fraudData = this.getFraudData();
+            var xend =   Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+            // if (this.state.should_use_meta) {
+            //     Xendit.card.createToken(tokenData, fraudData, this.xenditResponseHandler.bind(this));
+            // } else {
+            //     Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+            // }
+            // console.log(xend);
+        }
+        else{
             var dataRet = {
-                transaction_code:"56713178-01/12/2018-9059",
-                bank_code:"ALFAMART"
+                transaction_code:"56713178-03/12/2018-5470",
+                "token_id":"5bb1ca566225f3d717b71c34"
             }
             axios({
                 method: 'post',
@@ -143,12 +286,15 @@ export default class componentName extends Component {
                 })
                 .then((res) => {
                     console.log(res);
-
                 })
+        }
+        
     }
+
   render() {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
-        briMba,bniMba,expiryDate} = this.state;
+        briMba,bniMba,expiryDate,expiry} = this.state;
+
       let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime;
       let ForTime = new Date(expiryDate);
       let ForDate = new Date(expiryDate).toISOString().slice(0,10);
@@ -265,7 +411,16 @@ export default class componentName extends Component {
     return (
 
         <div className="container mt-5 mb-5">
-
+        <Modal 
+            open={this.state.showModal} 
+            closeOnEsc={false} 
+            showCloseIcon={true} 
+            closeOnOverlayClick={false} 
+            onClose={this.onCloseModal} 
+            blockScroll={true}
+            center>
+                <iframe title='payment-confirmation' className='iframeProps' src={this.state.redirectedUrl}/>
+         </Modal>
          {this.state.isLoading?
             <img className='loading' src='/images/loading.svg' alt='loading'/>
         :''}
@@ -338,23 +493,20 @@ export default class componentName extends Component {
                     <div className='col-12 border border-top-0'>
                         <ul className="nav nav-tabs" role="tablist">
                         <li className="nav-item">
-                           <a className="nav-link active" data-toggle="tab" href="#bankTransfers">Bank Transfer</a>
+                           <a className="nav-link active" onClick={(e) =>this.selectPaymentMethod('BankTransfer')} data-toggle="tab" href="#bankTransfers">Bank Transfer</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" data-toggle="tab" href="#retailTransfer">Retail Transfer</a>
+                            <a className="nav-link" onClick={(e) =>this.selectPaymentMethod('RetailTransfer')} data-toggle="tab" href="#retailTransfer">Retail Transfer</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" data-toggle="tab" href="#creditCard">Credit Card</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link otherBank" data-toggle="tab" href="#creditCard">Other Bank</a>
-                        </li>
+                            <a className="nav-link" onClick={(e) =>this.selectPaymentMethod('CreditCard')} data-toggle="tab" href="#creditCard">Credit Card</a>
+                        </li>   
                         </ul>
                     
                         <div className="tab-content">
                         <div id="bankTransfers" className="container tab-pane active px-md-5"><br/>
                         <p className="bankImage custom-control custom-radio" data-toggle="collapse" style={{ paddingLeft:"0px" }} data-target="#mandiri" data-parent="#bankTransfers">
-                        <input type='radio' className='custom-control-input' name='checkBank' id='checkMandiri'/>
+                        <input type='radio' className='custom-control-input' onChange={(e) =>this.handleBankClick('MANDIRI')} value={'mandiri'} name='checkBank' id='checkMandiri'/>
                         <label htmlFor='checkMandiri' className='custom-control-label'> 
                             <img className='bankImg' alt='mandiri' src='/images/mandiri.png'/>
                         </label>
@@ -382,7 +534,7 @@ export default class componentName extends Component {
 
 
                         <p className="bankImage custom-radio" data-toggle="collapse" data-target="#bankBri" data-parent="#bankTransfers">
-                        <input type='radio' className='custom-control-input' name='checkBank' id='checkBri'/>
+                        <input type='radio' className='custom-control-input' onChange={(e) =>this.handleBankClick('BRI')} value={'BRI'} name='checkBank' id='checkBri'/>
                             <label htmlFor='checkBri' className='custom-control-label'> 
                         <img className='bankImg' alt='BRI' src='/images/bank-bri.png'/>
                         </label>
@@ -417,7 +569,7 @@ export default class componentName extends Component {
                                 </div>
                             </div>
                         <p className="bankImage custom-radio" data-toggle="collapse" data-target="#bni" data-parent="#bankTransfers">
-                        <input type='radio' className='custom-control-input' name='checkBank' id='checkBni'/>
+                        <input type='radio' className='custom-control-input' onChange={(e) =>this.handleBankClick('BNI')} value={'BNI'} name='checkBank' id='checkBni'/>
                             <label htmlFor='checkBni' className='custom-control-label'> 
                             <img style={{ height:"20px" }} alt='bni' src='/images/bank-bni.png'/>
                         </label>
@@ -476,7 +628,7 @@ export default class componentName extends Component {
                                 cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCardNumberChange }}
                                 cardExpiryInputProps={{ value: this.state.expiry, onChange: this.handleCardExpiryChange }}
                                 cardCVCInputProps={{ value: this.state.cvc, onChange: this.handleCardCVCChange }}
-                                holderNameProps ={{ value: this.state.cvc, onChange: this.handleHolderName }}
+                                holderNameProps ={{ value: this.state.cardHolderName, onChange: this.handleHolderName }}
                                 fieldClassName="input"
                             />
                             <div className='sc-bdVaJa1'>
@@ -489,7 +641,7 @@ export default class componentName extends Component {
                      
                     </div>
                     <div className='col-md-12 mt-5 text-center'>
-                        <button className='confirm-payment'>Confirm Payment</button>
+                        <button className='confirm-payment' onClick={this.handleConfirmPayment}>Confirm Payment</button>
                     </div>
                     
                 </div>

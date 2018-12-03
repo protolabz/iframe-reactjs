@@ -36,7 +36,8 @@ export default class ActivityDetail extends Component {
      dateValue:null,
      showError:false,
      showPaxPage:false,
-     showMultipleHrs:false
+     showMultipleHrs:false,
+     showModal:false
     }
 
     componentWillMount(){
@@ -498,6 +499,7 @@ export default class ActivityDetail extends Component {
             <MultipleHours boxValue={this.state.boxValHeading} productId={this.props.match.params.id} dateValue={this.state.OperationDateNormal.date} selectValue={this.state.selectValHeading} />
             :
       <div className='container mt-5 mb-5'>
+
             <div className='row'>
                 <div className='col-sm-9 cols9-center mainOuterDiv'>
                 <div className='row mb-4'>
@@ -602,13 +604,9 @@ export default class ActivityDetail extends Component {
                           
                         </div>
                         </div>
-
-
                         
                     </div>         
 
-                   
-                   
                 </div>
                 <Alert stack={{limit: 1}} timeout={2000}/>
             </div>

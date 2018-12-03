@@ -431,6 +431,7 @@ export default class componentName extends Component {
                           data:databook
                         })
                         .then((res) => {
+                            console.log(res);
                             if(res.data.status){
                                 this.setState({bookingE:true})
                             }
@@ -446,7 +447,7 @@ export default class componentName extends Component {
                                     commission:res.data.commission,
                                     service:res.data.service,
                                     total_frontend:res.data.total_frontend,
-                                    minimum_deposit:res.data.minimum_deposit
+                                    minimum_deposit:res.data.minimum_deposit,
                                 })
                             }
                         })
@@ -538,6 +539,7 @@ export default class componentName extends Component {
             if(paymentType==='full payment'){
                 depositAmt=0
             }
+            console.log("Deposti AMOUNT: " +depositAmt);
             var selectHead, boxHead;
             var add_pax = this.state.additionalDesc;
             for(let i=0;i<add_pax.length;i++){
@@ -567,7 +569,7 @@ export default class componentName extends Component {
                 "children" : children,
                 "toddlers" : other,
                 "promo_code" : promoCode,
-                "product_code" : "A-09231721",
+                "product_code" : "A-09213790",
                 "payment_type" : paymentType,
                 "date" : date,
                 "customer_code" : "",
