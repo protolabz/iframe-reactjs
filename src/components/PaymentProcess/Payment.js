@@ -4,11 +4,13 @@ import './payment.css';
 import CreditCardInput from 'react-credit-card-input';
 import Xendit from 'xendit-js-node';
 import Modal from 'react-responsive-modal';
+import swal from 'sweetalert';
 const EX_API_KEY = 'xnd_public_development_NImDfL511rH6wMJgKrcdT2PFZdWnpIR8xXOx+Rxg+mHV8LegCQR0hQ==';
 
 export default class componentName extends Component {
 
     state ={
+        paymentType:this.props.paymentType,
         mandiri:null,
         bri:null,
         bni:null,
@@ -23,6 +25,9 @@ export default class componentName extends Component {
         detailMandiri:null,
         detailBni:null,
         detailBri:null,
+        aflaDetails:null,
+        alfaPayCode:null,
+        alfaPayName:null,
         expiryDate:null,
         isLoading:true,
         componentOpacity:0.2,
@@ -34,13 +39,16 @@ export default class componentName extends Component {
         bank_code:'',
         showModal:false,
         redirectedUrl:null,
-        paymentMethodType:'BankTransfer'
+        paymentMethodType:'BankTransfer',
+        baknkTransferE:false,
+        alfaMartData:true,
+        paymentFail:false,
     }
 
     componentWillMount(){
         var data = {
-            // transaction_code:this.props.transaction_code,
-            transaction_code:"56713178-03/12/2018-5470",
+            transaction_code:this.props.transaction_code,
+            // transaction_code:"56713178-05-12-2018-2867",
             bank_code:"BRI"
         }
         
@@ -137,8 +145,39 @@ export default class componentName extends Component {
                         componentOpacity:1
                     })
                 }
-            })
-        
+            });
+
+            var dataAlfa = {
+                transaction_code:this.props.transaction_code,
+                // transaction_code:"56713178-05-12-2018-2867",
+                bank_code:"ALFAMART"
+            }
+
+            axios({
+                method: 'post',
+                url: `https://api.trabo.co/payment/xendit/client/invoice`,
+                headers: {
+                    "Content-Type" : "application/json"
+                  },
+                  data:dataAlfa
+                })
+                .then((res) => {
+                    console.log(res);
+                    if(res.data.diagnostic.status===400){
+                        this.setState({
+                            alfaMartData:false
+                        })
+                    }
+                    else{
+                        this.setState({
+                            aflaDetails:res.data.response.retail[0].instruction[0].instruction,
+                            alfaPayCode:res.data.response.retail[0].payment_code,
+                            alfaPayName:res.data.response.retail[0].instruction[0].name
+                        })
+                    }
+                    // console.log(res.data.response.retail[0].instruction[0].name)
+                  
+                })
     }
     onCloseModal = () => {
         this.setState({ showModal: false });
@@ -149,6 +188,12 @@ export default class componentName extends Component {
         })
     }
     selectPaymentMethod = (method) =>{
+        if(method==='ALFAMART'){
+            
+        }
+        if(method==='CreditCard'){
+            
+        }
         this.setState({
             bank_code:'ALFAMART',
             paymentMethodType:method
@@ -194,20 +239,21 @@ export default class componentName extends Component {
     // }
     displaySuccess (creditCardToken) {
         var requestData = Object.assign({}, this.getTokenData());
-
+        console.log(requestData)
+        console.log("requestDataSuccess")
         // if (this.state.should_use_meta) {
         //     requestData["meta_enabled"] = true;
         // } else {
         //     requestData["meta_enabled"] = false;
         // }
-
-        console.log(
-            'RESPONSE: \n' +
-            JSON.stringify(creditCardToken, null, 4) +
-            '\n\n' +
-            'Request Data: \n' +
-            JSON.stringify(requestData, null, 4)
-        );
+        console.log(creditCardToken);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        // console.log(
+        //     'RESPONSE: \n' +
+        //     JSON.stringify(creditCardToken, null, 4) +
+        //     '\n\n' +
+        //     'Request Data: \n' +
+        //     JSON.stringify(requestData, null, 4)
+        // );
     }
 
     getTokenData () {
@@ -231,23 +277,39 @@ export default class componentName extends Component {
             "should_authenticate": true
         };
     }
+    displayError (err) {
+        var requestData = Object.assign({}, this.getTokenData());
+
+        // console.log(requestData)
+    }
     xenditResponseHandler (err, creditCardToken) {
+ 
         if (err) {
-            this.setState({ isLoading: false });
+            // this.setState({ isLoading: false });
             return this.displayError(err);
         }
+        console.log(creditCardToken)
         this.setState({ creditCardToken: creditCardToken })
 
         if (creditCardToken.status === 'APPROVED' || creditCardToken.status === 'VERIFIED') {
             this.displaySuccess(creditCardToken);
-            console.log(this.displaySuccess(creditCardToken));
+            // console.log(this.displaySuccess(creditCardToken));
+            // console.log("VERIFIED",creditCardToken);
         } 
         else if (creditCardToken.status === 'IN_REVIEW') {
             this.setState({ 
                 redirectedUrl: creditCardToken.payer_authentication_url,
                 showModal:true
              })
-            console.log(creditCardToken.status);
+            //  if(creditCardToken){
+            //     this.setState({ 
+            //         ccToken: creditCardToken.id,
+            //         showModal:false
+            //      })
+            //  }else{
+
+            //  }
+            // console.log("REVIEW",creditCardToken);
         }
         
          else if (creditCardToken.status === 'FAILED') {
@@ -263,7 +325,7 @@ export default class componentName extends Component {
             // Request a token from Xendit:
             var tokenData = this.getTokenData();
             // var fraudData = this.getFraudData();
-            var xend =   Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+            Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
             // if (this.state.should_use_meta) {
             //     Xendit.card.createToken(tokenData, fraudData, this.xenditResponseHandler.bind(this));
             // } else {
@@ -272,30 +334,74 @@ export default class componentName extends Component {
             // console.log(xend);
         }
         else{
-            var dataRet = {
-                transaction_code:"56713178-03/12/2018-5470",
-                "token_id":"5bb1ca566225f3d717b71c34"
-            }
+            if(bank_code===''){
+                this.setState({
+                    baknkTransferE:true
+                })
+            }else{
+            var confirmPay = {  
+                // "transaction_code":"56713178-05-12-2018-2867",
+                "transaction_code":this.props.transaction_code,
+                "payment":"full payment"
+                // "payment":this.state.paymentType
+              }
             axios({
                 method: 'post',
-                url: `https://api.trabo.co/payment/xendit/client/invoice`,
+                url: `https://api.trabo.co/payment/confirm`,
                 headers: {
                     "Content-Type" : "application/json"
                   },
-                  data:dataRet
+                  data:confirmPay
                 })
                 .then((res) => {
-                    console.log(res);
+                    console.log(res)
+                    if(res.data.response==='success'){
+                        swal({
+                            title: "Success",
+                            text: "Payment has been made successfully!",
+                            icon: "success",
+                            button: true,
+                            dangerMode: false,
+                          })
+                          .then((willDelete) => {
+                            if (willDelete) {
+                              swal("Poof! Your imaginary file has been deleted!", {
+                                icon: "success",
+                              });
+                            } else {
+                              swal("Your imaginary file is safe!");
+                            }
+                          });
+                    }
+                    else{
+                        swal({
+                            title: res.data.diagnostic.error,
+                            text: res.data.diagnostic.error_msgs,
+                            icon: "error",
+                            button: true,
+                            dangerMode: false,
+                          })
+                          .then((willDelete) => {
+                            if (willDelete) {
+                              swal("Poof! Your imaginary file has been deleted!", {
+                                icon: "success",
+                              });
+                            } else {
+                              swal("Your imaginary file is safe!");
+                            }
+                          });
+                    }
                 })
+            }
         }
         
     }
 
   render() {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
-        briMba,bniMba,expiryDate,expiry} = this.state;
+        briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
 
-      let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime;
+      let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
       let ForTime = new Date(expiryDate);
       let ForDate = new Date(expiryDate).toISOString().slice(0,10);
       ForDate = new Date(ForDate).toGMTString();
@@ -407,6 +513,13 @@ export default class componentName extends Component {
             ))
             )
       }
+      if(aflaDetails!==null){
+        alfaDet =(
+        aflaDetails.map((item,index)=>(
+            <li key={index} className='pb-2'><div className='textCounter mr-1'>{index+1}</div>{item} </li>
+          ))
+        )
+      }
 
     return (
 
@@ -495,9 +608,11 @@ export default class componentName extends Component {
                         <li className="nav-item">
                            <a className="nav-link active" onClick={(e) =>this.selectPaymentMethod('BankTransfer')} data-toggle="tab" href="#bankTransfers">Bank Transfer</a>
                         </li>
+                        {this.state.alfaMartData?
                         <li className="nav-item">
                             <a className="nav-link" onClick={(e) =>this.selectPaymentMethod('RetailTransfer')} data-toggle="tab" href="#retailTransfer">Retail Transfer</a>
                         </li>
+                        :''}
                         <li className="nav-item">
                             <a className="nav-link" onClick={(e) =>this.selectPaymentMethod('CreditCard')} data-toggle="tab" href="#creditCard">Credit Card</a>
                         </li>   
@@ -611,12 +726,14 @@ export default class componentName extends Component {
                                 <div className='col-md-12 my-5 border-bottom'>
                                     <img src='/images/alfa.jpg' alt='alpha'/>
                                 </div>
+                                
                                 <div className='col-md-12'>
-                                <h4 className='virtualAccountNorm'>Virtual Account <span className='virtualAccount'># {accBri}</span></h4>
-                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{nameBri}</span></h4>
-                                    <p className='atmText'>* Silakan baca petunjuk di bawah ini untuk menyelesaikan transaksi Anda. </p>
+                                <h4 className='virtualAccountNorm'>Berikut kode pembayaran Alfamart anda : <span className='virtualAccount'># {alfaPayCode}</span></h4>
+                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{alfaPayName}</span></h4>
+                                    <p className='atmText'>* Silahkan baca petunjuk di bawah ini untuk menyelesaikan transaksi anda.
+  Kami sarankan Anda untuk menyimpan halaman ini. </p>
                                     <ul className='listText'>
-                                        {briA}
+                                        {alfaDet}
                                     </ul>
                                 </div>
                             </div>    
@@ -642,11 +759,17 @@ export default class componentName extends Component {
                     </div>
                     <div className='col-md-12 mt-5 text-center'>
                         <button className='confirm-payment' onClick={this.handleConfirmPayment}>Confirm Payment</button>
+                        {this.state.baknkTransferE?  
+                           <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
+                               <strong>Error!</strong> Please select one of the bank.
+                            </div>:''
+                            }
                     </div>
                     
                 </div>
             </div>
             }
+
       </div>
     )
   }

@@ -7,7 +7,8 @@ import '../../../node_modules/react-intl-tel-input/dist/libphonenumber.js';
 import '../../../node_modules/react-intl-tel-input/dist/main.css';
 // import {ActivityDetail} from '../ChooseActivity/ActivityDetail';
 import AdditionalData from './additionalData';
-import Payment from '../PaymentProcess/Payment'
+import Payment from '../PaymentProcess/Payment';
+import swal from 'sweetalert';
 var arr =  {};
 var otherPaxArr = {};
 
@@ -105,6 +106,22 @@ export default class componentName extends Component {
      showPaymentPage:false
   }
   componentWillMount(){
+    // swal({
+    //     title: "Success",
+    //     text: "Payment has been made successfully!",
+    //     icon: "success",
+    //     button: true,
+    //     dangerMode: false,
+    //   })
+    //   .then((willDelete) => {
+    //     if (willDelete) {
+    //       swal("Poof! Your imaginary file has been deleted!", {
+    //         icon: "success",
+    //       });
+    //     } else {
+    //       swal("Your imaginary file is safe!");
+    //     }
+    //   });
     axios({
       method: 'get',
       // url: `https://api.trabo.co/partner/activity/detail/${this.state.id}`, A-09229850
@@ -431,7 +448,6 @@ export default class componentName extends Component {
                           data:databook
                         })
                         .then((res) => {
-                            console.log(res);
                             if(res.data.status){
                                 this.setState({bookingE:true})
                             }
