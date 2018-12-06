@@ -69,7 +69,7 @@ export default class componentName extends Component {
      package:[],
      additional_description:{},
      addProductsValue:[
-            {id:1,qty:0},
+            {id:1,qty:0,quot:0},
      ],
      addProductsValue1:[
         {id:1,qty:0},
@@ -102,8 +102,11 @@ export default class componentName extends Component {
      service:0,
      total_frontend:0,
      minimum_depos:0,
+     minimum_deposit:0,
      promoResponse:false,
-     showPaymentPage:false
+     showPaymentPage:false,
+     standardPaxMAx:0,
+     total_frontend_count:''
   }
   componentWillMount(){
     // swal({
@@ -170,6 +173,17 @@ export default class componentName extends Component {
                     paxxArr.push({id:paxDet[a].id, qty:0})
                   }
               }
+              let minBook = res.data.response.product.min_per_booking,
+              maxBook = res.data.response.product.max_per_booking,
+              quota = res.data.response.product.quota,
+              usedQuota = res.data.response.product.used_quota, finalQuota;
+              quota  = quota - usedQuota;
+              if(quota<maxBook){
+                finalQuota = quota
+              }else{
+                finalQuota = maxBook
+              }
+
           this.setState({
               detail_product:res.data.response.detail_product,
               rawPackage:paxxArr,
@@ -191,7 +205,8 @@ export default class componentName extends Component {
               min_per_booking:res.data.response.product.min_per_booking,
               quota:res.data.response.product.quota,
               used_quota:res.data.response.product.used_quota,
-              rawAddPR:rawAddProduct
+              rawAddPR:rawAddProduct,
+              standardPaxMAx:finalQuota
           })
 
       })
@@ -206,6 +221,7 @@ export default class componentName extends Component {
   incrementCounter = (id,count,maxB) => {
     var addValuesData = [...this.state.addProductsValue1];
     var addProBooking = [...this.state.addProductsValueQuota];
+
         if(addValuesData.findIndex(x=>x.id===id)>=0){
             for (var i = 0; i < addValuesData.length; i++){
                 if (addValuesData[i].id ===id){
@@ -464,6 +480,7 @@ export default class componentName extends Component {
                                     service:res.data.service,
                                     total_frontend:res.data.total_frontend,
                                     minimum_deposit:res.data.minimum_deposit,
+                                    total_frontend_count:res.data.total_frontend_count
                                 })
                             }
                         })
@@ -555,7 +572,7 @@ export default class componentName extends Component {
             if(paymentType==='full payment'){
                 depositAmt=0
             }
-            console.log("Deposti AMOUNT: " +depositAmt);
+
             var selectHead, boxHead;
             var add_pax = this.state.additionalDesc;
             for(let i=0;i<add_pax.length;i++){
@@ -633,13 +650,13 @@ export default class componentName extends Component {
                     })
               }
              
-
      }
 
      refreshRoute =() =>{
         window.location.reload()
      }
   render() {
+
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = this.state.operation_time,productDate = new Date(this.state.date).toGMTString();
@@ -738,31 +755,31 @@ export default class componentName extends Component {
 
     if(product.additional_products){
     a = product.additional_products;
-     additonalData = (      
-        a.map((item,i) => (
-            <div className='col-sm-12' key = {i}>
-            <h5 className='Meals mt-4'>{item.name}</h5>
-            <hr/>
-            {
-                item.details.map((it,i) => (
-                   <div className='row' key={i}>
-                    <div className='col-sm-3'>
-                    <label style={{ display:"flex" }}>
-                    <button id="subs" className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
-                    <input type="text" name={it.description} value={this.state.addProductsValue} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
-                    <button type="button" onClick={()=>this.increementByOne(it)} id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
-                    </label>
-                    </div>
-                    <div className='col-sm-6'>
-                        <h5 className='addProductRightHead'>{it.description} <span className='productAmt'> ({currency} {formatThousands(it.amount)}) </span></h5>
-                        <p className='Remark'>Remark:{it.remark} </p>
-                    </div>
-                    </div>
-                ))
-            }
-                </div>         
-            )) 
-        )
+    //  additonalData = (      
+    //     a.map((item,i) => (
+    //         <div className='col-sm-12' key = {i}>
+    //         <h5 className='Meals mt-4'>{item.name}</h5>
+    //         <hr/>
+    //         {
+    //             item.details.map((it,i) => (
+    //                <div className='row' key={i}>
+    //                 <div className='col-sm-3'>
+    //                 <label style={{ display:"flex" }}>
+    //                 <button id="subs" className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
+    //                 <input type="text" name={it.description} value={this.state.addProductsValue} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
+    //                 <button type="button" onClick={()=>this.increementByOne(it)} id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
+    //                 </label>
+    //                 </div>
+    //                 <div className='col-sm-6'>
+    //                     <h5 className='addProductRightHead'>{it.description} <span className='productAmt'> ({currency} {formatThousands(it.amount)}) </span></h5>
+    //                     <p className='Remark'>Remark:{it.remark} </p>
+    //                 </div>
+    //                 </div>
+    //             ))
+    //         }
+    //             </div>         
+    //         )) 
+    //     )
 
         }
 
@@ -939,7 +956,7 @@ export default class componentName extends Component {
                         {
                             item.details.map((it,i) => (
                                 this.state.addProductsValue.map(x=> (
-                                    <AdditionalData myFun={this.incrementCounter} decrement={this.decrementCounter} key={x.id} it={it} addiValue={x} currency={this.state.currency} data={a}></AdditionalData>  
+                                    <AdditionalData myFun={this.incrementCounter} decrement={this.decrementCounter} key={x.id} it={it} addiValue={x} currency={this.state.currency} getQuota ={it.max_per_booking} data={a}></AdditionalData>  
                                 ))
                                 
                             ))
@@ -1087,7 +1104,7 @@ export default class componentName extends Component {
                         </div>  
                         <div className='row mt-3'>
                             <div className='col-6'>
-                                <h5 className='subTotalText'>TOTAL</h5>
+                                <h5 className='subTotalText'>TOTAL ({this.state.total_frontend_count})</h5>
                             </div>
                             <div className='col-6'>
                                 <h5 className='subTotalValLight'>{currency}<span className='totalAmtText'>&nbsp;&nbsp;{formatThousands(this.state.total_frontend)}</span></h5>
@@ -1128,16 +1145,16 @@ export default class componentName extends Component {
                                     </div>
                                     <div className='col-9'>
                                     <h4>Deposit</h4>
-                                    <p className='payentAddText'><span className='payentAddText'>Min</span> {currency} {formatThousands(this.state.depositAmt)}</p>
+                                    <p className='payentAddText'><span className='payentAddText'>Min</span> {currency} {formatThousands(this.state.minimum_deposit)}</p>
                                     </div>
                                 </div>                                    
                                 </label>
                                 :''}
                             </div>  
-                            {this.state.depositAmt>0?    
+                            {this.state.minimum_deposit>0?    
                             <div className='row mt-4 mx-2'>
                                 <div className='col-sm-12'>
-                                    <h3 className='Deposit-Payment-Amou mt-4'>Deposit Payment Amount (<span className='depositAmtDark'>{currency} {formatThousands(this.state.depositAmt)}</span>)</h3>
+                                    <h3 className='Deposit-Payment-Amou mt-4'>Deposit Payment Amount (<span className='depositAmtDark'>{currency} {formatThousands(this.state.minimum_deposit)}</span>)</h3>
                                 </div>                        
                             </div>      
                             :''}

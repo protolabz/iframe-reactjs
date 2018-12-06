@@ -69,7 +69,7 @@ export default class MultipleHours extends Component {
       let preTime =[];
       let curTime =[];
       let nexTime =[];
-      if(dateBefore!==null){
+      if(dateBefore===null){
           preDate = dateBefore.before_date.from;
           CopyPrevDate = dateBefore.before_date.from;
           preTime = dateBefore.before;

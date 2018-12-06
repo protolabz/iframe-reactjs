@@ -2,18 +2,26 @@ import React,{Component} from 'react'
 import './PaxDetails.css';
 
 class AdditionalData extends Component {
-    state = {value: this.props.addiValue.qty }
+    state = {value: this.props.addiValue.qty, disablebutton:false, validValue:this.props.getQuota }
     handleIncreement = (id)  => {   
         var count = this.state.value;
         count= count +1;
-        
+        console.log(this.props.getQuota);
         this.setState({value:count});       
         this.props.myFun(id.id,count,id.max_per_booking);
+
+        if(this.state.value===this.state.validValue - 1){
+            this.setState({
+                disablebutton:true
+            })
+        }
     
     }
 
     handleDecreement = (id)  => {    
-        
+        this.setState({
+            disablebutton:false
+        })
         var count = this.state.value;
         if(count<1){
             count = 0
@@ -40,7 +48,7 @@ class AdditionalData extends Component {
             <label style={{ display:"flex" }} className='mt-2'>
             <button id="subs" onClick ={ () => this.handleDecreement(this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
             <input type="text" name={this.props.it.id} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
-            <button type="button" onClick={()=>this.handleIncreement(this.props.it)} id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
+            <button type="button" onClick={()=>this.handleIncreement(this.props.it)} id="adds" disabled ={this.state.disablebutton} className="btnPlus" ><i className='fa fa-plus'></i></button>
             </label>
             </div>
             <div className='col-sm-6'>

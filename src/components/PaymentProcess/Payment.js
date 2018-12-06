@@ -5,6 +5,7 @@ import CreditCardInput from 'react-credit-card-input';
 import Xendit from 'xendit-js-node';
 import Modal from 'react-responsive-modal';
 import swal from 'sweetalert';
+import Voucher from '../Vouchers/vouchers'
 const EX_API_KEY = 'xnd_public_development_NImDfL511rH6wMJgKrcdT2PFZdWnpIR8xXOx+Rxg+mHV8LegCQR0hQ==';
 
 export default class componentName extends Component {
@@ -43,6 +44,7 @@ export default class componentName extends Component {
         baknkTransferE:false,
         alfaMartData:true,
         paymentFail:false,
+        isShowVoucher:false
     }
 
     componentWillMount(){
@@ -241,40 +243,30 @@ export default class componentName extends Component {
         var requestData = Object.assign({}, this.getTokenData());
         console.log(requestData)
         console.log("requestDataSuccess")
-        // if (this.state.should_use_meta) {
-        //     requestData["meta_enabled"] = true;
-        // } else {
-        //     requestData["meta_enabled"] = false;
-        // }
-        console.log(creditCardToken);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-        // console.log(
-        //     'RESPONSE: \n' +
-        //     JSON.stringify(creditCardToken, null, 4) +
-        //     '\n\n' +
-        //     'Request Data: \n' +
-        //     JSON.stringify(requestData, null, 4)
-        // );
+         this.onCloseModal();
+        console.log(creditCardToken);
     }
 
     getTokenData () {
-        let {cardNumber,expiry,cvc,cardHolderName} = this.state;
-            let dt = expiry.split('/'),mm,yy;
-            mm = dt[0];
-            yy = dt[1];
-            yy = "20"+yy;
+        // let {cardNumber,expiry,cvc,cardHolderName} = this.state;
+        //     let dt = expiry.split('/'),mm,yy;
+        //     mm = dt[0];
+        //     yy = dt[1];
+        //     yy = "20"+yy;
         return {        
-            "amount": "10000",        
+            "amount": "75000",        
             // "amount": this.props.amount,
             "card_number": "4000000000000002",
             // "card_number": cardNumber,        
             "card_exp_month": "12",
             // "card_exp_month": mm,        
-            "card_exp_year": "2023",
+            "card_exp_year": "2018",
             // "card_exp_year": yy,        
             "card_cvn": "123",
             // "card_cvn": cvc,
             "is_multiple_use": false,
-            "should_authenticate": true
+            "should_authenticate": true,
+            "meta_enabled": false
         };
     }
     displayError (err) {
@@ -283,33 +275,31 @@ export default class componentName extends Component {
         // console.log(requestData)
     }
     xenditResponseHandler (err, creditCardToken) {
- 
+        console.log("VERIFIED",creditCardToken.status);
         if (err) {
             // this.setState({ isLoading: false });
             return this.displayError(err);
         }
-        console.log(creditCardToken)
         this.setState({ creditCardToken: creditCardToken })
 
         if (creditCardToken.status === 'APPROVED' || creditCardToken.status === 'VERIFIED') {
             this.displaySuccess(creditCardToken);
             // console.log(this.displaySuccess(creditCardToken));
-            // console.log("VERIFIED",creditCardToken);
+            console.log("VERIFIED",creditCardToken.status);
+            
         } 
         else if (creditCardToken.status === 'IN_REVIEW') {
             this.setState({ 
                 redirectedUrl: creditCardToken.payer_authentication_url,
                 showModal:true
              })
-            //  if(creditCardToken){
-            //     this.setState({ 
-            //         ccToken: creditCardToken.id,
-            //         showModal:false
-            //      })
-            //  }else{
-
-            //  }
-            // console.log("REVIEW",creditCardToken);
+             window.open(creditCardToken.payer_authentication_url, 'sample-inline-frame');
+            //  this.setState({
+            //     showModal:true
+            //  })
+                    // $('.overlay').show();
+                    // $('#three-ds-container').show();
+           // console.log("REVIEW",creditCardToken);
         }
         
          else if (creditCardToken.status === 'FAILED') {
@@ -317,9 +307,11 @@ export default class componentName extends Component {
             console.log(creditCardToken.status);
         }
     }
+    
     handleConfirmPayment =() => {
         let {bank_code,paymentMethodType} = this.state;
         let transaction_code = this.props.transaction_code;
+        console.log("asocho",paymentMethodType);
         if(paymentMethodType==='CreditCard'){
             Xendit.setPublishableKey(EX_API_KEY);
             // Request a token from Xendit:
@@ -364,13 +356,7 @@ export default class componentName extends Component {
                             dangerMode: false,
                           })
                           .then((willDelete) => {
-                            if (willDelete) {
-                              swal("Poof! Your imaginary file has been deleted!", {
-                                icon: "success",
-                              });
-                            } else {
-                              swal("Your imaginary file is safe!");
-                            }
+                            
                           });
                     }
                     else{
@@ -381,22 +367,21 @@ export default class componentName extends Component {
                             button: true,
                             dangerMode: false,
                           })
-                          .then((willDelete) => {
-                            if (willDelete) {
-                              swal("Poof! Your imaginary file has been deleted!", {
-                                icon: "success",
-                              });
-                            } else {
-                              swal("Your imaginary file is safe!");
-                            }
-                          });
+                        //   .then((willDelete) => {
+                        //     if (willDelete) {
+                        //       swal("Poof! Your imaginary file has been deleted!", {
+                        //         icon: "success",
+                        //       });
+                        //     } else {
+                        //       swal("Your imaginary file is safe!");
+                        //     }
+                        //   });
                     }
                 })
             }
         }
         
     }
-
   render() {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
@@ -532,7 +517,16 @@ export default class componentName extends Component {
             onClose={this.onCloseModal} 
             blockScroll={true}
             center>
-                <iframe title='payment-confirmation' className='iframeProps' src={this.state.redirectedUrl}/>
+                {/* <iframe title='payment-confirmation' className='iframeProps' src={this.state.redirectedUrl}/> */}
+                <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
+            {/* {this.state.showModal?  
+            // <div>   
+            <div className="overlay"></div>
+            <div id="three-ds-container">
+            <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
+            </div>
+            // </div>
+            :''} */}
          </Modal>
          {this.state.isLoading?
             <img className='loading' src='/images/loading.svg' alt='loading'/>
@@ -543,7 +537,10 @@ export default class componentName extends Component {
                 <button className='proceedToPayment mt-5' style={{ width:"20%" }}><i className='fa fa-arrow-left'></i> Go Back </button>
             </div>
             :
+            this.state.isShowVouchers?
+            <Voucher />:
             <div className='col-md-9 cols9-center mainOuterDiv' style={{ opacity:this.state.componentOpacity }} >
+
                 <div className='row pt-5 pb-4'>
                     <div className='col-md-12'>
                         <h2 className='paymentHeading'>Payment</h2>
@@ -767,7 +764,9 @@ export default class componentName extends Component {
                     </div>
                     
                 </div>
+
             </div>
+
             }
 
       </div>

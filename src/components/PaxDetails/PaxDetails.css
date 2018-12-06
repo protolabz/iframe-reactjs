@@ -457,3 +457,8 @@
 /* .customLabel::before{
   background-color: #FFF !important;
 } */
+.btnPlus[disabled]{
+  /* border: 1px solid #cacaca !important; */
+  background-color:#e6e6e6;
+  color: #666666;
+}
