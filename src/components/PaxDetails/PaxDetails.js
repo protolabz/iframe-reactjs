@@ -1145,7 +1145,7 @@ export default class componentName extends Component {
                                     </div>
                                     <div className='col-9'>
                                     <h4>Deposit</h4>
-                                    <p className='payentAddText'><span className='payentAddText'>Min</span> {currency} {formatThousands(this.state.minimum_deposit)}</p>
+                                    {/* <p className='payentAddText'><span className='payentAddText'>Min</span> {currency} {formatThousands(this.state.minimum_deposit)}</p> */}
                                     </div>
                                 </div>                                    
                                 </label>
