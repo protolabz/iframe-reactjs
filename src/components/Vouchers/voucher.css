@@ -1,0 +1,350 @@
+.voucherOrange{
+    /* width: 480px;
+    height: 300px; */
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
+    background-image: linear-gradient(238deg, #f3804a, #f8ab4b);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0px 4px 14px 2px #ccc;
+}
+.voucherWhite{
+    box-shadow: 4px 4px 14px 0px #ccc;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.operationDate{
+    font-family: Archivo;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 1.4px;
+    text-align: left;
+    color: #ffffff;
+}
+.productTitle{
+    font-family: Merriweather;
+    text-align: left;
+    font-style: normal;
+    font-weight: 900;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+.paxDetails{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+.paxDetailsBold{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+.location{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #ffffff;
+    display: flex;
+}
+.location span {
+    display:block;
+    padding-left:25px;
+}
+.location:before{
+    content:'\f041';
+    font-family: FontAwesome;
+    /* left: 25px; */
+    /* top: 140px; */
+    /* position: absolute; */
+    font-size: 20px;
+    margin-top: 7px;
+}
+.contactDetail{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    display: flex;
+}
+.contactDetail span {
+    display:block;
+    padding-left:15px;
+}
+.contactDetail:before{
+    content:'\f095';
+    font-family: FontAwesome;
+}
+.contactDetailEmail{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    display: flex;
+}
+.contactDetailEmail span {
+    display:block;
+    padding-left:15px;
+}
+.contactDetailEmail:before{
+    content:'\f0e0';
+    font-family: FontAwesome;
+}
+.bookingId{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+}
+.transId{
+    font-family: Archivo;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+}
+.leadPaxTitle{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 32px;
+    letter-spacing: normal;
+    color: #aaaaaa;
+}
+.leadPaxValue{
+    font-family: Archivo;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #4f4f4f;
+}
+.totalPaidTitle{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 32px;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .totalPaidTitleGreen{
+    color: #4a9380;
+  }
+  .totalPaidTitleRed{
+    color: #f89655;
+}
+.totalPaidValue{
+    font-family: Archivo;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 32px;
+    letter-spacing: normal;
+    text-align: right;
+    color: #4f4f4f;
+}
+.remainingValue{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #4f4f4f;
+}
+.noteText{
+  font-family: Archivo;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #4f4f4f;
+  text-align: center;
+  width: 100%;
+}
+.borderDashed{
+    border-top: 1px dashed #cccccc;
+}
+.dateText{
+    font-weight: bold;
+}
+.navPill li{
+    width: 190px;
+    height: 50px;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 0 #eeeeee;
+    background-color: #ffffff;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.navPill>.active{
+    border: 2px solid #f89655;
+}
+.navPill li a{
+    line-height: 50px;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #4f4f4f;
+}
+.navPill li a i {
+    font-weight: bold;
+    color:#aaaaaa;
+}
+.customBorder{
+    border-right:1px dashed #CCC;
+}
+@media only screen and (max-width: 767px) {
+    .customBorder{
+        border-right:none;
+    }   
+}
+
+.customerText{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+}
+.customerTextValue{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #4f4f4f;
+}
+.expirationText{
+    font-family: Archivo;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #aaaaaa;
+}
+.expirationTextRed{
+    font-family: Archivo;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ff0010;
+}
+.dueDateText{
+    font-family: Archivo;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+    text-align: center;
+    border: 2px dotted #f89655;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+.dueDateTextRed{
+    font-family: Archivo;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ff0010;
+}
+.customLabel{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: 0;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+}
+.email-textBox{
+    height: 50px !important;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 0 #eeeeee;
+    background-color: #ffffff;
+}
+.buttonEmail{
+    height: 50px !important;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 0 #eeeeee;
+    background-color: #eeeeee;
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+}

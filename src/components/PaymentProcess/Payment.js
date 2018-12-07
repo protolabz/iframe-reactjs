@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import './payment.css';
 import CreditCardInput from 'react-credit-card-input';
-import Xendit from 'xendit-js-node';
+// import Xendit from 'xendit-js-node';
 import Modal from 'react-responsive-modal';
 import swal from 'sweetalert';
 import Voucher from '../Vouchers/vouchers'
@@ -164,7 +164,7 @@ export default class componentName extends Component {
                   data:dataAlfa
                 })
                 .then((res) => {
-                    console.log(res);
+
                     if(res.data.diagnostic.status===400){
                         this.setState({
                             alfaMartData:false
@@ -226,43 +226,70 @@ export default class componentName extends Component {
             cardHolderName:e.target.value
         })
     }
-        // paymentForm = () => {
-        // Xendit.setPublishableKey(EX_API_KEY);
-
-        // // Request a token from Xendit:
-        // var tokenData = this.getTokenData();
-        // var fraudData = this.getFraudData();
-
-        // if (this.state.should_use_meta) {
-        //     Xendit.card.createToken(tokenData, fraudData, this.xenditResponseHandler.bind(this));
-        // } else {
-        //     Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
-        // }
-    // }
+       
     displaySuccess (creditCardToken) {
         var requestData = Object.assign({}, this.getTokenData());
-        console.log(requestData)
-        console.log("requestDataSuccess")
          this.onCloseModal();
-        console.log(creditCardToken);
+        var data = {
+            transaction_code:this.props.transaction_code,
+            token_id:creditCardToken.id
+        } 
+        if(creditCardToken.status==='VERIFIED'){
+            axios({
+                method: 'post',
+                url: `https://api.trabo.co/payment/credit-card`,
+                headers: {
+                    "Content-Type" : "application/json"
+                  },
+                  data:data
+                })
+                .then((res) => {
+                    console.log(res);
+                    if(res.data.diagnostic.status===200){
+                        swal({
+                            title: "Success",
+                            text: "Payment has been made successfully!",
+                            icon: "success",
+                            button: true,
+                            dangerMode: false,
+                          })
+                          .then((willDelete) => {
+                            this.setState({
+                                isShowVoucher:true
+                            })
+                          });
+                    }
+                    else{
+                        swal({
+                            title: res.data.diagnostic.error,
+                            text: res.data.diagnostic.error_msgs,
+                            icon: "warning",
+                            button: true,
+                            dangerMode: false,
+                          })
+                    }
+                })
+        }
     }
 
     getTokenData () {
-        // let {cardNumber,expiry,cvc,cardHolderName} = this.state;
-        //     let dt = expiry.split('/'),mm,yy;
-        //     mm = dt[0];
-        //     yy = dt[1];
-        //     yy = "20"+yy;
+        let {cardNumber,expiry,cvc,cardHolderName} = this.state;
+            let dt = expiry.split('/'),mm,yy;
+            mm = dt[0];
+            yy = dt[1];
+            yy = "20"+yy;
+           yy = yy.split(' ').join('');
+           mm = mm.split(' ').join('');
         return {        
-            "amount": "75000",        
-            // "amount": this.props.amount,
+            // "amount": "75000",        
+            "amount": this.props.amount,
             "card_number": "4000000000000002",
             // "card_number": cardNumber,        
-            "card_exp_month": "12",
-            // "card_exp_month": mm,        
-            "card_exp_year": "2018",
-            // "card_exp_year": yy,        
-            "card_cvn": "123",
+            // "card_exp_month": "12",
+            "card_exp_month": mm,        
+            // "card_exp_year": "2018",
+            "card_exp_year": yy,        
+            // "card_cvn": "123",
             // "card_cvn": cvc,
             "is_multiple_use": false,
             "should_authenticate": true,
@@ -272,20 +299,16 @@ export default class componentName extends Component {
     displayError (err) {
         var requestData = Object.assign({}, this.getTokenData());
 
-        // console.log(requestData)
+        console.log(requestData)
     }
     xenditResponseHandler (err, creditCardToken) {
-        console.log("VERIFIED",creditCardToken.status);
         if (err) {
-            // this.setState({ isLoading: false });
             return this.displayError(err);
         }
         this.setState({ creditCardToken: creditCardToken })
 
         if (creditCardToken.status === 'APPROVED' || creditCardToken.status === 'VERIFIED') {
             this.displaySuccess(creditCardToken);
-            // console.log(this.displaySuccess(creditCardToken));
-            console.log("VERIFIED",creditCardToken.status);
             
         } 
         else if (creditCardToken.status === 'IN_REVIEW') {
@@ -311,19 +334,11 @@ export default class componentName extends Component {
     handleConfirmPayment =() => {
         let {bank_code,paymentMethodType} = this.state;
         let transaction_code = this.props.transaction_code;
-        console.log("asocho",paymentMethodType);
         if(paymentMethodType==='CreditCard'){
-            Xendit.setPublishableKey(EX_API_KEY);
+            window.Xendit.setPublishableKey(EX_API_KEY);
             // Request a token from Xendit:
             var tokenData = this.getTokenData();
-            // var fraudData = this.getFraudData();
-            Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
-            // if (this.state.should_use_meta) {
-            //     Xendit.card.createToken(tokenData, fraudData, this.xenditResponseHandler.bind(this));
-            // } else {
-            //     Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
-            // }
-            // console.log(xend);
+            window.Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
         }
         else{
             if(bank_code===''){
@@ -332,10 +347,8 @@ export default class componentName extends Component {
                 })
             }else{
             var confirmPay = {  
-                // "transaction_code":"56713178-05-12-2018-2867",
                 "transaction_code":this.props.transaction_code,
-                "payment":"full payment"
-                // "payment":this.state.paymentType
+                "payment":this.state.paymentType
               }
             axios({
                 method: 'post',
@@ -346,7 +359,6 @@ export default class componentName extends Component {
                   data:confirmPay
                 })
                 .then((res) => {
-                    console.log(res)
                     if(res.data.response==='success'){
                         swal({
                             title: "Success",
@@ -538,7 +550,14 @@ export default class componentName extends Component {
             </div>
             :
             this.state.isShowVouchers?
-            <Voucher />:
+            <Voucher
+                transaction_code = {this.props.transaction_code}
+                operation_date = {this.props.operationDate+"--"+this.props.operationTime}
+                product_name = {this.props.productName}
+                enail = {this.props.email}
+                phone_number = {"+"+this.props.phoneNumber}
+                currency= {this.props.currency}
+             />:
             <div className='col-md-9 cols9-center mainOuterDiv' style={{ opacity:this.state.componentOpacity }} >
 
                 <div className='row pt-5 pb-4'>
@@ -555,8 +574,8 @@ export default class componentName extends Component {
                         {/* <p className='operationDateTime'>Thu, 27 Jul 2018 -- 07:00 AM</p> */}
                         <h4 className='productHeading'>{this.props.productName}</h4>
                         {/* <h4 className='productHeading mb-3'>Grand Ubud Tour</h4> */}
-                        {/* <h4 className='paxDetails'><span className='paxDetailsLight'>FOR</span> Details</h4>
-                        <h4 className='paxDetails'><span className='paxDetailsLight'>FOR</span> 2 ADULTS</h4> */}
+                        {/* <h4 className='paxDetails'><span className='paxDetailsLight'>FOR</span> Details</h4>*/}
+                        <h4 className='paxDetails'><span className='paxDetailsLight'>FOR</span> {this.props.total_frontend_count}</h4> 
                     </div>
                     <div className='col-md-4 text-left'>
                         <p className='bookingId mb-2'>BOOKING ID</p>
@@ -580,7 +599,7 @@ export default class componentName extends Component {
                         <h4 className='paymentTypeLight'><span className='paymentType'>PAYMENT AMOUNT (</span>{this.props.paymentType}<span className='paymentType'>)</span></h4>
                     </div>
                     <div className='col-md-6'>
-                        <h4 className='amountValue'><span className='currencyValue'>IDR </span>
+                        <h4 className='amountValue'><span className='currencyValue'>{this.props.currency} </span>
                             {formatThousands(this.props.amount)} 
                         </h4>
                     </div>

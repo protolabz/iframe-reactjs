@@ -106,6 +106,8 @@ export default class componentName extends Component {
      promoResponse:false,
      showPaymentPage:false,
      standardPaxMAx:0,
+     isDeposit:false,
+     depositValue:0,
      total_frontend_count:''
   }
   componentWillMount(){
@@ -854,7 +856,13 @@ export default class componentName extends Component {
             while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
             return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
           }
-
+        var amountLast;
+        if(this.state.paymentType==='deposit'){
+            amountLast = this.state.minimum_deposit;
+        }
+        else{
+            amountLast = this.state.finalAmount; 
+        }
     return (
         this.state.showPaymentPage?
         <Payment 
@@ -864,10 +872,11 @@ export default class componentName extends Component {
             productName={detail_product.name} 
             phoneNumber={this.state.phone_code+" "+this.state.phone}
             email={this.state.email}
-            amount={this.state.finalAmount}
+            amount={amountLast}
             transaction_code={this.state.transaction_code}
             paymentType={this.state.paymentType}
             currency={currency}
+            total_frontend_count={this.state.total_frontend_count}
         />
         :
       <div className='container mt-5 mb-5'>
@@ -956,7 +965,7 @@ export default class componentName extends Component {
                         {
                             item.details.map((it,i) => (
                                 this.state.addProductsValue.map(x=> (
-                                    <AdditionalData myFun={this.incrementCounter} decrement={this.decrementCounter} key={x.id} it={it} addiValue={x} currency={this.state.currency} getQuota ={it.max_per_booking} data={a}></AdditionalData>  
+                                    <AdditionalData myFun={this.incrementCounter} decrement={this.decrementCounter} key={x.id} it={it} addiValue={x} currency={this.state.currency} usedQuota={it.used_quota} quota={it.quota} maxPerBook ={it.max_per_booking} data={a}></AdditionalData>  
                                 ))
                                 
                             ))
@@ -1122,7 +1131,7 @@ export default class componentName extends Component {
                                 <div className='col-3'>
                                     {/* <input type='radio' name='fullPayment' />     */}
                                     <div className="custom-control custom-radio">
-                                        <input type="radio" onClick={this.handlePayMethod} checked={this.state.paymentType === "full payment"} className="custom-control-input" id="defaultUnchecked" value='full payment' name="payment" />
+                                        <input type="radio" onClick={(e) => this.handlePayMethod(e,this.state.total_frontend)} checked={this.state.paymentType === "full payment"} className="custom-control-input" id="defaultUnchecked" value='full payment' name="payment" />
                                         <label className="custom-control-label customLabel" htmlFor="defaultUnchecked"></label>
                                     </div>
                                 </div>
@@ -1139,25 +1148,25 @@ export default class componentName extends Component {
                                 <div className='row checkBoxDiv'>
                                     <div className='col-3'>
                                     <div className="custom-control custom-radio">
-                                        <input type="radio" onClick={this.handlePayMethod} checked={this.state.paymentType === "deposit"} className="custom-control-input" id="defaultUncheckeds" value='deposit' name="payment" />
+                                        <input type="radio" onClick={(e) => this.handlePayMethod(e,this.state.minimum_deposit)} checked={this.state.paymentType === "deposit"} className="custom-control-input" id="defaultUncheckeds" value='deposit' name="payment" />
                                         <label className="custom-control-label customLabel" ></label>
                                     </div>
                                     </div>
                                     <div className='col-9'>
                                     <h4>Deposit</h4>
-                                    {/* <p className='payentAddText'><span className='payentAddText'>Min</span> {currency} {formatThousands(this.state.minimum_deposit)}</p> */}
+                                    <p className='payentAddText'><span className='payentAddText'>Min</span> {currency} {formatThousands(this.state.minimum_deposit)}</p>
                                     </div>
                                 </div>                                    
                                 </label>
                                 :''}
                             </div>  
-                            {this.state.minimum_deposit>0?    
+                            {/* {this.state.minimum_deposit>0?    
                             <div className='row mt-4 mx-2'>
                                 <div className='col-sm-12'>
                                     <h3 className='Deposit-Payment-Amou mt-4'>Deposit Payment Amount (<span className='depositAmtDark'>{currency} {formatThousands(this.state.minimum_deposit)}</span>)</h3>
                                 </div>                        
                             </div>      
-                            :''}
+                            :''} */}
                             {/* <div className='row mt-4'> */}
                                 <div className='col-sm-12 mt-3'>
                                     <button onClick={this.handleProceedToPay} className='proceedToPayment'>Proceed to payment <i className='fa fa-arrow-right'></i></button>

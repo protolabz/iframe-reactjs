@@ -2,15 +2,29 @@ import React,{Component} from 'react'
 import './PaxDetails.css';
 
 class AdditionalData extends Component {
-    state = {value: this.props.addiValue.qty, disablebutton:false, validValue:this.props.getQuota }
+    state = {
+        value: this.props.addiValue.qty, 
+        disablebutton:false, 
+        maxPerBook:this.props.maxPerBook ,
+        usedQuota:this.props.usedQuota,
+        quota:this.props.quota
+    }
     handleIncreement = (id)  => {   
         var count = this.state.value;
         count= count +1;
-        console.log(this.props.getQuota);
+        var finQuota;
+        var FirstVal = this.state.quota - this.state.usedQuota;
+        var SecondVal = this.state.maxPerBook; 
         this.setState({value:count});       
+        if(FirstVal<SecondVal){
+            finQuota = FirstVal;
+        }
+        else{
+            finQuota = SecondVal;
+        }
         this.props.myFun(id.id,count,id.max_per_booking);
 
-        if(this.state.value===this.state.validValue - 1){
+        if(this.state.value===finQuota - 1){
             this.setState({
                 disablebutton:true
             })
