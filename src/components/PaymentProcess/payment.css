@@ -298,7 +298,7 @@
   position: absolute !important;
   top: 18px !important;
   right: 20px !important;
-  z-index: 9999 !important;
+  z-index: 99 !important;
   width: 35px;
   height: 30px;
 }

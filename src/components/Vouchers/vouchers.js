@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import './voucher.css';
-import Payment from '../PaymentProcess/Payment';
+import ListBooking from '../ListBooking/ListBooking';
 import CreditCardInput from 'react-credit-card-input';
 import Modal from 'react-responsive-modal';
 import swal from 'sweetalert';
 import { NavLink } from 'react-router-dom';
+import ScrollIntoView from 'react-scroll-into-view'
 var QRCode = require('qrcode-react');
 const EX_API_KEY = 'xnd_public_development_NImDfL511rH6wMJgKrcdT2PFZdWnpIR8xXOx+Rxg+mHV8LegCQR0hQ==';
 export default class componentName extends Component {
@@ -61,14 +62,15 @@ export default class componentName extends Component {
         isShowVoucher:false,
         specialNote:null,
         cancelText:null,
-        emailVoucherText:null
+        emailVoucherText:null,
+        isShowBooking:false
 
   }
   componentWillMount(){
     axios({
       method: 'get',
       // url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
-      url: `https://api.trabo.co/partner/activity/payment?transaction_code=56713178-07-12-2018-1971`,
+      url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
       })
       .then((res) => {
         var data = res.data;
@@ -85,7 +87,7 @@ export default class componentName extends Component {
             let expDt = (expDate.split(' '));
             let edd = expDt[1],emm = expDt[2],eyy = expDt[3],eday = expDt[0];
             let finalExDate = eday+ " " +edd+ " " +emm+ " " +eyy;
-        this.setState({
+            this.setState({
             operationDate:preDate,
             operationDateNormal:res.data.transaction.operation_date,
             operationTime:data.transaction.operation_time,
@@ -109,8 +111,7 @@ export default class componentName extends Component {
       })
 
       var data = {
-        transaction_code:this.state.transactionCode,
-        // transaction_code:"56713178-05-12-2018-2867",
+        transaction_code:this.props.transaction_code,
         bank_code:"BRI"
     }
     
@@ -210,8 +211,7 @@ export default class componentName extends Component {
         });
 
         var dataAlfa = {
-            transaction_code:this.state.transactionCode,
-            // transaction_code:"56713178-05-12-2018-2867",
+            transaction_code:this.props.transaction_code,
             bank_code:"ALFAMART"
         }
 
@@ -224,7 +224,6 @@ export default class componentName extends Component {
               data:dataAlfa
             })
             .then((res) => {
-                console.log(res);
                 if(res.data.diagnostic.status===400){
                     this.setState({
                         alfaMartData:false
@@ -247,7 +246,8 @@ onCloseModal = () => {
   };
 handleBankClick = (code) =>{
     this.setState({
-        bank_code:code
+        bank_code:code,
+        baknkTransferE:false
     })
 }
 selectPaymentMethod = (method) =>{
@@ -259,7 +259,8 @@ selectPaymentMethod = (method) =>{
     }
     this.setState({
         bank_code:'ALFAMART',
-        paymentMethodType:method
+        paymentMethodType:method,
+        baknkTransferE:false
     })
 
 }
@@ -389,22 +390,24 @@ displaySuccess (creditCardToken) {
 }
 
 getTokenData () {
-    // let {cardNumber,expiry,cvc,cardHolderName} = this.state;
-    //     let dt = expiry.split('/'),mm,yy;
-    //     mm = dt[0];
-    //     yy = dt[1];
-    //     yy = "20"+yy;
+    let {cardNumber,expiry,cvc,cardHolderName} = this.state;
+        let dt = expiry.split('/'),mm,yy;
+        mm = dt[0];
+        yy = dt[1];
+        yy = "20"+yy;
+        yy = yy.split(' ').join('');
+        mm = mm.split(' ').join('');
     return {        
-        "amount": "75000",        
-        // "amount": this.props.amount,
-        "card_number": "4000000000000002",
-        // "card_number": cardNumber,        
-        "card_exp_month": "12",
-        // "card_exp_month": mm,        
-        "card_exp_year": "2018",
-        // "card_exp_year": yy,        
-        "card_cvn": "123",
-        // "card_cvn": cvc,
+        // "amount": "75000",        
+        "amount": this.props.amount,
+        // "card_number": "4000000000000002",
+        "card_number": cardNumber,        
+        // "card_exp_month": "12",
+        "card_exp_month": mm,        
+        // "card_exp_year": "2018",
+        "card_exp_year": yy,        
+        // "card_cvn": "123",
+        "card_cvn": cvc,
         "is_multiple_use": false,
         "should_authenticate": true,
         "meta_enabled": false
@@ -412,11 +415,16 @@ getTokenData () {
 }
 displayError (err) {
     var requestData = Object.assign({}, this.getTokenData());
-
+    swal({
+        title: 'Failed',
+        text: "Payment has not been done.",
+        icon: "warning",
+        button: true,
+        dangerMode: true,
+      })
     // console.log(requestData)
 }
 xenditResponseHandler (err, creditCardToken) {
-    console.log("VERIFIED",creditCardToken.status);
     if (err) {
         // this.setState({ isLoading: false });
         return this.displayError(err);
@@ -451,10 +459,31 @@ xenditResponseHandler (err, creditCardToken) {
 handleConfirmPayment =() => {
   let {bank_code,paymentMethodType} = this.state;
   let transaction_code = this.props.transaction_code;
+  let {cardNumber,expiry,cvc,cardHolderName} = this.state; 
   if(paymentMethodType==='CreditCard'){
-      window.Xendit.setPublishableKey(EX_API_KEY);
-      var tokenData = this.getTokenData();
-      window.Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+    if(expiry===null){
+
+    }else{
+        let dt = expiry.split('/'),mm,yy;
+        mm = dt[0];
+        yy = dt[1];
+        yy = "20"+yy;
+        if(cardNumber===null && cvc===null && cardHolderName===null){
+            swal({
+                title: 'Warning',
+                text: "All fields are required!",
+                icon: "warning",
+                button: true,
+                dangerMode: true,
+              })
+        }else{
+          window.Xendit.setPublishableKey(EX_API_KEY);
+          var tokenData = this.getTokenData();
+          window.Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+        }
+    }
+
+      
   }
   else{
       if(bank_code===''){
@@ -486,7 +515,11 @@ handleConfirmPayment =() => {
                       dangerMode: false,
                     })
                     .then((willDelete) => {
-                      
+                        if (willDelete) {
+                            this.setState({
+                                showListBooking:true
+                            })
+                          }
                     });
               }
               else{
@@ -497,20 +530,21 @@ handleConfirmPayment =() => {
                       button: true,
                       dangerMode: true,
                     })
-                  //   .then((willDelete) => {
-                  //     if (willDelete) {
-                  //       swal("Poof! Your imaginary file has been deleted!", {
-                  //         icon: "success",
-                  //       });
-                  //     } else {
-                  //       swal("Your imaginary file is safe!");
-                  //     }
-                  //   });
+                    // .then((willDelete) => {
+                     
+                    // });
               }
           })
       }
   }
   
+}
+showListBooking = () =>{
+    
+    this.setState({isShowBooking:true})
+}
+handlePrint =()=>{
+    window.print()
 }
   render() {
  
@@ -634,18 +668,17 @@ handleConfirmPayment =() => {
             onClose={this.onCloseModal} 
             blockScroll={true}
             center>
-                {/* <iframe title='payment-confirmation' className='iframeProps' src={this.state.redirectedUrl}/> */}
                 <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
-            {/* {this.state.showModal?  
-            // <div>   
-            <div className="overlay"></div>
-            <div id="three-ds-container">
-            <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
-            </div>
-            // </div>
-            :''} */}
          </Modal>
+         {this.state.isShowBooking?
+            <div className='' >
+            <ListBooking
+                userEmail={this.state.userEmail}
+            />
+            </div>
+            :
           <div className='col-md-9 cols9-center mainOuterDiv' >
+
             <div className='row mb-4'>
                 <div className='col-sm-12'>
                     <a href="#" onClick={this.refreshRoute} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</a>
@@ -662,8 +695,8 @@ handleConfirmPayment =() => {
                     <div className='col-5'>
                       <p className='contactDetail'><span>{this.state.companyPhone}</span></p>
                     </div>
-                    <div className='col-7'>
-                      <p className='contactDetailEmail'><span>{this.state.companyPhone}</span></p>
+                    <div className='col-7 p-0'>
+                      <p className='contactDetailEmail'><span>{this.state.companyEmail}</span></p>
                     </div>
                   </div>
                 </div>
@@ -735,9 +768,9 @@ handleConfirmPayment =() => {
               <div className='col-sm-12 p-0'>
               <ul className="nav nav-pills navPill">
                 <li className="active"><a data-toggle="pill" href="#emailVoucher"><i className='fa fa-envelope-o'> </i> Email Voucher</a></li>
-                <li><a data-toggle="pill" href="#printVoucher"><i className='fa fa-print'> </i> Print Voucher</a></li>
+                <li><a data-toggle="pill" className='cancelButton' onClick={this.handlePrint} href="#"><i className='fa fa-print'> </i> Print Voucher</a></li>
                 <li><a data-toggle="pill" href="#specialRequest"><i className='fa fa-commenting-o'> </i> Special Request</a></li>
-                <li><a data-toggle="pill" href="#cancel"> Cancel</a></li>
+                <li><a className='cancelButton' data-toggle="pill" onClick={this.showListBooking}> Cancel</a></li>
               </ul>
                 <div className="tab-content m-md-5">
                   <div id="emailVoucher" className="tab-pane fade in active">
@@ -798,7 +831,9 @@ handleConfirmPayment =() => {
 
              <div className='row mb-4'>
                 <div className='col-sm-12 text-center'>
-                <button className='confirm-payment' onClick={this.handleConfirmPayment}>Continue to Payment</button>
+                <ScrollIntoView selector="#doPayment">
+                    <button className='confirm-payment' onClick={this.handleConfirmPayment}>Continue to Payment</button>
+                </ScrollIntoView>
                 </div>
              </div>  
             {this.state.due>0?
@@ -809,7 +844,7 @@ handleConfirmPayment =() => {
               <div className='col-sm-6 offset-md-3 my-4'>
                   <h3 className='dueDateText'>AMOUNT DUE: <span className='dueDateTextRed'>IDR {formatThousands(this.state.due)}</span></h3>
               </div>
-              <div className='row mt-5 rounded p-md-y-5'>
+              <div className='row mt-5 rounded p-md-y-5' id='doPayment'>
                     <div className='col-md-12 mb-4'>
                         <h4 className='paymentMethod'>Choose a payment method</h4>
                     </div>
@@ -980,6 +1015,7 @@ handleConfirmPayment =() => {
             </div>
             :''}    
           </div>
+          }
         </div>
     )
   }

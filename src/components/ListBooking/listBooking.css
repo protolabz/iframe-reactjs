@@ -1,0 +1,185 @@
+.bookingsHeading{
+    border-left: 5px solid #f89655 !important;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.bookingText{
+    margin: 0px;
+    font-family: Merriweather;
+    font-size: 30px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.5px;
+    color: #4f4f4f;
+    text-align: center;
+}
+.bookingIcon{
+    color: #f89655
+}
+.activeText{
+    font-family: Archivo;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .opDate{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .proTitle{
+    font-family: Archivo;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+  }
+  .paxDet{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4f4f4f;
+    margin: 0px;
+  }
+  .paxDetLight{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .mainBooking{
+      border-left:1px solid #ccc;
+      border-right:1px solid #ccc;
+      border-top:1px solid #ccc;
+      border-bottom:1px solid #ccc;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+  }
+  .mainBookingE{
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    border-top:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #eaeaea;
+}
+  .bookingBottom{
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #eaeaea;
+  }
+  .bookingBottomE{
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #FFF;
+  }
+  .totalText{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #aaaaaa;
+  }
+  .totalPaidGreen{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4a9380;
+  }
+  .totalPaidRed{
+    font-family: Archivo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f89655;
+  }
+  .totalAmt{
+    font-family: Archivo;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #4f4f4f;
+  }
+  .remainAmt{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #4f4f4f;
+  }
+  .remainAmtLight{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #aaaaaa;
+  }
+  .details{
+    font-family: Archivo;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f3804a;
+    text-decoration: underline;
+    margin: 0px;
+  }
+  .details:hover{
+      cursor: pointer;
+  }

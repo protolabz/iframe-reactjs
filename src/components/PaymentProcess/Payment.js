@@ -5,7 +5,7 @@ import CreditCardInput from 'react-credit-card-input';
 // import Xendit from 'xendit-js-node';
 import Modal from 'react-responsive-modal';
 import swal from 'sweetalert';
-import Voucher from '../Vouchers/vouchers'
+import Voucher from '../Vouchers/vouchers';
 const EX_API_KEY = 'xnd_public_development_NImDfL511rH6wMJgKrcdT2PFZdWnpIR8xXOx+Rxg+mHV8LegCQR0hQ==';
 
 export default class componentName extends Component {
@@ -244,7 +244,6 @@ export default class componentName extends Component {
                   data:data
                 })
                 .then((res) => {
-                    console.log(res);
                     if(res.data.diagnostic.status===200){
                         swal({
                             title: "Success",
@@ -254,9 +253,11 @@ export default class componentName extends Component {
                             dangerMode: false,
                           })
                           .then((willDelete) => {
-                            this.setState({
-                                isShowVoucher:true
-                            })
+                            if (willDelete) {
+                                this.setState({
+                                    isShowVoucher:true
+                                })
+                            }
                           });
                     }
                     else{
@@ -265,8 +266,15 @@ export default class componentName extends Component {
                             text: res.data.diagnostic.error_msgs,
                             icon: "warning",
                             button: true,
-                            dangerMode: false,
+                            dangerMode: true,
                           })
+                          .then((willDelete) => {
+                            if (willDelete) {
+                                this.setState({
+                                    isShowVoucher:true
+                                })
+                            }
+                          });
                     }
                 })
         }
@@ -283,14 +291,14 @@ export default class componentName extends Component {
         return {        
             // "amount": "75000",        
             "amount": this.props.amount,
-            "card_number": "4000000000000002",
-            // "card_number": cardNumber,        
+            // "card_number": "4000000000000002",
+            "card_number": cardNumber,        
             // "card_exp_month": "12",
             "card_exp_month": mm,        
             // "card_exp_year": "2018",
             "card_exp_year": yy,        
             // "card_cvn": "123",
-            // "card_cvn": cvc,
+            "card_cvn": cvc,
             "is_multiple_use": false,
             "should_authenticate": true,
             "meta_enabled": false
@@ -298,8 +306,13 @@ export default class componentName extends Component {
     }
     displayError (err) {
         var requestData = Object.assign({}, this.getTokenData());
-
-        console.log(requestData)
+        swal({
+            title: 'Failed',
+            text: "Payment has not been done.",
+            icon: "warning",
+            button: true,
+            dangerMode: true,
+          })
     }
     xenditResponseHandler (err, creditCardToken) {
         if (err) {
@@ -334,11 +347,39 @@ export default class componentName extends Component {
     handleConfirmPayment =() => {
         let {bank_code,paymentMethodType} = this.state;
         let transaction_code = this.props.transaction_code;
+        let {cardNumber,expiry,cvc,cardHolderName} = this.state;
+ 
         if(paymentMethodType==='CreditCard'){
-            window.Xendit.setPublishableKey(EX_API_KEY);
-            // Request a token from Xendit:
-            var tokenData = this.getTokenData();
-            window.Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+            if(expiry===null){
+                swal({
+                    title: 'Warning',
+                    text: "All fields are required!",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true,
+                  })
+            }else{
+                let dt = expiry.split('/'),mm,yy;
+                mm = dt[0];
+                yy = dt[1];
+                yy = "20"+yy;
+                if(cardNumber===null && cvc===null && cardHolderName===null){
+                    swal({
+                        title: 'Warning',
+                        text: "All fields are required!",
+                        icon: "warning",
+                        button: true,
+                        dangerMode: true,
+                      })
+                }else{
+                    window.Xendit.setPublishableKey(EX_API_KEY);
+                    // Request a token from Xendit:
+                    var tokenData = this.getTokenData();
+                    window.Xendit.card.createToken(tokenData, this.xenditResponseHandler.bind(this));
+                }
+            }
+           
+          
         }
         else{
             if(bank_code===''){
@@ -368,7 +409,11 @@ export default class componentName extends Component {
                             dangerMode: false,
                           })
                           .then((willDelete) => {
-                            
+                            if (willDelete) {
+                                this.setState({
+                                    isShowVoucher:true
+                                })
+                            }
                           });
                     }
                     else{
@@ -549,10 +594,10 @@ export default class componentName extends Component {
                 <button className='proceedToPayment mt-5' style={{ width:"20%" }}><i className='fa fa-arrow-left'></i> Go Back </button>
             </div>
             :
-            this.state.isShowVouchers?
+            this.state.isShowVoucher?
             <Voucher
                 transaction_code = {this.props.transaction_code}
-                operation_date = {this.props.operationDate+"--"+this.props.operationTime}
+                operation_date = {this.props.operationDate+" — "+this.props.operationTime}
                 product_name = {this.props.productName}
                 enail = {this.props.email}
                 phone_number = {"+"+this.props.phoneNumber}
