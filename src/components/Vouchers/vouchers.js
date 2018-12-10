@@ -366,6 +366,51 @@ handleCancelText =(e) =>{
     cancelText:e.target.value
   })
 }
+
+callApiAgain =() =>{
+    axios({
+        method: 'get',
+        // url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
+        url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.state.transaction_code}`,
+        })
+        .then((res) => {
+          var data = res.data;
+          let opDate = new Date(res.data.transaction.operation_date).toGMTString();
+              let dts = (opDate.split(' '));
+              let dd,mm,yy,dday;
+              dd = dts[1];
+              mm = dts[2];
+              yy = dts[3];
+              dday = dts[0];
+              let preDate = dday+ " " +dd+ " " +mm+ " " +yy;
+              var expDate = new Date(data.transaction.time_limit * 1000);
+              expDate = expDate.toGMTString();
+              let expDt = (expDate.split(' '));
+              let edd = expDt[1],emm = expDt[2],eyy = expDt[3],eday = expDt[0];
+              let finalExDate = eday+ " " +edd+ " " +emm+ " " +eyy;
+              this.setState({
+              operationDate:preDate,
+              operationDateNormal:res.data.transaction.operation_date,
+              operationTime:data.transaction.operation_time,
+              productName:data.activity.name,
+              address:data.activity.address,
+              companyEmail:data.company.email,
+              companyPhone:data.company.phone_number,
+              userEmail:data.customer.email,
+              userPhone:data.customer.phone,
+              transactionCode:data.transaction.transaction_code,
+              leadPaxName:data.customer.name,
+              paymentType:data.total_status,
+              paxText:data.pax_text+" "+data.package_text,
+              totalPaid:data.transaction.total_price,
+              due:data.transaction.due,
+              expirationDate:finalExDate,
+              cancelationPolicyPack:data.cancellation_policy.cancellation_policy_package,
+              paymentMethodId:data.transaction.payment_method_id
+  
+          })
+        })
+}
 handleCancelTextButton = () =>{
  if(this.state.emailVoucherText===null){
     swal({
@@ -383,10 +428,51 @@ handleCancelTextButton = () =>{
 }
 displaySuccess (creditCardToken) {
     var requestData = Object.assign({}, this.getTokenData());
-    console.log(requestData)
-    console.log("requestDataSuccess")
      this.onCloseModal();
-    console.log(creditCardToken);
+     var data = {
+        transaction_code:this.props.transaction_code,
+        token_id:creditCardToken.id
+    } 
+     if(creditCardToken.status==='VERIFIED'){
+        axios({
+            method: 'post',
+            url: `https://api.trabo.co/payment/credit-card`,
+            headers: {
+                "Content-Type" : "application/json"
+              },
+              data:data
+            })
+            .then((res) => {
+                if(res.data.diagnostic.status===200){
+                    swal({
+                        title: "Success",
+                        text: "Payment has been made successfully!",
+                        icon: "success",
+                        button: true,
+                        dangerMode: false,
+                      })
+                      .then((willDelete) => {
+                        if (willDelete) {
+                            this.callApiAgain();
+                        }
+                      });
+                }
+                else{
+                    swal({
+                        title: res.data.diagnostic.error,
+                        text: res.data.diagnostic.error_msgs,
+                        icon: "warning",
+                        button: true,
+                        dangerMode: true,
+                      })
+                      .then((willDelete) => {
+                        if (willDelete) {
+                            this.callApiAgain();
+                        }
+                      });
+                }
+            })
+    }
 }
 
 getTokenData () {
@@ -516,9 +602,7 @@ handleConfirmPayment =() => {
                     })
                     .then((willDelete) => {
                         if (willDelete) {
-                            this.setState({
-                                showListBooking:true
-                            })
+                            this.callApiAgain();
                           }
                     });
               }
@@ -530,9 +614,11 @@ handleConfirmPayment =() => {
                       button: true,
                       dangerMode: true,
                     })
-                    // .then((willDelete) => {
-                     
-                    // });
+                    .then((willDelete) => {
+                        if(willDelete){
+                            this.callApiAgain();
+                        }
+                    });
               }
           })
       }

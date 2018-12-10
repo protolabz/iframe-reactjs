@@ -466,15 +466,27 @@ export default class componentName extends Component {
             else{
                 packg = this.state.packageValues;
             }
-            if(standardPax.adult){
-                adult=standardPax.adult
-            }
-            if(standardPax.child){
-                children=standardPax.child;
-            }
-            if(standardPax.infant){
-                other=standardPax.infant
-            }
+            
+            standardPax.map(x=>{
+                if(x.name==='ADULT'){
+                    adult=x.qty;
+                }
+                if(x.name==='CHILD'){
+                    children=x.qty;
+                }
+                if(x.name==='INFANT'){
+                    other=x.qty;
+                }
+            })
+            // if(standardPax.adult){
+            //     adult=standardPax.adult
+            // }
+            // if(standardPax.child){
+            //     children=standardPax.child;
+            // }
+            // if(standardPax.infant){
+            //     other=standardPax.infant
+            // }
 
             //Validations Related to Pax
             if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!=false && isRequiredSelect!=false){
