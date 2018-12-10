@@ -648,15 +648,17 @@ export default class componentName extends Component {
             else{
                 packg = this.state.packageValues;
             }
-            if(standardPax.adult){
-                adult=standardPax.adult
-            }
-            if(standardPax.child){
-                children=standardPax.child;
-            }
-            if(standardPax.infant){
-                other=standardPax.infant
-            }
+            standardPax.map(x=>{
+                if(x.name==='ADULT'){
+                    adult=x.qty;
+                }
+                if(x.name==='CHILD'){
+                    children=x.qty;
+                }
+                if(x.name==='INFANT'){
+                    other=x.qty;
+                }
+            })
             if(paymentType==='full payment'){
                 depositAmt=0
             }
