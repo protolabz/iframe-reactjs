@@ -48,6 +48,7 @@ export default class componentName extends Component {
     }
 
     componentWillMount(){
+
         var data = {
             transaction_code:this.props.transaction_code,
             // transaction_code:"56713178-05-12-2018-2867",
@@ -564,6 +565,7 @@ export default class componentName extends Component {
     return (
 
         <div className="container mt-5 mb-5">
+ 
         <Modal 
             open={this.state.showModal} 
             closeOnEsc={false} 
@@ -572,16 +574,7 @@ export default class componentName extends Component {
             onClose={this.onCloseModal} 
             blockScroll={true}
             center>
-                {/* <iframe title='payment-confirmation' className='iframeProps' src={this.state.redirectedUrl}/> */}
                 <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
-            {/* {this.state.showModal?  
-            // <div>   
-            <div className="overlay"></div>
-            <div id="three-ds-container">
-            <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
-            </div>
-            // </div>
-            :''} */}
          </Modal>
          {this.state.isLoading?
             <img className='loading' src='/images/loading.svg' alt='loading'/>
@@ -614,11 +607,9 @@ export default class componentName extends Component {
                 <div className='row text-left'>
                     <div className='col-md-4'>
                         <p className='operationDateTime'>{this.props.operationDate+"--"+this.props.operationTime}</p>
-                        {/* <p className='operationDateTime'>Thu, 27 Jul 2018 -- 07:00 AM</p> */}
                         <h4 className='productHeading'>{this.props.productName}</h4>
-                        {/* <h4 className='productHeading mb-3'>Grand Ubud Tour</h4> */}
-                        {/* <h4 className='paxDetails'><span className='paxDetailsLight'>FOR</span> Details</h4>*/}
                         <h4 className='paxDetails'><span className='paxDetailsLight'>FOR</span> {this.props.total_frontend_count}</h4> 
+                        {console.log(this.props.total_frontend_count)}
                     </div>
                     <div className='col-md-4 text-left'>
                         <p className='bookingId mb-2'>BOOKING ID</p>
