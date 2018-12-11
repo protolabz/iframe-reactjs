@@ -315,8 +315,8 @@ export default class componentName extends Component {
             dangerMode: true,
           })
         //   console.log(requestData);
-        console.log(err);
-        console.log(requestData);
+        // console.log(err);
+        // console.log(requestData);
     }
     xenditResponseHandler (err, creditCardToken) {
         if (err) {
