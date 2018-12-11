@@ -350,6 +350,13 @@
   border: none;
   width: 60%;
 }
+.confirm-payment:disabled,
+.confirm-payment[disabled]{
+  box-shadow: 0 1px 0 0#b9a69c;
+  background-color: #ffb381;
+  color: #FFF;
+  cursor: not-allowed;
+}
 @media only screen and (max-width: 767px) {
   .sc-bdVaJa{
     width: 100%;

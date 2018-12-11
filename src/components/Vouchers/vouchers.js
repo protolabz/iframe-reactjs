@@ -64,7 +64,7 @@ export default class componentName extends Component {
         cancelText:null,
         emailVoucherText:null,
         isShowBooking:false,
-        active:"emailVoucher",
+        active:"",
         isDisablePayment:false
 
   }
@@ -786,7 +786,7 @@ setActive = (value) => {
                 <div className='col-md-6 voucherOrange p-md-4'>
                    <h3 className='operationDate'>{this.state.operationDate+" — "+this.state.operationTime}</h3>
                    <h3 className='productTitle'>{this.state.productName}</h3>
-                   <p className='paxDetails'>for <span className='paxDetailsBold'>{this.state.paxText}</span></p>
+                   <p className='paxDetails'><span className='paxDetailsBold'>{this.state.paxText}</span></p>
                    <p className='location my-4'><span>{this.state.address}</span></p>
                   
                   <div className='row mt-md-2'>
