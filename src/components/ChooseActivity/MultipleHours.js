@@ -60,7 +60,6 @@ export default class MultipleHours extends Component {
     }
   render() {
       const {dateBefore,dateAfter,dateCurrent} = this.state;
-      console.log(dateBefore);
       let preDate;
       let curDate;
       let CopyPrevDate
@@ -70,7 +69,8 @@ export default class MultipleHours extends Component {
       let preTime =[];
       let curTime =[];
       let nexTime =[];
-      if(dateBefore===null){
+      if(dateBefore){
+          if(dateBefore.before_date!==null){
           preDate = dateBefore.before_date.from;
           CopyPrevDate = dateBefore.before_date.from;
           preTime = dateBefore.before;
@@ -83,8 +83,10 @@ export default class MultipleHours extends Component {
             yy = dts[3];
             dday = dts[0];
             preDate = dday+ " " +dd+ " " +mm+ " " +yy;
+        }
       }
-      if(dateAfter!==null){
+      if(dateAfter){
+        if(dateBefore.after_date!==null){
         nexDate = dateAfter.after_date.from;
         CopyNexDate = dateAfter.after_date.from;
         nexTime = dateAfter.after;
@@ -97,8 +99,10 @@ export default class MultipleHours extends Component {
             yy = dts[3];
             dday = dts[0];
             nexDate = dday+ " " +dd+ " " +mm+ " " +yy;
+        }
       }
-      if(dateCurrent!==null){
+      if(dateCurrent){
+        if(dateBefore.current_date!==null){
         curDate = dateCurrent.current_date.from;
         CopyCurDate  =dateCurrent.current_date.from;
         curTime = dateCurrent.current;
@@ -110,6 +114,7 @@ export default class MultipleHours extends Component {
             yy = dts[3];
             dday = dts[0];
             curDate = dday+ " " +dd+ " " +mm+ " " +yy;
+        }
       }
       const previousTime = (
           (
