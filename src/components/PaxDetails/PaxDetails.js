@@ -574,6 +574,8 @@ export default class componentName extends Component {
                                     minimum_deposit:res.data.minimum_deposit,
                                     total_frontend_count:res.data.total_frontend_count
                                 })
+                                var elmnt = document.getElementById("PromoBlock");
+                                elmnt.scrollIntoView();
                             }
                         })
                     }
@@ -1186,7 +1188,7 @@ export default class componentName extends Component {
                     </div>
                 </div>
                 {this.state.promoResponse?
-                <div className='row mt-5'>
+                <div className='row mt-5' id="PromoBlock">
                     <div className='col-sm-8 offset-md-1'>
                         <div className='row'>
                             <div className='col-sm-12'>
