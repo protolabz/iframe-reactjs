@@ -483,6 +483,7 @@ getTokenData () {
         yy = "20"+yy;
         yy = yy.split(' ').join('');
         mm = mm.split(' ').join('');
+        cardNumber = cardNumber.split(' ').join('');
     return {        
         // "amount": "75000",        
         "amount": this.props.amount,

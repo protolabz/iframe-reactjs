@@ -288,6 +288,7 @@ export default class componentName extends Component {
             yy = "20"+yy;
            yy = yy.split(' ').join('');
            mm = mm.split(' ').join('');
+           cardNumber = cardNumber.split(' ').join('');
         return {        
             // "amount": "75000",        
             "amount": this.props.amount,
@@ -307,19 +308,21 @@ export default class componentName extends Component {
     displayError (err) {
         var requestData = Object.assign({}, this.getTokenData());
         swal({
-            title: 'Failed',
-            text: "Service Temporary unavailable.",
+            title: "Failed",
+            text: err.message,
             icon: "warning",
             button: true,
             dangerMode: true,
           })
         //   console.log(requestData);
+        console.log(err);
+        console.log(requestData);
     }
     xenditResponseHandler (err, creditCardToken) {
         if (err) {
             return this.displayError(err);
         }
-        this.setState({ creditCardToken: creditCardToken })
+        // this.setState({ creditCardToken: creditCardToken })
 
         if (creditCardToken.status === 'APPROVED' || creditCardToken.status === 'VERIFIED') {
             this.displaySuccess(creditCardToken);

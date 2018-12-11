@@ -60,6 +60,7 @@ export default class MultipleHours extends Component {
     }
   render() {
       const {dateBefore,dateAfter,dateCurrent} = this.state;
+      console.log(dateBefore);
       let preDate;
       let curDate;
       let CopyPrevDate
