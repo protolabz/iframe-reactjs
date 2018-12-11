@@ -606,10 +606,9 @@ export default class componentName extends Component {
 
                 <div className='row text-left'>
                     <div className='col-md-4'>
-                        <p className='operationDateTime'>{this.props.operationDate+"--"+this.props.operationTime}</p>
+                        <p className='operationDateTime'>{this.props.operationDate+" — "+this.props.operationTime}</p>
                         <h4 className='productHeading'>{this.props.productName}</h4>
                         <h4 className='paxDetails'><span className='paxDetailsLight'>FOR</span> {this.props.total_frontend_count}</h4> 
-                        {console.log(this.props.total_frontend_count)}
                     </div>
                     <div className='col-md-4 text-left'>
                         <p className='bookingId mb-2'>BOOKING ID</p>
