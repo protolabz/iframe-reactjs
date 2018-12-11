@@ -642,7 +642,7 @@ export default class componentName extends Component {
      handleProceedToPay =() =>{
        let {name,email,date,operation_time,phone_code,phone,refferal,
             standardPax,total_frontend,addProductsValue1,
-            commentBox,promoCode,paymentType,depositAmt} =this.state;
+            commentBox,promoCode,paymentType,depositAmt,minimum_deposit} =this.state;
             let packg;
             let pkg = [];
 
@@ -678,7 +678,7 @@ export default class componentName extends Component {
                 packg = this.state.packageValues;
             }
             if(paymentType==='full payment'){
-                depositAmt=0
+                minimum_deposit=0
             }
 
             var selectHead, boxHead;
@@ -714,7 +714,7 @@ export default class componentName extends Component {
                 "payment_type" : paymentType,
                 "date" : date,
                 "customer_code" : "",
-                "amount" : depositAmt,
+                "amount" : minimum_deposit,
                 "total_amount" : total_frontend,
                 "operation_time" : operation_time,
                 "phone_code" : phone_code,
