@@ -64,7 +64,8 @@ export default class componentName extends Component {
         cancelText:null,
         emailVoucherText:null,
         isShowBooking:false,
-        active:"emailVoucher"
+        active:"emailVoucher",
+        isDisablePayment:false
 
   }
   componentWillMount(){
@@ -548,6 +549,9 @@ handleConfirmPayment =() => {
   let {bank_code,paymentMethodType} = this.state;
   let transaction_code = this.props.transaction_code;
   let {cardNumber,expiry,cvc,cardHolderName} = this.state; 
+  this.setState({
+    isDisablePayment:true
+  })
   if(paymentMethodType==='CreditCard'){
     if(expiry===null){
 
@@ -861,9 +865,9 @@ setActive = (value) => {
             <div className='row'>
               <div className='col-sm-12 p-0'>
               <ul className="nav nav-pills navPill">
-                <li onClick={() => this.setActive("emailVoucher")} className={"customPadding "+this.state.active === "emailVoucher" ? "active" : ""}><a data-toggle="pill" href="#emailVoucher"><i className='fa fa-envelope-o'> </i> Email Voucher</a></li>
+                <li onClick={() => this.setActive("emailVoucher")} className={this.state.active === "emailVoucher" ? "active" : ""}><a data-toggle="pill" href="#emailVoucher" className='customPadding'><i className='fa fa-envelope-o'> </i> Email Voucher</a></li>
                 <li><a data-toggle="pill" className='cancelButton customPadding' onClick={this.handlePrint} href="#"><i className='fa fa-print'> </i> Print Voucher</a></li>
-                <li onClick={() => this.setActive("specialRequest")} className={"customPadding"+ this.state.active === "specialRequest" ? "active" : ""}><a data-toggle="pill" href="#specialRequest"><i className='fa fa-commenting-o'> </i> Special Request</a></li>
+                <li onClick={() => this.setActive("specialRequest")} className={this.state.active === "specialRequest" ? "active" : ""}><a data-toggle="pill" href="#specialRequest" className='customPadding'><i className='fa fa-commenting-o'> </i> Special Request</a></li>
                 <li><a className='cancelButton customPadding' data-toggle="pill" onClick={this.showListBooking}> Cancel</a></li>
               </ul>
                 <div className="tab-content m-md-5">

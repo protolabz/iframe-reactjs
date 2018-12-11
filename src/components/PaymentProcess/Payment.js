@@ -44,7 +44,8 @@ export default class componentName extends Component {
         baknkTransferE:false,
         alfaMartData:true,
         paymentFail:false,
-        isShowVoucher:false
+        isShowVoucher:false,
+        isDisablePayment:false
     }
 
     componentWillMount(){
@@ -315,6 +316,13 @@ export default class componentName extends Component {
             button: true,
             dangerMode: true,
           })
+          .then((willDelete) => {
+            if (willDelete) {
+                this.setState({
+                    isDisablePayment:false
+                })
+            } 
+          });
         //   console.log(requestData);
         // console.log(err);
         // console.log(requestData);
@@ -347,7 +355,9 @@ export default class componentName extends Component {
         let {bank_code,paymentMethodType} = this.state;
         let transaction_code = this.props.transaction_code;
         let {cardNumber,expiry,cvc,cardHolderName} = this.state;
- 
+        this.setState({
+            isDisablePayment:true
+        })
         if(paymentMethodType==='CreditCard'){
             if(expiry===null){
                 swal({
@@ -410,7 +420,7 @@ export default class componentName extends Component {
                           .then((willDelete) => {
                             if (willDelete) {
                                 this.setState({
-                                    isShowVoucher:true
+                                    isShowVoucher:true,
                                 })
                             }
                           });
@@ -423,15 +433,13 @@ export default class componentName extends Component {
                             button: true,
                             dangerMode: false,
                           })
-                        //   .then((willDelete) => {
-                        //     if (willDelete) {
-                        //       swal("Poof! Your imaginary file has been deleted!", {
-                        //         icon: "success",
-                        //       });
-                        //     } else {
-                        //       swal("Your imaginary file is safe!");
-                        //     }
-                        //   });
+                          .then((willDelete) => {
+                            if (willDelete) {
+                                this.setState({
+                                    isDisablePayment:false
+                                })
+                            } 
+                          });
                     }
                 })
             }
@@ -807,7 +815,7 @@ export default class componentName extends Component {
                      
                     </div>
                     <div className='col-md-12 mt-5 text-center'>
-                        <button className='confirm-payment' onClick={this.handleConfirmPayment}>Confirm Payment</button>
+                        <button className='confirm-payment' onClick={this.handleConfirmPayment} disabled={this.state.isDisablePayment}>Confirm Payment</button>
                         {this.state.baknkTransferE?  
                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
                                <strong>Error!</strong> Please select one of the bank.
