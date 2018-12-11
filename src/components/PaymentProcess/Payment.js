@@ -308,11 +308,12 @@ export default class componentName extends Component {
         var requestData = Object.assign({}, this.getTokenData());
         swal({
             title: 'Failed',
-            text: "Please give correct card details.",
+            text: "Service Temporary unavailable.",
             icon: "warning",
             button: true,
             dangerMode: true,
           })
+        //   console.log(requestData);
     }
     xenditResponseHandler (err, creditCardToken) {
         if (err) {

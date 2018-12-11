@@ -503,7 +503,7 @@ displayError (err) {
     var requestData = Object.assign({}, this.getTokenData());
     swal({
         title: 'Failed',
-        text: "Payment has not been done.",
+        text: "Service Temporary unavailable.",
         icon: "warning",
         button: true,
         dangerMode: true,
