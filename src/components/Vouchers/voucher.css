@@ -354,3 +354,6 @@
 .confirm-payment:hover{
     cursor: pointer;
 }
+.customPadding{
+    padding: 15px 25px;
+}

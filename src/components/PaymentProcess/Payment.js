@@ -364,7 +364,7 @@ export default class componentName extends Component {
                 if(cardNumber===null && cvc===null && cardHolderName===null){
                     swal({
                         title: 'Warning',
-                        text: "All fields are required!",
+                        text: "All Card fields are required!",
                         icon: "warning",
                         button: true,
                         dangerMode: true,

@@ -63,7 +63,8 @@ export default class componentName extends Component {
         specialNote:null,
         cancelText:null,
         emailVoucherText:null,
-        isShowBooking:false
+        isShowBooking:false,
+        active:"emailVoucher"
 
   }
   componentWillMount(){
@@ -633,6 +634,12 @@ showListBooking = () =>{
 handlePrint =()=>{
     window.print()
 }
+
+setActive = (value) => {
+    if (this.state.active !== value) {
+      this.setState({ active: value });
+    }
+  };
   render() {
  
     let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
@@ -854,10 +861,10 @@ handlePrint =()=>{
             <div className='row'>
               <div className='col-sm-12 p-0'>
               <ul className="nav nav-pills navPill">
-                <li className="active"><a data-toggle="pill" href="#emailVoucher"><i className='fa fa-envelope-o'> </i> Email Voucher</a></li>
-                <li><a data-toggle="pill" className='cancelButton' onClick={this.handlePrint} href="#"><i className='fa fa-print'> </i> Print Voucher</a></li>
-                <li><a data-toggle="pill" href="#specialRequest"><i className='fa fa-commenting-o'> </i> Special Request</a></li>
-                <li><a className='cancelButton' data-toggle="pill" onClick={this.showListBooking}> Cancel</a></li>
+                <li onClick={() => this.setActive("emailVoucher")} className={"customPadding "+this.state.active === "emailVoucher" ? "active" : ""}><a data-toggle="pill" href="#emailVoucher"><i className='fa fa-envelope-o'> </i> Email Voucher</a></li>
+                <li><a data-toggle="pill" className='cancelButton customPadding' onClick={this.handlePrint} href="#"><i className='fa fa-print'> </i> Print Voucher</a></li>
+                <li onClick={() => this.setActive("specialRequest")} className={"customPadding"+ this.state.active === "specialRequest" ? "active" : ""}><a data-toggle="pill" href="#specialRequest"><i className='fa fa-commenting-o'> </i> Special Request</a></li>
+                <li><a className='cancelButton customPadding' data-toggle="pill" onClick={this.showListBooking}> Cancel</a></li>
               </ul>
                 <div className="tab-content m-md-5">
                   <div id="emailVoucher" className="tab-pane fade in active">
@@ -915,7 +922,8 @@ handlePrint =()=>{
                     </div>
                 </div>    
              </div>
-
+             {this.state.due>0?
+             <div>
              <div className='row mb-4'>
                 <div className='col-sm-12 text-center'>
                 <ScrollIntoView selector="#doPayment">
@@ -923,7 +931,7 @@ handlePrint =()=>{
                 </ScrollIntoView>
                 </div>
              </div>  
-            {this.state.due>0?
+           
             <div className='row'>
               <div className='col-sm-12'>
                   <h3 className='expirationText'>Please complete your payment before <span className='expirationTextRed'>{this.state.expirationDate}</span></h3>
@@ -1099,6 +1107,7 @@ handlePrint =()=>{
                     </div>
                     
                 </div>
+            </div>
             </div>
             :''}    
           </div>
