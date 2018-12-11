@@ -12,19 +12,49 @@ class AdditionalPax extends Component {;
         max:this.props.max
     }
     handleIncreement = (name,data)  => { 
-        console.log(this.props.min);  
-        var count = this.state.value;
-        count= count +1;
+        console.log(this.props.totalPax)
+       let {quota,usedQuota,maxPerBook} =this.state;
+       let val1 = quota-usedQuota,val2,maxQutVal=0;
+       var count = this.state.value;
+       if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
+        if(maxPerBook<data.maximum){
+            val2 = maxPerBook;
+        }
+        else{
+            val2 = data.maximum;
+        }
+        if(val1<val2){
+            maxQutVal = val1;
+        }
+        else{
+            maxQutVal = val2;
+        }
+        if(data.minimum>0 && count===0){
+            count =data.minimum;
+        }
+        else{
+            count= count +1;
+        }
+        if(count>maxQutVal){
+            count = maxQutVal
+        }
+       }else{
+        // if(data.minimum>0 && count==0){
+        //     count =data.minimum;
+        // }
+        // else{
+            count= count +1;
+        // }
+       }
+       
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
             this.setState({
                 value:count,
             });
-            this.props.countValuesIncre();
-
-        this.props.myFun(name,data,count);
-    
+            this.props.myFun(name,data,count);
+            // this.props.countValuesIncre();
     }
 
     handleDecreement = (name,data)  => {    
@@ -32,15 +62,19 @@ class AdditionalPax extends Component {;
             disablebutton:false
         })
         var count = this.state.value;
-        if(count<1){
-            count = 0
-        } 
-        else{
-            count= count -1;
+        count= count -1;
+        if(data.minimum>0 && count<data.minimum){
+            count =0;
+            
+        }else{
+            if(count<1){
+                count = 0
+            } 
         }
-        this.props.countValuesDecre();
+        
         this.setState({value:count});
         this.props.decrement(name,data,count);
+        this.props.countValuesDecre();
     }
 
     formatThousands =(n, dp) => {
@@ -52,7 +86,7 @@ class AdditionalPax extends Component {;
 
     render(props) {
         return (
-            <div className='row'>
+            <div className={"row " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
             <div className='col-sm-3'>
             <label style={{ display:"flex" }} className='mt-2'>
             <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>

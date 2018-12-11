@@ -86,10 +86,10 @@ export default class componentName extends Component {
      promoCode:0,
      promoAmount:0,
      //Errors
-     quotaE:false,
+    //  quotaE:false,
      reqiredE:false,
-     standardPaxE:false,
-     otherPaxE:false,
+    //  standardPaxE:false,
+    //  otherPaxE:false,
      promoE:false,
      bookingE:false,
      proceedE:false,
@@ -113,7 +113,8 @@ export default class componentName extends Component {
      isDeposit:false,
      depositValue:0,
      total_frontend_count:'',
-     standardPaxDisable:false
+     standardPaxDisable:false,
+     isPaxInvalid:false
   }
   componentWillMount(){
     axios({
@@ -238,11 +239,12 @@ export default class componentName extends Component {
         });
   }
   incrementCounterPax = (name,data,count) => {
+      this.handleCountValuesIncrement(name,data,count);
     var addValuesData = [...this.state.standardPax];
         if(addValuesData.findIndex(x=>x.name===name)>=0){
             for (var i = 0; i < addValuesData.length; i++){
                 if (addValuesData[i].name ===name){
-                    addValuesData[i]={name:name,qty:count};
+                    addValuesData[i]={id:data.id,name:name,qty:count};
                     // this.setState({
                     //     addValuesData: addValuesData,
                     // });
@@ -250,7 +252,7 @@ export default class componentName extends Component {
             }
         }
         else{
-            addValuesData= addValuesData.concat([{name:name,qty:count}]);
+            addValuesData= addValuesData.concat([{id:data.id,name:name,qty:count}]);
         }     
         this.setState({
             standardPax: addValuesData,
@@ -262,12 +264,12 @@ export default class componentName extends Component {
         if(addValuesData.findIndex(x=>x.name===name)>=0){
             for (var i = 0; i < addValuesData.length; i++){
                 if (addValuesData[i].name ===name){
-                    addValuesData[i]={name:name,qty:count};
+                    addValuesData[i]={id:data.id,name:name,qty:count};
                 }
             }
         }
         else{
-            addValuesData= addValuesData.concat([{name:name,qty:count}]);
+            addValuesData= addValuesData.concat([{id:data.id,name:name,qty:count}]);
         }     
         this.setState({
             standardPax: addValuesData,
@@ -303,31 +305,34 @@ export default class componentName extends Component {
             quotaE:false
         });
   }
-
-  handleCountValuesIncrement =() =>{
+  handleCountValuesIncrement =(name,data,count) =>{
+    // this.forceUpdate();
+    // console.log(name);
       var max=this.state.standardPaxMAx;
+      var staData = [this.state.standardPax];
       var val=0;
       var qtyAdult=0;
       var qtyChild=0;
       var qtyInfant=0;
-        for(var i=1;i<this.state.standardPax.length;i++){
-            if(this.state.standardPax[i].name==="ADULT"){
-
-                 qtyAdult= this.state.standardPax[i].qty;
-            }
-
-            if(this.state.standardPax[i].name==="CHILD"){
-
-                 qtyChild= this.state.standardPax[i].qty;
-            }
-
-            if(this.state.standardPax[i].name==="INFANT"){
-
-                 qtyInfant= this.state.standardPax[i].qty;
-            }
+      var add =0;
+      var addValuesData = [...this.state.standardPax];
+      if(addValuesData.findIndex(x=>x.name===name)>=0){
+          for (var i = 0; i < addValuesData.length; i++){
+              if (addValuesData[i].name ===name){
+                  addValuesData[i]={id:data.id,name:name,qty:count};
+                  // this.setState({
+                  //     addValuesData: addValuesData,
+                  // });
+              }
+          }
+      }
+      else{
+          addValuesData= addValuesData.concat([{id:data.id,name:name,qty:count}]);
+      }     
+        for(var i=1;i<addValuesData.length;i++){
+            add =  add + addValuesData[i].qty;
         }
 
-        var add= qtyAdult+qtyChild+qtyInfant+1;
         if(add===max){
             this.setState({
                 standardPaxDisable:true
@@ -338,13 +343,20 @@ export default class componentName extends Component {
                 standardPaxDisable:false
             })
         }
+        if(add>max){
+            this.setState({
+                isPaxInvalid:true,
+                standardPaxDisable:true
+            })
+        }
         
     // }
   }
 
   handleCountValuesDecrement =() =>{
           this.setState({
-              standardPaxDisable:false
+              standardPaxDisable:false,
+              isPaxInvalid:false
           })
       }
 
@@ -451,6 +463,7 @@ export default class componentName extends Component {
             addProductsValueQuota} =this.state;
             // let packg = this.state.package;
             let packg;
+            let pkg =[];
         
 
             let adult=0,children=0,other=0,prodadd;
@@ -458,13 +471,7 @@ export default class componentName extends Component {
                 prodadd = this.state.rawAddPR
             }
             else{
-                prodadd = addProductsValue1
-            }
-            if(this.state.packageValues.length<1){
-                packg = this.state.rawPackage;
-            }
-            else{
-                packg = this.state.packageValues;
+                prodadd = addProductsValue1;
             }
             
             standardPax.map(x=>{
@@ -477,17 +484,20 @@ export default class componentName extends Component {
                 if(x.name==='INFANT'){
                     other=x.qty;
                 }
+                if(x.name==='ADULT' || x.name==='CHILD' || x.name==='INFANT'){
+                    
+                }else{
+                    pkg.push({id:x.id,qty:x.qty})
+                }
             })
-            // if(standardPax.adult){
-            //     adult=standardPax.adult
-            // }
-            // if(standardPax.child){
-            //     children=standardPax.child;
-            // }
-            // if(standardPax.infant){
-            //     other=standardPax.infant
-            // }
-
+            if(pkg.length>1){
+                pkg = pkg.slice(1);
+                packg = pkg;
+            }
+            else{
+                packg = this.state.packageValues;
+            }
+            console.log(packg);
             //Validations Related to Pax
             if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!=false && isRequiredSelect!=false){
                 let quotaDiff = quota - used_quota,finalQuota;
@@ -634,6 +644,7 @@ export default class componentName extends Component {
             standardPax,total_frontend,addProductsValue1,
             commentBox,promoCode,paymentType,depositAmt} =this.state;
             let packg;
+            let pkg = [];
 
             let adult=0,children=0,other=0,prodadd;
             if(addProductsValue1.length<2){
@@ -641,12 +652,6 @@ export default class componentName extends Component {
             }
             else{
                 prodadd = addProductsValue1
-            }
-            if(this.state.packageValues.length<1){
-                packg = this.state.rawPackage;
-            }
-            else{
-                packg = this.state.packageValues;
             }
             standardPax.map(x=>{
                 if(x.name==='ADULT'){
@@ -658,7 +663,20 @@ export default class componentName extends Component {
                 if(x.name==='INFANT'){
                     other=x.qty;
                 }
+                if(x.name==='ADULT' || x.name==='CHILD' || x.name==='INFANT'){
+                    
+                }
+                else{
+                    pkg.push({"id":x.id,"qty":x.qty})
+                }
             })
+
+            if(pkg.length>1){
+                pkg = pkg.slice(1);
+                packg = pkg;
+            }else{
+                packg = this.state.packageValues;
+            }
             if(paymentType==='full payment'){
                 depositAmt=0
             }
@@ -709,6 +727,7 @@ export default class componentName extends Component {
                     "pax_details":[pax_select,pax_box]
                   }
               }
+              console.log(dataProceeed);
               if(total_frontend<1){
                 this.setState({
                     zeroAmount:true
@@ -761,6 +780,11 @@ export default class componentName extends Component {
     let lastYear = fullYear - 1,quota = product.quota - product.used_quota,addDescText,addDescList,addDescCheck,
     reff, a;
 
+    let staPax = this.state.standardPax;
+    let paxTotal =0;
+    staPax.map(x=>{
+        paxTotal +=x.qty;
+    })
     //Get Quota Value
     let quotaDiff = quota - this.state.used_quota,finalQuota;
     if(this.state.max_per_booking<quotaDiff){
@@ -795,11 +819,13 @@ export default class componentName extends Component {
         //             name={item.pax_type.toLowerCase()} 
         //             className='form-control Box'
         //             />
+        
                     <AdditionalPax
                         maxQuota={this.state.standardPaxMAx}
                         min={item.minimum}
                         max={item.maximum}
                         it ={item}
+                        totalPax={paxTotal}
                         myFun={this.incrementCounterPax} 
                         decrement={this.decrementCounterPax}
                         key={item.id}
@@ -811,6 +837,7 @@ export default class componentName extends Component {
                         countValuesIncre= {this.handleCountValuesIncrement}
                         countValuesDecre = {this.handleCountValuesDecrement}
                         standardPaxDisable={this.state.standardPaxDisable}
+                        isPaxInvalid={this.state.isPaxInvalid}
                     />
         //         </div>
         //     </div>
@@ -832,6 +859,7 @@ export default class componentName extends Component {
         decrement={this.decrementCounterPax}
         key={item.id}
         addiValue={0}
+        totalPax={paxTotal}
         currency={this.state.currency}
         usedQuota={item.used_quota} 
         quota={item.quota} 
@@ -839,6 +867,7 @@ export default class componentName extends Component {
         countValuesIncre= {this.handleCountValuesIncrement}
         countValuesDecre = {this.handleCountValuesDecrement}
         standardPaxDisable={this.state.standardPaxDisable}
+        isPaxInvalid={this.state.isPaxInvalid}
     />
 //      <div className='col-sm-6 mb-3' key={index}>
 //      <div className='row ratesDiv px-0 mx-0'>
@@ -984,6 +1013,7 @@ export default class componentName extends Component {
         else{
             amountLast = this.state.finalAmount; 
         }
+       
     return (
         this.state.showPaymentPage?
         <Payment 
@@ -1051,6 +1081,9 @@ export default class componentName extends Component {
                     </div>
                  </div>
                  {standardPax}
+                 {this.state.isPaxInvalid?
+                    <p style={{ color:"red" }}>Quota limit exceeds</p>:''
+                 }
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>CANCELATION POLICY PAX</h2>
@@ -1062,7 +1095,10 @@ export default class componentName extends Component {
                     <div className='col-sm-12 px-0'>
                     <h2 className='CancelationPax'>PACKAGE</h2>
                     {otherPax}
-
+                    {this.state.isPaxInvalid?
+                    <p style={{ color:"red" }}>Quota limit exceeds</p>:''
+                    }
+                    
                  </div>
                   </div>  
                  <div className='row mt-4'>
@@ -1139,7 +1175,7 @@ export default class componentName extends Component {
                     <div className='col-sm-10' style={{ textAlign:"center" }}>
                         <div className='row'>
                             <div className='col-sm-6 offset-3'>
-                            <button className='book4thComponent' onClick={this.handleBook}>Book</button>
+                            <button className='book4thComponent' onClick={this.handleBook} disabled={this.state.isPaxInvalid}>Book</button>
                             {this.state.bookingE?  
                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
                                <strong>Error!</strong> Quota limit exceeds.
@@ -1147,30 +1183,6 @@ export default class componentName extends Component {
                             }
                             </div>
                         </div>
-                        {this.state.reqiredE?
-                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
-                                <strong>Error!</strong> Fields indicates with * are mandatory.
-                            </div>
-                            :''
-                        }
-                        {this.state.quotaE?
-                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
-                               <strong>Error!</strong> Maximum quota limit Exceeds for Additional Product.
-                            </div>
-                            :''
-                        }
-                        {this.state.standardPaxE?
-                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
-                               <strong>Error!</strong> Maximum quota limit Exceeds for Tickets.
-                            </div>
-                            :''
-                        }
-                        {this.state.otherPaxE?
-                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
-                               <strong>Error!</strong> Maximum quota limit Exceeds for Package.
-                            </div>
-                            :''
-                        }
                     </div>
                 </div>
                 {this.state.promoResponse?

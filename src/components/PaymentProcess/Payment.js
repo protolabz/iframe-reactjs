@@ -308,7 +308,7 @@ export default class componentName extends Component {
         var requestData = Object.assign({}, this.getTokenData());
         swal({
             title: 'Failed',
-            text: "Payment has not been done.",
+            text: "Please give correct card details.",
             icon: "warning",
             button: true,
             dangerMode: true,
@@ -330,17 +330,11 @@ export default class componentName extends Component {
                 showModal:true
              })
              window.open(creditCardToken.payer_authentication_url, 'sample-inline-frame');
-            //  this.setState({
-            //     showModal:true
-            //  })
-                    // $('.overlay').show();
-                    // $('#three-ds-container').show();
-           // console.log("REVIEW",creditCardToken);
         }
         
          else if (creditCardToken.status === 'FAILED') {
-            // this.displayError(creditCardToken);
-            console.log(creditCardToken.status);
+            this.displayError(creditCardToken);
+            // console.log(creditCardToken.status);
         }
     }
     

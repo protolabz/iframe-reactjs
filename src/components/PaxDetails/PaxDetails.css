@@ -258,6 +258,13 @@
   cursor: pointer;
   outline: none !important;
 }
+.book4thComponent:disabled,
+.book4thComponent[disabled]{
+  box-shadow: 0 1px 0 0#b9a69c;
+  background-color: #ffb381;
+  color: #FFF;
+  cursor: not-allowed;
+}
 .paxCountClass{
   margin: 0px !important;
   font-size: 10px;
@@ -461,4 +468,7 @@
   /* border: 1px solid #cacaca !important; */
   background-color:#e6e6e6;
   color: #666666;
+}
+.isPaxInvalid{
+  border:1px dotted red;
 }
