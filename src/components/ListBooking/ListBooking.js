@@ -42,7 +42,6 @@ export default class componentName extends Component {
             })
         }
   render() {
-      console.log(this.state.showVoucher);
       let {bookingList,bookingListExpire} = this.state;
       let boList,boListE;
       if(bookingList.length!==0){
@@ -134,13 +133,13 @@ export default class componentName extends Component {
       }
       
     return (
-      <div>
-        <div className="container mt-5 mb-5">
-            {this.state.showVoucher?
+          this.state.showVoucher?
              <Voucher
              transaction_code = {this.state.transaction_code}
             />
             :
+        <div className="container mt-5 mb-5">
+            
             <div className='col-md-9 cols9-center mainOuterDiv' >
                 <div className='row'>
                     <div className='col-sm-12 p-0'>
@@ -167,9 +166,9 @@ export default class componentName extends Component {
                 </div>
                 {boListE}
             </div>
-            }
+           
         </div> 
-      </div>
+ 
     )
   }
 }

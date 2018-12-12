@@ -411,13 +411,13 @@ export default class ActivityDetail extends Component {
            rates_pax_package.map((item,index) => (
                item.amount>0?
             <div className='row px-3' key={item.id}>
-                <div className='col-sm-8 col-xs-8'>
+                <div className='col-sm-8 col-xs-8 px-1'>
                 <p className='participants'>{item.pax_type} (Age {item.age_from}-{item.age_to})
                 <br/>
                 {item.minimum>0?<span style={{ fontSize:"10px",textTransform:"capitalize" }}>Minimum : {item.minimum} PAX</span>:''}
                 </p>
                 </div>
-                <div className='col-sm-4 col-xs-4 px-0'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
+                <div className='col-sm-4 col-xs-4 px-1'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
             </div>
             :''
            ))
@@ -444,18 +444,20 @@ export default class ActivityDetail extends Component {
     addDescText = (
         additionalDesc.map(item => 
             item.type === 'text' ? (
-            <div key={item.heading}>
-                <h5 className='Tempat px-4 mb-0'>{item.heading}</h5>
-                <p className='tempatText mx-4'>{item.items[0]}</p>
-            </div>
+            // <div className='row' key={item.heading}>
+                <div className='col-sm-12' key={item.heading}>
+                    <h5 className='Tempat mx-4 mb-0'>{item.heading}</h5>
+                    <p className='tempatText mx-4'>{item.items[0]}</p>
+                </div>
+            // </div>
             ) 
             : ''
         ));
      addDescCheck = (
         additionalDesc.map(item => 
             item.type === 'check_box' ? (
-            <div key={item.heading}>
-                <h5 className='Perlengkapan px-4 mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
+            <div className='col-sm-12' key={item.heading}>
+                <h5 className='Perlengkapan mx-4 mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                 <ul className='pelam mb-4'>
                 {
                     item.items.map((chk,index) =>(
@@ -475,10 +477,10 @@ export default class ActivityDetail extends Component {
     addDescList = (
         additionalDesc.map((item,index) => 
             item.type === 'list_box' ? (
-                <div key={index}>
+                <div className='col-sm-12' key={index}>
                     <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                     <div className='selectdiv'>
-                        <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box mx-4'>
+                        <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box mx-md-4'>
                         <option disabled={true} selected={true}>Select option</option>
                         {
                             item.items.map((list,index) =>(
@@ -534,7 +536,7 @@ export default class ActivityDetail extends Component {
                             </div>
                         </div> 
                     </div>
-                    <div className='row px-5 mb-4'>
+                    <div className='row px-md-5 mb-4 px-xs-1'>
                         <div className='col-sm-7'>
                             <h5 className="Location mb-4">LOCATION</h5>
                             <p className='Ubud-Bali-Indonesi'>{mainCity}</p>
@@ -555,40 +557,8 @@ export default class ActivityDetail extends Component {
                             </div>
                             </div>
                             :''}
+                            </div>
 
-                             <h5 className='Description mb-4 mt-5'>DESCRIPTION</h5>
-                            <p className='DescriptionTexts'>{detail_product.brief_description}</p>
-                            <div className='row mt-4'>
-                             <div className='col-sm-6'>
-                                    <h5 className='Include mb-3'>INCLUDE</h5>
-                                        <ul className='include'>
-                                            {incl}
-                                        </ul>
-                                </div>
-                                <div className='col-sm-6'>
-                                    <h5 className='Exclude mb-3'>EXCLUDE</h5>
-                                    <ul className='exclude'>
-                                        {excl}
-                                    </ul>
-                                </div>
-                             </div>
-                                <h5 className='ADDITIONAL-DESCRIPTI mb-3 mt-4'>ADDITIONAL DESCRIPTION</h5>
-                            {
-                                addDescText?addDescText:''
-                            }
-                            {
-                                addDescCheck?addDescCheck:''
-                            }
-
-                            {
-                                addDescList?
-                                    addDescList
-                                :''
-                            }
-
-                             <h5 className='Special-Notes mt-5 mb-3'>SPECIAL NOTES</h5>
-                            <p className='specialText'>{product.spesial_note}</p>
-                    </div>
                    
                     <div className='col-sm-5 calendarOuter'>
                         <p className='pickDate'>PICK A DATE</p>
@@ -611,6 +581,49 @@ export default class ActivityDetail extends Component {
                               :''
                           }
                           
+                        </div>
+                        <div className='row px-2'>
+                            <div className='col-sm-12'>
+                            <h5 className='Description mb-4 mt-5'>DESCRIPTION</h5>
+                            <p className='DescriptionTexts'>{detail_product.brief_description}</p>
+                            </div>
+                           
+                            {/* <div className='row mt-4'> */}
+                             <div className='col-sm-6'>
+                                    <h5 className='Include mb-3'>INCLUDE</h5>
+                                        <ul className='include'>
+                                            {incl}
+                                        </ul>
+                                </div>
+                                <div className='col-sm-6'>
+                                    <h5 className='Exclude mb-3'>EXCLUDE</h5>
+                                    <ul className='exclude'>
+                                        {excl}
+                                    </ul>
+                                </div>
+                             {/* </div> */}
+                            <div className='col-12'>
+                                <h5 className='ADDITIONAL-DESCRIPTI mb-3 mt-4'>ADDITIONAL DESCRIPTION</h5>
+                            </div>
+                            {
+                                addDescText?addDescText:''
+                            }
+                            {
+                                addDescCheck?addDescCheck:''
+                            }
+
+                            {
+                                addDescList?
+                                    addDescList
+                                :''
+                            }
+                            {product.spesial_note?
+                            <div className='col-sm-12'>
+                            <h5 className='Special-Notes mt-5 mb-3'>SPECIAL NOTES</h5>
+                            <p className='specialText'>{product.spesial_note}</p>
+                            </div>
+                            :''}
+                             
                         </div>
                         </div>
                         

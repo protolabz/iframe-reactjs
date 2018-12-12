@@ -680,7 +680,7 @@ export default class componentName extends Component {
                         <p className="bankImage custom-control custom-radio" data-toggle="collapse" style={{ paddingLeft:"0px" }} data-target="#mandiri" data-parent="#bankTransfers">
                         <input type='radio' className='custom-control-input' onChange={(e) =>this.handleBankClick('MANDIRI')} value={'mandiri'} name='checkBank' id='checkMandiri'/>
                         <label htmlFor='checkMandiri' className='custom-control-label'> 
-                            <img className='bankImg' alt='mandiri' src='/images/mandiri.png'/>
+                            <img className='bankImg' alt='mandiri' src='/images/mandiri.png' style={{ marginTop: "-11px" }}/>
                         </label>
                         </p>
                             <div id="mandiri" className="collapse mb-4">
@@ -777,12 +777,55 @@ export default class componentName extends Component {
                                 </div>
                             </div>
 
+                        <p className="bankImage custom-radio" data-toggle="collapse" data-target="#other" data-parent="#bankTransfers">
+                        <input type='radio' className='custom-control-input' onChange={(e) =>this.handleBankClick('other')} value={'other'} name='checkBank' id='checkOther'/>
+                            <label htmlFor='checkOther' className='custom-control-label'> 
+                            <h2 className='otherBank'>Other Bank</h2>
+                        </label>
+                        
+                        </p>
+                            <div id="other" className="collapse">
+                            <button className="customButtonTop" data-toggle="collapse" data-target="#bniAtm">ATM</button><br></br>
+                                <div id="bniAtm" className="collapse p-md-4 p-sm-1">
+                                    <h4 className='virtualAccountNorm'>Virtual Account <span className='virtualAccount'># {accBni}</span></h4>
+                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{nameBni}</span></h4>
+                                    <p className='atmText'>* Silakan baca petunjuk di bawah ini untuk menyelesaikan transaksi Anda. </p>
+                                    <ul className='listText'>
+                                        {bniA}
+                                    </ul>
+                                </div>
+                                <button className="customButtonMiddle" data-toggle="collapse" data-target="#bniIban">I-Banking</button>
+                                <div id="bniIban" className="collapse p-sm-4 p-sm-1">
+                                    <h4 className='virtualAccountNorm'>Virtual Account <span className='virtualAccount'># {accBni}</span></h4>
+                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{nameBni}</span></h4>
+                                    <p className='atmText'>* Silakan baca petunjuk di bawah ini untuk menyelesaikan transaksi Anda. </p>
+                                    <ul className='listText'>
+                                        {bniI}
+                                    </ul>
+                                </div>
+                                <button className="customButtonBottom mb-3" data-toggle="collapse" data-target="#bniMba">M-Banking</button>
+                                <div id="bniMba" className="collapse p-md-4 p-sm-1">
+                                    <h4 className='virtualAccountNorm'>Virtual Account <span className='virtualAccount'># {accBni}</span></h4>
+                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{nameBni}</span></h4>
+                                    <p className='atmText'>* Silakan baca petunjuk di bawah ini untuk menyelesaikan transaksi Anda. </p>
+                                    <ul className='listText'>
+                                        {bniM}
+                                    </ul>
+                                </div>
+                            </div>
+
                         </div>
                         <div id="retailTransfer" className="container tab-pane px-md-5 px-sm-0">
-                            <div className='row'>
-                                <div className='col-md-12 my-5 border-bottom'>
-                                    <img src='/images/alfa.jpg' alt='alpha'/>
-                                </div>
+                        <div className='row'>
+
+                        <div className='col-md-12 my-5 border-bottom'>
+                            <p className="bankImage custom-radio" data-toggle="collapse" data-target="#bni" data-parent="#bankTransfers">
+                            <input type='radio' className='custom-control-input' value={'ALFAMART'} checked='true' name='checkRetail' id='checkAlfa'/>
+                                <label htmlFor='checkBni' className='custom-control-label'> 
+                                <img src='/images/alfa.jpg' alt='alpha'/>
+                            </label>
+                        </p>           
+                        </div>
                                 
                                 <div className='col-md-12'>
                                 <h4 className='virtualAccountNorm'>Berikut kode pembayaran Alfamart anda : <span className='virtualAccount'># {alfaPayCode}</span></h4>

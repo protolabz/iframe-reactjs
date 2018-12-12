@@ -250,7 +250,7 @@
     list-style: none;
 }
 .listText li{
-    display: flex;
+    display: -webkit-box;
     font-family: Archivo;
     font-size: 16px;
     font-weight: normal;
@@ -260,19 +260,18 @@
     color: #4f4f4f;
 }
 .textCounter{
-    background-color: #004f9f;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    text-align: center;
-    color: #FFF;
-    padding-left: 6px;
-    padding-right: 7px;
-    padding-top: 4px;
+  background-color: #004f9f;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  text-align: center;
+  color: #FFF;
+  font-size: 14px;
+  padding-top: 2px;
 }
 .loading{
   text-align: center;
-  position: fixed;
+  position: sticky;
   left: 40%;
   top: 40%;
   z-index: 9999;
@@ -389,17 +388,17 @@
 }
 .custom-radio .custom-control-input:checked~.custom-control-label::before {
   background-color: #f89655 !important;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 .custom-control-input:checked~.custom-control-label::before{
   background-color: #f89655 !important;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 .custom-control-label::after{
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 .custom-radio .custom-control-label::before{
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 .custom-control-input{
   display: none;
@@ -420,17 +419,28 @@
   z-index: 11;
 }
 #three-ds-container{
-            display: none;
-            width: 550px;
-            height: 450px;
-            line-height: 200px;
-            position: fixed;
-            top: 25%;
-            left: 40%;
-            margin-top: -100px;
-            margin-left: -150px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            text-align: center;
-            z-index: 10000;
+  display: none;
+  width: 550px;
+  height: 450px;
+  line-height: 200px;
+  position: fixed;
+  top: 25%;
+  left: 40%;
+  margin-top: -100px;
+  margin-left: -150px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 10000;
+}
+.otherBank{
+  font-family: Archivo;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #f89655;
+  margin-top: 4px;
 }

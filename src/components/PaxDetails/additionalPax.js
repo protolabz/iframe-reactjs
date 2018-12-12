@@ -86,18 +86,18 @@ class AdditionalPax extends Component {;
 
     render(props) {
         return (
-            <div className={"row " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
-            <div className='col-sm-3'>
+            <div className={"row mx-1 " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
+            <div className={'col-sm-3 border '+(this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':'p-2')}>
             <label style={{ display:"flex" }} className='mt-2'>
             <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
             <input type="text" name={this.props.it.pax_type} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
             <button type="button" onClick={()=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button>
             </label>
             </div>
-            <div className='col-sm-6'>
+            <div className='col-sm-9 border p-2'>
                 <h5 className='addProductRightHead'>{this.props.it.pax_type} <span className='productAmt'> ({this.props.currency} {this.formatThousands(this.props.it.amount)}) </span></h5>
                 <p className='Remark'>Age {this.props.it.age_from}-{this.props.it.age_to}</p>
-                {this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':<p className='paxCountClass mb-2'>Minimum Pax {this.props.it.minimum}</p>}
+                {this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':<p className='paxCountClass'>Minimum Pax {this.props.it.minimum}</p>}
             </div>
             </div>
         )

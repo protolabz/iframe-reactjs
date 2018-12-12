@@ -636,7 +636,14 @@ showListBooking = () =>{
     this.setState({isShowBooking:true})
 }
 handlePrint =()=>{
-    window.print()
+    var printContent = document.getElementById('voucherId');
+    var WinPrint = window.open('', '', 'width=900,height=650');
+    WinPrint.document.write(printContent.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+    WinPrint.close();
+    // window.print();
 }
 
 setActive = (value) => {
@@ -756,7 +763,13 @@ setActive = (value) => {
     }
     
     return (
-        
+        this.state.isShowBooking?
+            // <div className='' >
+            <ListBooking
+                userEmail={this.state.userEmail}
+            />
+            // </div>
+            :
         <div className="container mt-5 mb-5">
          <Modal 
             open={this.state.showModal} 
@@ -768,13 +781,7 @@ setActive = (value) => {
             center>
                 <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
          </Modal>
-         {this.state.isShowBooking?
-            <div className='' >
-            <ListBooking
-                userEmail={this.state.userEmail}
-            />
-            </div>
-            :
+         
           <div className='col-md-9 cols9-center mainOuterDiv' >
 
             <div className='row mb-4'>
@@ -782,12 +789,12 @@ setActive = (value) => {
                     <a href="#" onClick={this.refreshRoute} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</a>
                 </div>
             </div>
-            <div className='row pt-5 pb-4'>
+            <div className='row pt-5 pb-4' id="voucherId">
                 <div className='col-md-6 voucherOrange p-md-4'>
                    <h3 className='operationDate'>{this.state.operationDate+" — "+this.state.operationTime}</h3>
                    <h3 className='productTitle'>{this.state.productName}</h3>
                    <p className='paxDetails'><span className='paxDetailsBold'>{this.state.paxText}</span></p>
-                   <p className='location my-4'><span>{this.state.address}</span></p>
+                   {this.state.address?<p className='location my-4'><span>{this.state.address}</span></p>:''}
                   
                   <div className='row mt-md-2'>
                     <div className='col-5'>
@@ -1115,7 +1122,7 @@ setActive = (value) => {
             </div>
             :''}    
           </div>
-          }
+          
         </div>
     )
   }

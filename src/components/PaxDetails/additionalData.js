@@ -57,18 +57,20 @@ class AdditionalData extends Component {
 
     render(props) {
         return (
+            <div className='col-sm-12'>
             <div className='row'>
-            <div className='col-sm-3'>
+            <div className='col-sm-3 border p-2'>
             <label style={{ display:"flex" }} className='mt-2'>
             <button id="subs" onClick ={ () => this.handleDecreement(this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
             <input type="text" name={this.props.it.id} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
             <button type="button" onClick={()=>this.handleIncreement(this.props.it)} id="adds" disabled ={this.state.disablebutton} className="btnPlus" ><i className='fa fa-plus'></i></button>
             </label>
             </div>
-            <div className='col-sm-6'>
+            <div className='col-sm-9 border p-2'>
                 <h5 className='addProductRightHead'>{this.props.it.description} <span className='productAmt'> ({this.props.currency} {this.formatThousands(this.props.it.amount)}) </span></h5>
                 <p className='Remark' >Remark:{this.props.it.remark} </p>
-                <p className="paxCountClass mb-2">(Maximum Per Booking = {this.props.it.max_per_booking})</p>
+                <p className="paxCountClass">(Maximum Per Booking = {this.props.it.max_per_booking})</p>
+            </div>
             </div>
             </div>
         )

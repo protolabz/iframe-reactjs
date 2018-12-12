@@ -12,7 +12,8 @@ export default class MultipleHours extends Component {
         selectedTime:null,
         selectedDate:null,
         showPaxPage:false,
-        showActivityDetail:false
+        showActivityDetail:false,
+        isLoading:true
     }
 
     componentWillMount(){
@@ -25,7 +26,8 @@ export default class MultipleHours extends Component {
                     this.setState({
                        dateBefore:res.data.response.date_before,
                        dateAfter:res.data.response.date_after,
-                       dateCurrent:res.data.response.date_current
+                       dateCurrent:res.data.response.date_current,
+                       isLoading:false
                     })
             })
             .catch((e) =>
@@ -169,8 +171,10 @@ export default class MultipleHours extends Component {
         <Paxpage boxValue={this.props.boxValue} selectValue={this.props.selectValue}
          timeValue={this.state.selectedTime} dateValue={this.state.selectedDate} 
          productId={this.props.productId}/>:
-      <div>
            <div className='container mt-5 mb-5'>
+           {this.state.isLoading?
+                <img className='loading' src='/images/loading.svg' alt='loading'/>
+            :
                 <div className='row'>
                     <div className='col-sm-9 cols9-center mainOuterDiv'>
                         <div className='row mb-1 goBackBox'>
@@ -198,8 +202,8 @@ export default class MultipleHours extends Component {
                         </div>
                     </div>
                 </div>
+           }
             </div>
-      </div>
     )
   }
 }

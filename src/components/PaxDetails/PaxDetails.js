@@ -942,7 +942,7 @@ export default class componentName extends Component {
             additionalDesc.map(item => 
                 item.type === 'check_box' ? (
                 <div key={item.heading} className='col-sm-12'>
-                    <h5 className='Perlengkapan px-4 mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
+                    <h5 className='Perlengkapan mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                     <ul className='pelam mb-4'>
                     {
                         item.items.map((chk,index) =>(
@@ -963,9 +963,9 @@ export default class componentName extends Component {
             additionalDesc.map((item,index) => 
                 item.type === 'list_box' ? (
                     <div key={index} className='col-sm-12'>
-                        <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
+                        <h5 className='Kendaraan mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                         <div className='selectdiv'>
-                            <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box mx-4'>
+                            <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box'>
                             <option disabled={true} selected={true}>Select option</option>
                             {
                                 item.items.map((list,index) =>(
@@ -1030,7 +1030,7 @@ export default class componentName extends Component {
               </div> 
           </div>
 
-          <div className='row mb-3'>
+          <div className='row mb-3 mx-2'>
               <div className='col-sm-12'>
               <h1 className='PAX-Details mb-4'>PAX Details</h1>
                 <div className='row'>
@@ -1082,7 +1082,7 @@ export default class componentName extends Component {
 
                 <div className='row mt-5'>
                     <div className='col-sm-12 px-0'>
-                    <h2 className='CancelationPax'>PACKAGE</h2>
+                    <h2 className='CancelationPax border mx-1 p-2' style={{ margin:"0px" }}>PACKAGE</h2>
                     {otherPax}
                     {this.state.isPaxInvalid?
                     <p style={{ color:"red" }}>Quota limit exceeds</p>:''
@@ -1101,13 +1101,13 @@ export default class componentName extends Component {
                         <h2 className='CancelationPax'>ADDITIONAL PRODUCT</h2>
                         
                     </div>
-
+                    <div className='row'>
                     {a?
                     this.state.currency?
                     a.map((item,i) => (
                         <div className='col-sm-12' key = {i}>
-                        <h5 className='Meals mt-4'>{item.name}</h5>
-                        <hr/>
+                        <h5 className='Meals mt-4 p-2 border' style={{ margin:"0px" }}>{item.name}</h5>
+                        {/* <hr/> */}
                         {
                             item.details.map((it,i) => (
                                 this.state.addProductsValue.map(x=> (
@@ -1121,13 +1121,14 @@ export default class componentName extends Component {
                     
                     :''
                     :''}
+                    </div>
                 </div>
                     
                 <div className='row mt-5'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>ADDITIONAL PAX DETAILS</h2>
                     </div>
-                    <div className='row'>
+                    {/* <div className='row'> */}
                 
                             {
                                 addDescText?addDescText:''
@@ -1141,11 +1142,11 @@ export default class componentName extends Component {
                                     addDescList
                                 :''
                             }
-                    </div>        
+                    {/* </div>         */}
                 </div>      
 
                 <div className='row mt-5'>
-                    <div className='col-sm-10'>
+                    <div className='col-sm-12'>
                     <h2 className='CancelationPax'>REFERRAL</h2>
                     <select onChange={(e) => this.handleRefferal(e.target.value)} className='Text-Box'>
                     <option >select option</option>
@@ -1155,7 +1156,7 @@ export default class componentName extends Component {
                 </div>
 
                 <div className='row mt-5'>
-                    <div className='col-sm-10'>
+                    <div className='col-sm-12'>
                     <h2 className='CancelationPax'>ADDITIONAL COMMENTS (Optional)</h2>
                         <textarea onChange={this.handleCommentBox} className='TextArea form-control'></textarea>
                     </div>
@@ -1163,7 +1164,7 @@ export default class componentName extends Component {
                 <div className='row mt-5'>
                     <div className='col-sm-10' style={{ textAlign:"center" }}>
                         <div className='row'>
-                            <div className='col-sm-6 offset-3'>
+                            <div className='col-md-6 offset-md-4'>
                             <button className='book4thComponent' onClick={this.handleBook} disabled={this.state.isPaxInvalid}>Book</button>
                             {this.state.bookingE?  
                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
