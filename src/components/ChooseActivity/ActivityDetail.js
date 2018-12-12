@@ -25,7 +25,7 @@ export default class ActivityDetail extends Component {
      OperationDateNormal:null,
      holidaysRows:[],
      showHolidays:false,
-     isRequiredSelect:false,
+     isRequiredSelect:true,
      isRequiredBox:true,
      isTimeSelected:false,
      boxValue:[],
@@ -37,18 +37,19 @@ export default class ActivityDetail extends Component {
      showError:false,
      showPaxPage:false,
      showMultipleHrs:false,
-     showModal:false
+     showModal:false,
+     isLoading:true,
     }
 
     componentWillMount(){
         axios({
             method: 'get',
-            // url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.id}`,
+            url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.id}`,
             // url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=2018-11-17&time=8:30 AM`,
-            url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
+            // url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
         })
             .then((res) => {
-                // console.log(res);
+                console.log(res);
                 var data = res.data.response.product.additional_description.description;
                 var len = res.data.response.product.additional_description.description.length;
                     for(let i=0;i<=len-1;i++){
@@ -69,7 +70,8 @@ export default class ActivityDetail extends Component {
                     pax_details:res.data.response.product.additional_description.pax_details,
                     additionalDesc:res.data.response.product.additional_description.description,
                     bannerImg:res.data.response.detail_product.image,
-                    dates:res.data.response.operationDate
+                    dates:res.data.response.operationDate,
+                    isLoading:false
                 })
 
             })
@@ -238,7 +240,7 @@ export default class ActivityDetail extends Component {
           }
         handleBookButton =(timeValue) => {
             let {boxValue,selectValue} = this.state;
-            var selectHead, boxHead;
+            var selectHead='', boxHead='';
             var add_pax = this.state.additionalDesc;
             for(let i=0;i<add_pax.length;i++){
                 if(add_pax[i].type==='list_box'){
@@ -415,7 +417,7 @@ export default class ActivityDetail extends Component {
                 {item.minimum>0?<span style={{ fontSize:"10px",textTransform:"capitalize" }}>Minimum : {item.minimum} PAX</span>:''}
                 </p>
                 </div>
-                <div className='col-sm-4 col-xs-4'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
+                <div className='col-sm-4 col-xs-4 px-0'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
             </div>
             :''
            ))
@@ -496,10 +498,17 @@ export default class ActivityDetail extends Component {
         this.state.showPaxPage?
             <PaxDetails productId={this.props.match.params.id} boxValue={this.state.boxValHeading} selectValue={this.state.selectValHeading} dateValue={this.state.dateValue} timeValue={this.state.timeValue}/>
         : (this.state.showMultipleHrs?
-            <MultipleHours boxValue={this.state.boxValHeading} productId={this.props.match.params.id} dateValue={this.state.OperationDateNormal.date} selectValue={this.state.selectValHeading} />
+            <MultipleHours 
+                boxValue={this.state.boxValHeading} 
+                productId={this.props.match.params.id} 
+                dateValue={this.state.OperationDateNormal.date} 
+                selectValue={this.state.selectValHeading}
+            />
             :
       <div className='container mt-5 mb-5'>
-
+            {this.state.isLoading?
+                <img className='loading' src='/images/loading.svg' alt='loading'/>
+            :
             <div className='row'>
                 <div className='col-sm-9 cols9-center mainOuterDiv'>
                 <div className='row mb-4'>
@@ -608,7 +617,9 @@ export default class ActivityDetail extends Component {
                     </div>         
 
                 </div>
+                 }
                 <Alert stack={{limit: 1}} timeout={2000}/>
+               
             </div>
             )
 

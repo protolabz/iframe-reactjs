@@ -8,7 +8,8 @@ export default class ChooseActivity extends Component {
             listProducts:[],
             firstProduct:[],
             secondProduct:[],
-            thirdProduct:[]
+            thirdProduct:[],
+            isLoading:true
             }
             
     componentWillMount(){
@@ -23,7 +24,8 @@ export default class ChooseActivity extends Component {
                     listProducts:res.data.response,
                     firstProduct:res.data.response[0],
                     secondProduct:res.data.response[1],
-                    thirdProduct:res.data.response[2]
+                    thirdProduct:res.data.response[2],
+                    isLoading:false
                 })
 
             })
@@ -53,6 +55,9 @@ export default class ChooseActivity extends Component {
       );
     return (
       <div className='container noPadding mainOuterDiv'>
+       {this.state.isLoading?
+            <img className='loading' src='/images/loading.svg' alt='loading'/>
+        :
         <div className='row'>
             <div className='col-sm-8 offset-sm-2 noPadding'>
                 <div className='row'>
@@ -88,6 +93,7 @@ export default class ChooseActivity extends Component {
                 </div>
             </div>
         </div>
+        }
       </div>
     )
   }

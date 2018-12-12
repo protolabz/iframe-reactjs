@@ -12,8 +12,13 @@ import Payment from '../PaymentProcess/Payment';
 import swal from 'sweetalert';
 var arr =  {};
 var otherPaxArr = {};
-
+const errorPhone ={
+    border:'1px solid #D2162B',
+    outline: 'none !important',
+    borderRadius:'4px'
+}
 export default class componentName extends Component {
+    
   state ={
     // params:this.props.match.params,
     detail_product:[],
@@ -65,6 +70,7 @@ export default class componentName extends Component {
      user_code:null,
      refferal:null,
      phone:null,
+     isLoading:true,
      paxDetailsName:null,
      standardPax:[
          {name:"name",qty:0}
@@ -88,6 +94,9 @@ export default class componentName extends Component {
      //Errors
     //  quotaE:false,
      reqiredE:false,
+     nameE:false,
+     emailE:false,
+     phoneE:false,
     //  standardPaxE:false,
     //  otherPaxE:false,
      promoE:false,
@@ -116,12 +125,13 @@ export default class componentName extends Component {
      standardPaxDisable:false,
      isPaxInvalid:false
   }
+
   componentWillMount(){
     axios({
       method: 'get',
-      // url: `https://api.trabo.co/partner/activity/detail/${this.props.productId}`, A-09229850
+      url: `https://api.trabo.co/partner/activity/detail/${this.props.productId}`, 
     //   url: `https://api.trabo.co/partner/activity/detail/${this.props.productId}?date=${this.props.dateValue}&time=${this.props.timeValue}`,
-     url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
+    //  url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
       })
       .then((res) => {
           let addPr = res.data.response.product.additional_products;
@@ -197,7 +207,8 @@ export default class componentName extends Component {
               used_quota:res.data.response.product.used_quota,
               rawAddPR:rawAddProduct,
               standardPaxMAx:finalQuota,
-              standardPaxMAx1:finalQuota
+              standardPaxMAx1:finalQuota,
+              isLoading:false
           })
 
       })
@@ -363,26 +374,60 @@ export default class componentName extends Component {
 
   //Handle Name change
   handleChangeName =(e) =>{
-      this.setState({
-          name:e.target.value,
-          reqiredE:false
-        })
+      let names = e.target.value;
+      if(/^[-\w ]+$/.test(names)){
+        this.setState({
+            name:names,
+            reqiredE:false,
+            nameE:false
+          })
+      }
+      else{ 
+        this.setState({
+            name:names,
+            nameE:true,
+            reqiredE:true
+          })  
+      }
+
     }
     //Email
     handleChangeEmail = (e) =>{
-        this.setState({
-            email:e.target.value,
-            reqiredE:false
-        })
+        var emailVal = e.target.value;
+        var pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+        pattern = pattern.test(emailVal)
+        if(pattern){
+            this.setState({
+                email:e.target.value,
+                reqiredE:false,
+                emailE:false
+            })
+        }else{
+            this.setState({
+                email:emailVal,
+                emailE:true,
+                reqiredE:true,
+            })
+        }
+       
     }
     //Mobile number Codes
     handler = (status, value, countryData, number, id) =>  {
         // console.log(status, value, countryData, number, id)
-        this.setState({
-            phone:value,
-            phone_code:countryData.dialCode,
-            reqiredE:false
-        })
+        if(/^\d+$/.test(value)){
+            this.setState({
+                phone:value,
+                phone_code:countryData.dialCode,
+                reqiredE:false,
+                phoneE:false,
+            })
+        }
+        else{
+            this.setState({
+                phoneE:true,
+                reqiredE:true
+            })
+        }
     };
    
     handleStandardPax =(e) => { 
@@ -535,8 +580,8 @@ export default class componentName extends Component {
                             "token":"aadsfasdf",
                             "date":date,
                             "product_id":product.product_id,
-                            // "product_code":productCode,
-                            "product_code":"A-09213790",
+                            "product_code":productCode,
+                            // "product_code":"A-09213790",
                             "additional":prodadd,
                             "package":packg,
                             "adult":adult,
@@ -613,7 +658,8 @@ export default class componentName extends Component {
             var dataProm =
             {
                "token": "popo11",
-               "product_code": "A-09213790",
+            //    "product_code": "A-09213790",
+               "product_code": this.state.productCode,
                // "promo_code" : "MUSIAMO",
                "promo_code":promo,
                // "date" : "2018-12-01",
@@ -683,7 +729,7 @@ export default class componentName extends Component {
                 minimum_deposit=0
             }
 
-            var selectHead, boxHead;
+            var selectHead='', boxHead='';
             var add_pax = this.state.additionalDesc;
             for(let i=0;i<add_pax.length;i++){
                 if(add_pax[i].type==='list_box'){
@@ -712,7 +758,8 @@ export default class componentName extends Component {
                 "children" : children,
                 "toddlers" : other,
                 "promo_code" : promoCode,
-                "product_code" : "A-09213790",
+                // "product_code" : "A-09213790",
+                "product_code" :this.state.productCode,
                 "payment_type" : paymentType,
                 "date" : date,
                 "customer_code" : "",
@@ -729,7 +776,6 @@ export default class componentName extends Component {
                     "pax_details":[pax_select,pax_box]
                   }
               }
-              console.log(dataProceeed);
               if(total_frontend<1){
                 this.setState({
                     zeroAmount:true
@@ -767,7 +813,7 @@ export default class componentName extends Component {
         window.location.reload()
      }
   render() {
-    //   console.log(this.state.standardPax);
+      console.log(this.state.nameE);
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = this.state.operation_time,productDate = new Date(this.state.date).toGMTString();
@@ -795,55 +841,36 @@ export default class componentName extends Component {
     else{
         finalQuota = quotaDiff;
     }
- //Rates Data
- if(rates_pax_package.length!==0){
     function formatThousands(n, dp) {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
         while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
         return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
       }
+ //Rates Data
+ if(rates_pax_package.length!==0){
+
     standardPax = (
        rates_pax_package.map((item,index) => (
            item.amount>0 && (item.pax_type==='ADULT' || item.pax_type==='CHILD' || item.pax_type==='INFANT')?
-        // <div className='col-sm-4 mb-3' key={item.id}>
-        //     <div className='row ratesDiv px-0 mx-0'>
-        //         <div className='col-sm-7 mt-2'>
-        //             <h5 className='PaxType'>{item.pax_type}</h5>
-        //             <p className='PaxPrice'>{currency} {formatThousands(item.amount)}</p>
-        //             <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
-        //         </div>
-        //         <div className='col-sm-5 mt-3'>
-        //             <input 
-        //             min={item.minimum} 
-        //             max={item.maximum} 
-        //             type='number' 
-        //             onChange={this.handleStandardPax} 
-        //             name={item.pax_type.toLowerCase()} 
-        //             className='form-control Box'
-        //             />
-        
-                    <AdditionalPax
-                        maxQuota={this.state.standardPaxMAx}
-                        min={item.minimum}
-                        max={item.maximum}
-                        it ={item}
-                        totalPax={paxTotal}
-                        myFun={this.incrementCounterPax} 
-                        decrement={this.decrementCounterPax}
-                        key={item.id}
-                        addiValue={0}
-                        currency={this.state.currency}
-                        usedQuota={item.used_quota} 
-                        quota={item.quota} 
-                        maxPerBook ={item.max_per_booking}
-                        countValuesIncre= {this.handleCountValuesIncrement}
-                        countValuesDecre = {this.handleCountValuesDecrement}
-                        standardPaxDisable={this.state.standardPaxDisable}
-                        isPaxInvalid={this.state.isPaxInvalid}
-                    />
-        //         </div>
-        //     </div>
-        // </div>
+            <AdditionalPax
+                maxQuota={this.state.standardPaxMAx}
+                min={item.minimum}
+                max={item.maximum}
+                it ={item}
+                totalPax={paxTotal}
+                myFun={this.incrementCounterPax} 
+                decrement={this.decrementCounterPax}
+                key={item.id}
+                addiValue={0}
+                currency={this.state.currency}
+                usedQuota={item.used_quota} 
+                quota={item.quota} 
+                maxPerBook ={item.max_per_booking}
+                countValuesIncre= {this.handleCountValuesIncrement}
+                countValuesDecre = {this.handleCountValuesDecrement}
+                standardPaxDisable={this.state.standardPaxDisable}
+                isPaxInvalid={this.state.isPaxInvalid}
+            />
         :''
        ))
    )
@@ -871,19 +898,6 @@ export default class componentName extends Component {
         standardPaxDisable={this.state.standardPaxDisable}
         isPaxInvalid={this.state.isPaxInvalid}
     />
-//      <div className='col-sm-6 mb-3' key={index}>
-//      <div className='row ratesDiv px-0 mx-0'>
-//          <div className='col-sm-7 mt-2'>
-//              <h5 className='PaxType'>{item.pax_type}</h5>
-//              <p className="paxCountClass">Minimum {item.minimum} PAX</p>
-//              <p className='PaxPrice'>{currency} {formatThousands(item.amount)}</p>
-//              <p className='PaxAge mb-2'>Age {item.age_from}-{item.age_to}</p>
-//          </div>
-//          <div className='col-sm-5 mt-3'>
-//              <input type='number' min={item.minimum} max={item.maximum} onChange={this.handleOtherPax} name={item.id} className='form-control Box'/>
-//          </div>
-//      </div>
-//  </div>
     ))
 )
 
@@ -891,7 +905,7 @@ export default class componentName extends Component {
     if(cancellation_policy_pax){
         CancelationPolicy = (
             cancellation_policy_pax.map((item,index) => (
-                <div className='col-sm-10 ' key={index}>
+                <div className='col-sm-12 ' key={index}>
                     <input className='form-control CancelationTextBox' name={"cancelationPax"+index} type="text" value={item} readOnly/>
                 </div>
             ))
@@ -900,7 +914,7 @@ export default class componentName extends Component {
     if(cancellation_policy_package){
         CancelationPolicyPackage = (
             cancellation_policy_pax.map((item,index) => (
-                <div className='col-sm-10 ' key={index}>
+                <div className='col-sm-12 ' key={index}>
                     <input className='form-control CancelationTextBox' name={"cancelationPackage"+index} type="text" value={item} readOnly/>
                 </div>
             ))
@@ -909,39 +923,8 @@ export default class componentName extends Component {
 
     if(product.additional_products){
     a = product.additional_products;
-    //  additonalData = (      
-    //     a.map((item,i) => (
-    //         <div className='col-sm-12' key = {i}>
-    //         <h5 className='Meals mt-4'>{item.name}</h5>
-    //         <hr/>
-    //         {
-    //             item.details.map((it,i) => (
-    //                <div className='row' key={i}>
-    //                 <div className='col-sm-3'>
-    //                 <label style={{ display:"flex" }}>
-    //                 <button id="subs" className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
-    //                 <input type="text" name={it.description} value={this.state.addProductsValue} className="additoinalTextBox form-control pull-left" id="noOfRoom" />&nbsp;
-    //                 <button type="button" onClick={()=>this.increementByOne(it)} id="adds" className="btnPlus" ><i className='fa fa-plus'></i></button>
-    //                 </label>
-    //                 </div>
-    //                 <div className='col-sm-6'>
-    //                     <h5 className='addProductRightHead'>{it.description} <span className='productAmt'> ({currency} {formatThousands(it.amount)}) </span></h5>
-    //                     <p className='Remark'>Remark:{it.remark} </p>
-    //                 </div>
-    //                 </div>
-    //             ))
-    //         }
-    //             </div>         
-    //         )) 
-    //     )
 
         }
-
-    function formatThousands(n, dp) {
-        var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
-        while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
-        return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
-      }
 
           //Additional Description
     if(additionalDesc.length!==''){
@@ -1003,11 +986,7 @@ export default class componentName extends Component {
             ))
             )
         }
-        function formatThousands(n, dp) {
-            var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
-            while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
-            return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
-          }
+       
         var amountLast;
         if(this.state.paymentType==='deposit'){
             amountLast = this.state.minimum_deposit;
@@ -1033,6 +1012,9 @@ export default class componentName extends Component {
         />
         :
       <div className='container mt-5 mb-5'>
+      {this.state.isLoading?
+      <img className='loading' src='/images/loading.svg' alt='loading'/>
+        :
       <div className='row'>
           <div className='col-sm-9 cols9-center mainOuterDiv'>
           <div className='row mb-4'>
@@ -1052,13 +1034,15 @@ export default class componentName extends Component {
               <div className='col-sm-12'>
               <h1 className='PAX-Details mb-4'>PAX Details</h1>
                 <div className='row'>
-                <div className='col-sm-5  mb-3'>
+                <div className='col-sm-6 mb-3'>
                 <label className='Name'>NAME <i className='fa fa-asterisk requiredField'></i></label>
-                  <input ref={el => this.nameValue=el}  onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' />
+                  <input ref={el => this.nameValue=el} value={this.state.name}  onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' id={this.state.nameE===true?'errorBorder':''}/>
+                  {this.state.nameE===true?<p class='errorText'> only a-z , A-Z and (- , _ ) Allowed</p>:''}
                 </div>
-                <div className='col-sm-5  mb-3'>
+                <div className='col-sm-6 mb-3'>
                 <label className='Name'>E-MAIL <i className='fa fa-asterisk requiredField'></i></label>
-                  <input ref={el => this.nameValue=el}  onChange={this.handleChangeEmail} type='email' name='email' className='Text-Box mt-2 mb-3' />
+                  <input ref={el => this.nameValue=el}  onChange={this.handleChangeEmail} type='email' name='email' className='Text-Box mt-2 mb-3 emailTrans' id={this.state.emailE===true?'errorEmail':''}/>
+                  {this.state.emailE===true?<p class='errorText'> e-mail address should be valid</p>:''}
                 </div>
                 </div>
                 <label className='Name'>PHONE NUMBER <i className='fa fa-asterisk requiredField'></i></label>
@@ -1067,13 +1051,16 @@ export default class componentName extends Component {
                         <IntlTelInput 
                         fieldName='mobile'
                         value={this.state.mobileNumber}
-                        style={ { width: '100%' } }
+                        id={this.state.phoneE===true?'errorPhone':''}
+                        placeholder={''}
+                        style={this.state.phoneE===true?errorPhone:'' }
                         onPhoneNumberChange={ this.handler }
                         onPhoneNumberBlur={ this.handler }
                             preferredCountries={['id']}
                             css={ ['intl-tel-input', 'form-control'] }
                             utilsScript={ 'libphonenumber.js' } 
                         />
+                    {this.state.phoneE===true?<p class='errorText'> Phone number should be valid</p>:''}
                   </div>
                 </div>
                  
@@ -1333,6 +1320,7 @@ export default class componentName extends Component {
           </div>
           
       </div>
+      }
       </div>    
     )
   }

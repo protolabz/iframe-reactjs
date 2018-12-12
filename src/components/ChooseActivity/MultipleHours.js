@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios';
 // import { NavLink } from 'react-router-dom';
 import Paxpage from '../PaxDetails/PaxDetails'
-
 import './ChooseActivity.css';
+
 export default class MultipleHours extends Component {
     state ={
         dateBefore:null,
@@ -12,13 +12,14 @@ export default class MultipleHours extends Component {
         selectedTime:null,
         selectedDate:null,
         showPaxPage:false,
+        showActivityDetail:false
     }
 
     componentWillMount(){
         axios({
             method: 'get',
-            // url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.params}?date=${this.props.match.params.date}&&multi=true`,
-            url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${this.props.dateValue}&&multi=true`,
+            url: `https://api.trabo.co/partner/activity/detail/${this.props.productId}?date=${this.props.dateValue}&&multi=true`,
+            // url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${this.props.dateValue}&&multi=true`,
         })
             .then((res) => {
                     this.setState({
@@ -57,6 +58,9 @@ export default class MultipleHours extends Component {
         t = t.replace(/ /g,'-');
         // window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
         // `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
+    }
+    goToActivity = () =>{
+        window.location.reload();
     }
   render() {
       const {dateBefore,dateAfter,dateCurrent} = this.state;
@@ -169,14 +173,13 @@ export default class MultipleHours extends Component {
            <div className='container mt-5 mb-5'>
                 <div className='row'>
                     <div className='col-sm-9 cols9-center mainOuterDiv'>
-                        <div className='row mb-4 mt-4'>
-                            <div className='col-sm-12'>
-                                {/* <b onClick={this.props.history.goBack} className='goBack'><i className='fa fa-angle-left'> </i> Go back to activity</b> */}
+                        <div className='row mb-1 goBackBox'>
+                            <div className='col-sm-12 py-2'>
+                                <p className='goBack' onClick={this.goToActivity}><i className='fa fa-angle-left'> </i> Go back to activity</p>
                             </div>
                         </div>
-                        <hr/> 
-                        <div className='row createTimesBox'>
-                       
+                        {/* <hr/>  */}
+                        <div className='row createTimesBox py-3'>
                             <div className='col-sm-4 mb-4'>
                                 <h6 className='dayState'>PREVOUS DAY</h6>
                                 <h6 className='fullDate'>{preDate}</h6>

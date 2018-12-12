@@ -69,6 +69,9 @@
     box-shadow: 0 1px 0 0 #eeeeee;
     background-color: #ffffff;
   }
+  .emailTrans{
+    text-transform: lowercase !important;
+  }
   .ratesDiv{
     border-radius: 4px;
     box-shadow: 0 1px 0 0 #eeeeee;
@@ -471,4 +474,24 @@
 }
 .isPaxInvalid{
   border:1px dotted red;
+}
+#errorBorder{
+  border:1px solid #D2162B;
+  outline: none !important;
+}
+#errorEmail{
+  border:1px solid #D2162B;
+  outline: none !important;
+}
+#errorPhone{
+  border:1px solid #D2162B;
+  outline: none !important;
+}
+.errorText{
+  color:#D2162B;
+  font-size:12px;
+  margin: 0px;
+}
+.intl-tel-input{
+  width:100% !important;
 }
