@@ -376,7 +376,6 @@ callApiAgain =() =>{
         url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.state.transactionCode}`,
         })
         .then((res) => {
-            // console.log(res);
           var data = res.data;
           let opDate = new Date(res.data.transaction.operation_date).toGMTString();
               let dts = (opDate.split(' '));
@@ -409,7 +408,8 @@ callApiAgain =() =>{
               due:data.transaction.due,
               expirationDate:finalExDate,
               cancelationPolicyPack:data.cancellation_policy.cancellation_policy_package,
-              paymentMethodId:data.transaction.payment_method_id
+              paymentMethodId:data.transaction.payment_method_id,
+              isDisablePayment:false
   
           })
         })
@@ -623,9 +623,7 @@ handleConfirmPayment =() => {
                   })
                   .then((willDelete) => {
                     if (willDelete) {
-                        if (willDelete) {
-                            this.callApiAgain();
-                          }
+                        this.callApiAgain();
                     } 
                   });
             }
@@ -1033,7 +1031,7 @@ setActive = (value) => {
                         <p className="bankImage custom-control custom-radio" data-toggle="collapse" style={{ paddingLeft:"0px" }} data-target="#mandiri" data-parent="#bankTransfers">
                         <input type='radio' className='custom-control-input' onChange={(e) =>this.handleBankClick('MANDIRI')} value={'mandiri'} name='checkBank' id='checkMandiri'/>
                         <label htmlFor='checkMandiri' className='custom-control-label'> 
-                            <img className='bankImg' alt='mandiri' src='/images/mandiri.png'/>
+                            <img className='bankImg' alt='mandiri' src='/images/mandiri.png' style={{ marginTop: "-11px" }}/>
                         </label>
                         </p>
                             <div id="mandiri" className="collapse mb-4">
@@ -1130,6 +1128,41 @@ setActive = (value) => {
                                 </div>
                             </div>
 
+                        <p className="bankImage custom-radio" data-toggle="collapse" data-target="#other" data-parent="#bankTransfers">
+                        <input type='radio' className='custom-control-input' onChange={(e) =>this.handleBankClick('other')} value={'other'} name='checkBank' id='checkOther'/>
+                            <label htmlFor='checkOther' className='custom-control-label'> 
+                            <h2 className='otherBank'>Other Bank</h2>
+                        </label>
+                        </p>
+                            <div id="other" className="collapse">
+                            <button className="customButtonTop" data-toggle="collapse" data-target="#bniAtm">ATM</button><br></br>
+                                <div id="bniAtm" className="collapse p-md-4 p-sm-1">
+                                    <h4 className='virtualAccountNorm'>Virtual Account <span className='virtualAccount'># {accBni}</span></h4>
+                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{nameBni}</span></h4>
+                                    <p className='atmText'>* Silakan baca petunjuk di bawah ini untuk menyelesaikan transaksi Anda. </p>
+                                    <ul className='listText'>
+                                        {bniA}
+                                    </ul>
+                                </div>
+                                <button className="customButtonMiddle" data-toggle="collapse" data-target="#bniIban">I-Banking</button>
+                                <div id="bniIban" className="collapse p-sm-4 p-sm-1">
+                                    <h4 className='virtualAccountNorm'>Virtual Account <span className='virtualAccount'># {accBni}</span></h4>
+                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{nameBni}</span></h4>
+                                    <p className='atmText'>* Silakan baca petunjuk di bawah ini untuk menyelesaikan transaksi Anda. </p>
+                                    <ul className='listText'>
+                                        {bniI}
+                                    </ul>
+                                </div>
+                                <button className="customButtonBottom mb-3" data-toggle="collapse" data-target="#bniMba">M-Banking</button>
+                                <div id="bniMba" className="collapse p-md-4 p-sm-1">
+                                    <h4 className='virtualAccountNorm'>Virtual Account <span className='virtualAccount'># {accBni}</span></h4>
+                                    <h4 className='virtualAccountNorm mb-4'>Nama Akun Virtual <span className='virtualAccount'>{nameBni}</span></h4>
+                                    <p className='atmText'>* Silakan baca petunjuk di bawah ini untuk menyelesaikan transaksi Anda. </p>
+                                    <ul className='listText'>
+                                        {bniM}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <div id="retailTransfer" className="container tab-pane px-md-5 px-sm-0">
                             <div className='row'>
@@ -1168,7 +1201,7 @@ setActive = (value) => {
                      
                     </div>
                     <div className='col-md-12 mt-5 text-center'>
-                        <button className='confirm-payment' onClick={this.handleConfirmPayment}  disabled={this.state.isDisablePayment}>Confirm Payment</button>
+                        <button className='confirm-payment' onClick={this.handleConfirmPayment}>Confirm Payment</button>
                         {this.state.baknkTransferE?  
                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
                                <strong>Error!</strong> Please select one of the bank.
