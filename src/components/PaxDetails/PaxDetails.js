@@ -58,8 +58,8 @@ export default class componentName extends Component {
      depositAmt:0,
      paymentType:'full payment',
      //ImpData Form
-     name:null,
-     email:null,
+     name:'',
+     email:'',
      productCode:this.props.productId,
      date:this.props.dateValue,
      amount:null,
@@ -692,7 +692,7 @@ export default class componentName extends Component {
             commentBox,promoCode,paymentType,depositAmt,minimum_deposit} =this.state;
             let packg;
             let pkg = [];
-
+            operation_time = operation_time.replace(/-/g,' ');
             let adult=0,children=0,other=0,prodadd;
             if(addProductsValue1.length>0){
                 prodadd = addProductsValue1;
@@ -740,10 +740,12 @@ export default class componentName extends Component {
             }
             var pax_box =this.state.boxValHeading, pax_select = this.state.selectValHeading;
             if(pax_box===null){
-                pax_box ={heading:boxHead,content:[null]}
+                // pax_box ={heading:boxHead,content:[null]}
+                pax_box ={heading:boxHead,content:[]}
             }
             if(pax_select===null){
-                pax_select = {heading:selectHead,content:[null]}
+                // pax_select = {heading:selectHead,content:[null]}
+                pax_select = {heading:selectHead,content:[]}
                 
             }
             var dataProceeed = 
@@ -812,7 +814,6 @@ export default class componentName extends Component {
         window.location.reload()
      }
   render() {
-
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = this.state.operation_time,productDate = new Date(this.state.date).toGMTString();
@@ -919,12 +920,19 @@ export default class componentName extends Component {
             ))
         )
     }
-
+    let packCount;
     if(product.additional_products){
     a = product.additional_products;
+    if(product.additional_products.length>0){
+        packCount = (
+            <div className='col-sm-12 px-0'>
+            <h2 className='CancelationPax' style={{ marginBottom:"0px" }}>ADDITIONAL PRODUCT</h2>
+            
+            </div>
+        )
+    }
 
-        }
-
+    }
           //Additional Description
     if(additionalDesc.length!==''){
         addDescText = (
@@ -964,8 +972,8 @@ export default class componentName extends Component {
                     <div key={index} className='col-sm-12'>
                         <h5 className='Kendaraan mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                         <div className='selectdiv'>
-                            <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box'>
-                            <option disabled={true} selected={true}>Select option</option>
+                            <select defaultValue='' onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box'>
+                            <option disabled={true} value=''>Select option</option>
                             {
                                 item.items.map((list,index) =>(
                                 <option key={index}>{list}</option>
@@ -1072,13 +1080,15 @@ export default class componentName extends Component {
                  {this.state.isPaxInvalid?
                     <p style={{ color:"red" }}>Quota limit exceeds</p>:''
                  }
+                 {CancelationPolicy?
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>CANCELATION POLICY PAX</h2>
                     </div>
                     {CancelationPolicy}
                 </div>  
-
+                :''}
+                 {this.state.rawPackage.length>0?
                 <div className='row mt-5'>
                     <div className='col-sm-12 px-2'>
                     <h2 className='CancelationPax border mx-1 p-2' style={{ margin:"0px" }}>PACKAGE</h2>
@@ -1088,18 +1098,19 @@ export default class componentName extends Component {
                     }
                     
                  </div>
-                  </div>  
+                </div>
+                  :''}
+                 {CancelationPolicyPackage?   
                  <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>CANCELATION POLICY PACKAGE</h2>
                     </div>
                     {CancelationPolicyPackage}
-                </div>   
+                </div>
+                :''}
+                {packCount? 
                 <div className='row mt-5'>
-                    <div className='col-sm-12 px-0'>
-                        <h2 className='CancelationPax' style={{ marginBottom:"0px" }}>ADDITIONAL PRODUCT</h2>
-                        
-                    </div>
+                   {packCount}
                     <div className='row px-2'>
                     {a?
                     this.state.currency?
@@ -1110,7 +1121,18 @@ export default class componentName extends Component {
                         {
                             item.details.map((it,i) => (
                                 this.state.addProductsValue.map(x=> (
-                                    <AdditionalData myFun={this.incrementCounter} decrement={this.decrementCounter} key={x.id} it={it} addiValue={x} currency={this.state.currency} usedQuota={it.used_quota} quota={it.quota} maxPerBook ={it.max_per_booking} data={a}></AdditionalData>  
+                                    <AdditionalData
+                                        myFun={this.incrementCounter} 
+                                        decrement={this.decrementCounter} 
+                                        key={x.id} 
+                                        it={it} 
+                                        addiValue={x} 
+                                        currency={this.state.currency} 
+                                        usedQuota={it.used_quota} 
+                                        quota={it.quota} 
+                                        maxPerBook ={it.max_per_booking} 
+                                        data={a}>
+                                    </AdditionalData>  
                                 ))
                                 
                             ))
@@ -1122,7 +1144,10 @@ export default class componentName extends Component {
                     :''}
                     </div>
                 </div>
-                    
+                :''}
+                {addDescText=='' || addDescCheck=='' || addDescCheck==''?
+                ''
+                : 
                 <div className='row mt-5'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>ADDITIONAL PAX DETAILS</h2>
@@ -1142,13 +1167,14 @@ export default class componentName extends Component {
                                 :''
                             }
                     {/* </div>         */}
-                </div>      
+                </div>    
+                }  
 
                 <div className='row mt-5'>
                     <div className='col-sm-12'>
                     <h2 className='CancelationPax'>REFERRAL</h2>
-                    <select onChange={(e) => this.handleRefferal(e.target.value)} className='Text-Box'>
-                    <option >select option</option>
+                    <select  defaultValue='' onChange={(e) => this.handleRefferal(e.target.value)} className='Text-Box'>
+                    <option disabled={true} value=''>select option</option>
                             {reff}
                         </select>
                     </div>

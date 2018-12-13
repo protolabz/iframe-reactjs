@@ -900,7 +900,12 @@
 .cardParent{
   margin-top: 35px;
 }
-
+.image-gallery-thumbnails-container {
+  display: block;
+}
+.image-gallery-bullets{
+  bottom:25px !important;
+}
 @media screen and(max-width: 767px){
   .cols9-center{
     margin: none;
@@ -908,6 +913,9 @@
   .DayPicker{
     height: unset;
     top:0px;
+  }
+  .image-gallery-thumbnails-container {
+    display: none;
   }
 }
 .DayPicker-Day--disabled {

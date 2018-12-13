@@ -495,3 +495,7 @@
 .intl-tel-input{
   width:100% !important;
 }
+.additoinalTextBox[readonly] {
+  background-color: #ffffff !important;
+  opacity: 1;
+}

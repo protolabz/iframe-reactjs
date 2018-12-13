@@ -254,12 +254,14 @@ export default class ActivityDetail extends Component {
                     // timeValue = timeValue.replace(/ /g,'-');
                     if(this.state.boxValHeading===null){
                         this.setState({
-                            boxValHeading:{heading:boxHead,content:[null]}
+                            // boxValHeading:{heading:boxHead,content:[null]}
+                            boxValHeading:{heading:boxHead,content:[]}
                          }) 
                     }
                     if(this.state.selectValHeading===null){
                         this.setState({
-                            selectValHeading:{heading:selectHead,content:[null]}
+                            // selectValHeading:{heading:selectHead,content:[null]}
+                            selectValHeading:{heading:selectHead,content:[]}
                          }) 
                     }
                     if(selectValue===''){
@@ -284,12 +286,14 @@ export default class ActivityDetail extends Component {
                 if(this.state.isRequiredBox && this.state.isRequiredSelect){
                     if(this.state.boxValHeading===null){
                         this.setState({
-                            boxValHeading:{heading:boxHead,content:[null]}
+                            // boxValHeading:{heading:boxHead,content:[null]}
+                            boxValHeading:{heading:boxHead,content:[]}
                          }) 
                     }
                     if(this.state.selectValHeading===null){
                         this.setState({
-                            selectValHeading:{heading:selectHead,content:[null]}
+                            // selectValHeading:{heading:selectHead,content:[null]}
+                            selectValHeading:{heading:selectHead,content:[]}
                          }) 
                     }
                     timeValue = timeValue.replace(/ /g,'-');
@@ -394,12 +398,13 @@ export default class ActivityDetail extends Component {
             mainCity = locations[0].city;
             location = locations;
             // location.splice(0,1)
+            locs = (
+                location.map((item) =>(
+                     <li key={item.city}>{item.city}</li>
+                 ))
+        );
         }
-        locs = (
-            location.map((item) =>(
-                 <li key={item.id}>{item.city}</li>
-             ))
-    );
+        
 
     }
 
@@ -449,8 +454,8 @@ export default class ActivityDetail extends Component {
             item.type === 'text' ? (
             // <div className='row' key={item.heading}>
                 <div className='col-sm-12' key={item.heading}>
-                    <h5 className='Tempat mx-4 mb-0'>{item.heading}</h5>
-                    <p className='tempatText mx-4'>{item.items[0]}</p>
+                    <h5 className='Tempat mb-0'>{item.heading}</h5>
+                    <p className='tempatText'>{item.items[0]}</p>
                 </div>
             // </div>
             ) 
@@ -460,7 +465,7 @@ export default class ActivityDetail extends Component {
         additionalDesc.map(item => 
             item.type === 'check_box' ? (
             <div className='col-sm-12' key={item.heading}>
-                <h5 className='Perlengkapan mx-4 mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
+                <h5 className='Perlengkapan mb-0'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                 <ul className='pelam mb-4'>
                 {
                     item.items.map((chk,index) =>(
@@ -481,10 +486,10 @@ export default class ActivityDetail extends Component {
         additionalDesc.map((item,index) => 
             item.type === 'list_box' ? (
                 <div className='col-sm-12' key={index}>
-                    <h5 className='Kendaraan mx-4 mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
+                    <h5 className='Kendaraan mb-3'>{item.heading} {item.mandatory==='1'?  <i className='fa fa-asterisk requiredField'></i>:''}</h5>
                     <div className='selectdiv'>
-                        <select onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box mx-md-4'>
-                        <option disabled={true} selected={true}>Select option</option>
+                        <select defaultValue='' onChange={(e) => this.handleSelectBox(e.target.value,item.heading)} className='Text-Box mx-md-4'>
+                        <option disabled={true} value=''>Select option</option>
                         {
                             item.items.map((list,index) =>(
                             <option key={index}>{list}</option>
@@ -498,10 +503,16 @@ export default class ActivityDetail extends Component {
         ));
         // let {boxValue,selectValue,dateValue,timeValue} = this.state;
     }
-    
+    // console.log(this.state.boxValHeading);
     return (
         this.state.showPaxPage?
-            <PaxDetails productId={this.props.match.params.id} boxValue={this.state.boxValHeading} selectValue={this.state.selectValHeading} dateValue={this.state.dateValue} timeValue={this.state.timeValue}/>
+            <PaxDetails 
+                productId={this.props.match.params.id} 
+                boxValue={this.state.boxValHeading} 
+                selectValue={this.state.selectValHeading} 
+                dateValue={this.state.dateValue} 
+                timeValue={this.state.timeValue}
+            />
         : (this.state.showMultipleHrs?
             <MultipleHours 
                 boxValue={this.state.boxValHeading} 
@@ -534,6 +545,8 @@ export default class ActivityDetail extends Component {
                                         showFullscreenButton={false}
                                         showPlayButton={false}
                                         disableArrowKeys={true}
+                                        showBullets={true}
+                                        showThumbnails={false}
                                     />
                                 </div>
                             </div>
@@ -547,8 +560,9 @@ export default class ActivityDetail extends Component {
                             {locs}
                             </ul>
                             <NavLink className='View-map' to="#">View map</NavLink>
-
+                            {rates?
                             <h5 className='Rates mb-4 mt-5'>RATES</h5>
+                            :''}
                             {rates}
                             <hr />
 
@@ -585,29 +599,39 @@ export default class ActivityDetail extends Component {
                           }
                           
                         </div>
-                        <div className='row px-2'>
+                        <div className='row mx-2'>
+                          {detail_product.brief_description!==''?
                             <div className='col-sm-12'>
                             <h5 className='Description mb-4'>DESCRIPTION</h5>
                             <p className='DescriptionTexts'>{detail_product.brief_description}</p>
                             </div>
-                           
+                          :''} 
                             {/* <div className='row mt-4'> */}
+                            {include_exclude.length>0?
                              <div className='col-sm-6'>
                                     <h5 className='Include mb-3'>INCLUDE</h5>
                                         <ul className='include'>
                                             {incl}
                                         </ul>
                                 </div>
+                                :''
+                                }
+                               {include_exclude.length>0?
                                 <div className='col-sm-6'>
                                     <h5 className='Exclude mb-3'>EXCLUDE</h5>
                                     <ul className='exclude'>
                                         {excl}
                                     </ul>
                                 </div>
+                                :''}
                              {/* </div> */}
-                            <div className='col-12'>
+                             {addDescText=='' || addDescCheck=='' || addDescCheck==''?
+                             ''
+                             :
+                             <div className='col-12'>
                                 <h5 className='ADDITIONAL-DESCRIPTI mb-3 mt-4'>ADDITIONAL DESCRIPTION</h5>
                             </div>
+                             }
                             {
                                 addDescText?addDescText:''
                             }
