@@ -373,9 +373,10 @@ callApiAgain =() =>{
     axios({
         method: 'get',
         // url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
-        url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.state.transaction_code}`,
+        url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.state.transactionCode}`,
         })
         .then((res) => {
+            console.log(res);
           var data = res.data;
           let opDate = new Date(res.data.transaction.operation_date).toGMTString();
               let dts = (opDate.split(' '));
@@ -488,7 +489,7 @@ getTokenData () {
         cardNumber = cardNumber.split(' ').join('');
     return {        
         // "amount": "75000",        
-        "amount": this.props.amount,
+        "amount": this.state.due,
         // "card_number": "4000000000000002",
         "card_number": cardNumber,        
         // "card_exp_month": "12",
@@ -511,7 +512,7 @@ displayError (err) {
         button: true,
         dangerMode: true,
       })
-    // console.log(requestData)
+    console.log(requestData)
 }
 xenditResponseHandler (err, creditCardToken) {
     if (err) {

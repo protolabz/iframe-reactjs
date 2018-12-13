@@ -12,7 +12,7 @@ class AdditionalPax extends Component {;
         max:this.props.max
     }
     handleIncreement = (name,data)  => { 
-        console.log(this.props.totalPax)
+
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;

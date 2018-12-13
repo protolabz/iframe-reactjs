@@ -157,13 +157,16 @@ export default class componentName extends Component {
                     </div>
                 </div>
                {boList}
+               {boListE?
                <div className='row mt-4'>
-                    <div className='col-sm-12'>
-                        <div className='col-3 p-0'>
-                            <h4 className="activeText">Expired</h4>
-                        </div>
-                    </div>
-                </div>
+               <div className='col-sm-12'>
+                   <div className='col-3 p-0'>
+                       <h4 className="activeText">Expired</h4>
+                   </div>
+               </div>
+           </div>:''
+               }
+               
                 {boListE}
             </div>
            
