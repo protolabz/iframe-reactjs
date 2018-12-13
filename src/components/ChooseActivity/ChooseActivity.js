@@ -20,11 +20,27 @@ export default class ChooseActivity extends Component {
             url: 'https://api.trabo.co//partner/activity/popo11',
         })
             .then((res) => {
+                var details = res.data.response,first=[],second=[],third=[],listPro = [];
+                details.map(x=>{
+
+                    if(x.order_frondend===1){
+                        first.push(x)
+                    }
+                    if(x.order_frondend===2){
+                        second.push(x)
+                    }
+                    if(x.order_frondend===3){
+                        third.push(x)
+                    }
+                    if(x.order_frondend!==1 && x.order_frondend!==2 && x.order_frondend!==3){
+                        listPro.push(x)
+                    }
+                })
                 this.setState({
-                    listProducts:res.data.response,
-                    firstProduct:res.data.response[0],
-                    secondProduct:res.data.response[1],
-                    thirdProduct:res.data.response[2],
+                    listProducts:listPro,
+                    firstProduct:first,
+                    secondProduct:second,
+                    thirdProduct:third,
                     isLoading:false
                 })
 
@@ -37,22 +53,61 @@ export default class ChooseActivity extends Component {
 
     }
 
+
   render() {
       var {listProducts,firstProduct,secondProduct,thirdProduct} = this.state;
-      listProducts = listProducts.splice(3,listProducts.length);
-      const lists = (
-                listProducts.map((item, index) =>(
-                 <div className='col-sm-4 mb-4' key={index}>
-                     <div className='OverlayThreeCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+item.resource+"')"}}>
-                         <p className='titleTextThreeCols'>{item.name.replace(/\b\w/g, l => l.toUpperCase())}</p>
-                         <br/>
-                         <p className='descriptionTextThreeCols'>{item.brief_description}</p>
-                         <br/>
-                         <NavLink className='bookNow' to={`product-detail/${item.code}`}>Book Now</NavLink>
+    //   listProducts = listProducts.splice(3,listProducts.length);
+      var secondAndThird,firstPro,lists;
+      if(firstProduct.length>0){
+          firstPro = (
+              <div className='row'>
+            <div className='col-sm-12'>
+                <div className='Overlay fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+firstProduct[0].resource+"')"}}>
+                    <p className='titleText'>{ firstProduct[0].name }</p>
+                    <p className='descriptionText'>{ firstProduct[0].brief_description }</p>
+                    <NavLink className='bookNow' to={`product-detail/${firstProduct[0].code}`}>Book Now</NavLink>
+                </div>
+            </div>
+        </div>
+          )
+        }
+        if(secondProduct.length>0 && thirdProduct.length>0){
+            secondAndThird =(
+                <div className='row'>
+                    <div className='col-sm-6 mb-4'>
+                        <div className='OverlayTwoCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+secondProduct[0].resource+"')"}}>
+                            <p className='titleTextTwoCols'>{ secondProduct[0].name }</p>
+                            <p className='descriptionTextTwoCols'>{ secondProduct[0].brief_description } Central to the Java’s heritage, the city is where the Island’s culture is at its purest</p>
+                            <NavLink className='bookNow' to={`product-detail/${secondProduct[0].code}`}>Book Now</NavLink>
+                        </div>
+                    </div>
+                    
+                    <div className='col-sm-6'>
+                        <div className='OverlayTwoCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+thirdProduct[0].resource+"')"}}>
+                            <p className='titleTextTwoCols'>{ thirdProduct[0].name }</p>
+                            <p className='descriptionTextTwoCols'>{ thirdProduct[0].brief_description }</p>
+                            <NavLink className='bookNow' to={`product-detail/${thirdProduct[0].code}`}>Book Now</NavLink>
+                        </div>
                      </div>
-                 </div>
-                 ))
-      );
+                </div>
+        )
+    }
+    console.log(listProducts)
+    if(listProducts.length>0){
+        lists = (
+            listProducts.map((item, index) =>(
+                <div className='col-sm-4 mb-4' key={index}>
+                    <div className='OverlayThreeCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+item.resource+"')"}}>
+                        <p className='titleTextThreeCols'>{item.name}</p>
+                        <br/>
+                        <p className='descriptionTextThreeCols'>{item.brief_description}</p>
+                        <br/>
+                        <NavLink className='bookNow' to={`product-detail/${item.code}`}>Book Now</NavLink>
+                    </div>
+                </div>
+                ))
+        );
+    }   
     return (
       <div className='container noPadding mainOuterDiv'>
        {this.state.isLoading?
@@ -60,33 +115,9 @@ export default class ChooseActivity extends Component {
         :
         <div className='row'>
             <div className='col-sm-8 offset-sm-2 noPadding'>
-                <div className='row'>
-                    <div className='col-sm-12'>
-                        <div className='Overlay fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+firstProduct.resource+"')"}}>
-                            <p className='titleText'>{ firstProduct.name }</p>
-                            <p className='descriptionText'>{ firstProduct.brief_description }</p>
-                            <NavLink className='bookNow' to={`product-detail/${firstProduct.code}`}>Book Now</NavLink>
-                        </div>
-                    </div>
-                </div>    
+                {firstPro}
                 <br/>
-                <div className='row'>
-                    <div className='col-sm-6 mb-4'>
-                        <div className='OverlayTwoCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+secondProduct.resource+"')"}}>
-                            <p className='titleTextTwoCols'>{ secondProduct.name }</p>
-                            <p className='descriptionTextTwoCols'>{ secondProduct.brief_description } Central to the Java’s heritage, the city is where the Island’s culture is at its purest</p>
-                            <NavLink className='bookNow' to={`product-detail/${secondProduct.code}`}>Book Now</NavLink>
-                        </div>
-                    </div>
-                    
-                    <div className='col-sm-6'>
-                        <div className='OverlayTwoCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+thirdProduct.resource+"')"}}>
-                            <p className='titleTextTwoCols'>{ thirdProduct.name }</p>
-                            <p className='descriptionTextTwoCols'>{ thirdProduct.brief_description }</p>
-                            <NavLink className='bookNow' to={`product-detail/${thirdProduct.code}`}>Book Now</NavLink>
-                        </div>
-                     </div>
-                </div>
+               {secondAndThird}
                 <br/>
                 <div className='row'>
                 {lists}
