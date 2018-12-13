@@ -584,7 +584,7 @@ export default class ActivityDetail extends Component {
                         </div>
                         <div className='row px-2'>
                             <div className='col-sm-12'>
-                            <h5 className='Description mb-4 mt-5'>DESCRIPTION</h5>
+                            <h5 className='Description mb-4'>DESCRIPTION</h5>
                             <p className='DescriptionTexts'>{detail_product.brief_description}</p>
                             </div>
                            
