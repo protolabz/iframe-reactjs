@@ -1015,7 +1015,7 @@ export default class componentName extends Component {
       <img className='loading' src='/images/loading.svg' alt='loading'/>
         :
       <div className='row'>
-          <div className='col-sm-9 cols9-center mainOuterDiv'>
+          <div className='col-sm-9 cols9-center mainOuterDiv' style={{     border: "1px solid #efefef",borderTop:"none",borderBottom:"none" }}>
           <div className='row mb-4'>
               <div className='col-sm-12'>
                   <a href="#" onClick={this.refreshRoute} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</a>
