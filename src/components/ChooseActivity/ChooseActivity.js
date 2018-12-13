@@ -92,7 +92,6 @@ export default class ChooseActivity extends Component {
                 </div>
         )
     }
-    console.log(listProducts)
     if(listProducts.length>0){
         lists = (
             listProducts.map((item, index) =>(
