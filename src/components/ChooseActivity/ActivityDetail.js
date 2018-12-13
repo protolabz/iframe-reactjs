@@ -49,7 +49,6 @@ export default class ActivityDetail extends Component {
             // url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
         })
             .then((res) => {
-                console.log(res);
                 var data = res.data.response.product.additional_description.description;
                 var len = res.data.response.product.additional_description.description.length;
                     for(let i=0;i<=len-1;i++){
@@ -333,9 +332,10 @@ export default class ActivityDetail extends Component {
       let lastYear = fullYear - 1;
       let quota = product.quota - product.used_quota;
     // Banner Images
+
     if(bannerImg.length>=1){
         for(let i = 0; i < bannerImg.length; i++){
-            let ifs = {original:"https://res.cloudinary.com/trabo/"+bannerImg[0].resource+"",thumbnail:"https://res.cloudinary.com/trabo/"+bannerImg[0].resource+""};
+            let ifs = {original:"https://res.cloudinary.com/trabo/"+bannerImg[i].resource+"",thumbnail:"https://res.cloudinary.com/trabo/"+bannerImg[i].resource+""};
             images.push(ifs);
         }
     }
@@ -389,15 +389,18 @@ export default class ActivityDetail extends Component {
     
     // Locations Data
     if(locations.length!==0){
+        var location;
         if(locations.length>1){
             mainCity = locations[0].city;
-            locations = locations.splice(1,locations.length);
+            location = locations;
+            // location.splice(0,1)
         }
         locs = (
-            locations.map((item, index) =>(
+            location.map((item) =>(
                  <li key={item.id}>{item.city}</li>
              ))
     );
+
     }
 
     //Rates Data
