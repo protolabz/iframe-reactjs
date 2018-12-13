@@ -7,7 +7,7 @@ import Paxdetails from './components/PaxDetails/PaxDetails';
 import Payment from './components/PaymentProcess/Payment';
 import ListBooking from './components/ListBooking/ListBooking';
 // import CardMain from './components/PaymentProcess/CardMain';
-import CardMain from './components/PaymentProcess/CardMain';
+import Voucher from './components/Vouchers/vouchers';
 
 export default class componentName extends Component {
   render( ){
@@ -19,7 +19,7 @@ export default class componentName extends Component {
                 <Route path="/select-hours/:params/:date" component={MultipleHours}/>
                 <Route path="/pax-details/:time/:date/:checked/:selected/:id" component={Paxdetails}/>
                 <Route path="/payment" component={Payment}/>
-                <Route path="/xen" component={CardMain}/>
+                <Route path="/voucher" component={Voucher}/>
                 <Route path="/booking" component={ListBooking}/>
             </Switch>
         </Router>

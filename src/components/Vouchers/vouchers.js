@@ -71,7 +71,7 @@ export default class componentName extends Component {
   componentWillMount(){
     axios({
       method: 'get',
-      // url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
+    //   url: `https://api.trabo.co/partner/activity/payment?transaction_code=56713178-13-12-2018-7854`,
       url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
       })
       .then((res) => {
@@ -376,7 +376,7 @@ callApiAgain =() =>{
         url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.state.transactionCode}`,
         })
         .then((res) => {
-            console.log(res);
+            // console.log(res);
           var data = res.data;
           let opDate = new Date(res.data.transaction.operation_date).toGMTString();
               let dts = (opDate.split(' '));
@@ -512,7 +512,7 @@ displayError (err) {
         button: true,
         dangerMode: true,
       })
-    console.log(requestData)
+    // console.log(requestData)
 }
 xenditResponseHandler (err, creditCardToken) {
     if (err) {
@@ -524,7 +524,7 @@ xenditResponseHandler (err, creditCardToken) {
     if (creditCardToken.status === 'APPROVED' || creditCardToken.status === 'VERIFIED') {
         this.displaySuccess(creditCardToken);
         // console.log(this.displaySuccess(creditCardToken));
-        console.log("VERIFIED",creditCardToken.status);
+        // console.log("VERIFIED",creditCardToken.status);
         
     } 
     else if (creditCardToken.status === 'IN_REVIEW') {
@@ -543,7 +543,7 @@ xenditResponseHandler (err, creditCardToken) {
     
      else if (creditCardToken.status === 'FAILED') {
         // this.displayError(creditCardToken);
-        console.log(creditCardToken.status);
+        // console.log(creditCardToken.status);
     }
 }
 handleConfirmPayment =() => {
@@ -599,7 +599,7 @@ handleConfirmPayment =() => {
             data:confirmPay
           })
           .then((res) => {
-              if(res.data.response==='success'){
+            if(res.data.diagnostic.status===200){
                   swal({
                       title: "Success",
                       text: "Payment has been made successfully!",
@@ -613,20 +613,70 @@ handleConfirmPayment =() => {
                           }
                     });
               }
-              else{
-                  swal({
-                      title: res.data.diagnostic.error,
-                      text: res.data.diagnostic.error_msgs,
-                      icon: "warning",
-                      button: true,
-                      dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if(willDelete){
+              else if(res.data.diagnostic.status===300){
+                swal({
+                    title: res.data.diagnostic.error,
+                    text: res.data.diagnostic.error_msgs,
+                    icon: "warning",
+                    button: true,
+                    dangerMode: false,
+                  })
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        if (willDelete) {
                             this.callApiAgain();
-                        }
-                    });
-              }
+                          }
+                    } 
+                  });
+            }
+            else if(res.data.diagnostic.status===400){
+                swal({
+                    title: res.data.diagnostic.error,
+                    text: res.data.diagnostic.error_msgs,
+                    icon: "error",
+                    button: true,
+                    dangerMode: true,
+                  })
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        this.setState({
+                            isDisablePayment:false
+                        })
+                    } 
+                  });
+            }
+            else if(res.data.diagnostic.status===401){
+                swal({
+                    title: res.data.diagnostic.error,
+                    text: res.data.diagnostic.error_msgs,
+                    icon: "error",
+                    button: true,
+                    dangerMode: true,
+                  })
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        this.setState({
+                            isDisablePayment:false
+                        })
+                    } 
+                  });
+            }
+            else{
+                swal({
+                    title: 'Failed',
+                    text: 'Server error',
+                    icon: "error",
+                    button: true,
+                    dangerMode: false,
+                  })
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        this.setState({
+                            isDisablePayment:false
+                        })
+                    } 
+                  });
+                }
           })
       }
   }
@@ -652,6 +702,9 @@ setActive = (value) => {
       this.setState({ active: value });
     }
   };
+  refreshRoute =() =>{
+    window.location.reload()
+ }
   render() {
  
     let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
@@ -788,6 +841,11 @@ setActive = (value) => {
             <div className='row mb-4'>
                 <div className='col-sm-12'>
                     <a href="#" onClick={this.refreshRoute} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</a>
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col-sm-12'>
+                    <h3 className='Booking-Details'>Booking Details</h3>
                 </div>
             </div>
             <div className='row pt-5 pb-4' id="voucherId">
@@ -1110,7 +1168,7 @@ setActive = (value) => {
                      
                     </div>
                     <div className='col-md-12 mt-5 text-center'>
-                        <button className='confirm-payment' onClick={this.handleConfirmPayment}>Confirm Payment</button>
+                        <button className='confirm-payment' onClick={this.handleConfirmPayment}  disabled={this.state.isDisablePayment}>Confirm Payment</button>
                         {this.state.baknkTransferE?  
                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
                                <strong>Error!</strong> Please select one of the bank.

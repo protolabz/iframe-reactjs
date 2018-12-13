@@ -92,7 +92,7 @@ export default class MultipleHours extends Component {
         }
       }
       if(dateAfter){
-        if(dateBefore.after_date!==null){
+        if(dateAfter.after_date!==null){
         nexDate = dateAfter.after_date.from;
         CopyNexDate = dateAfter.after_date.from;
         nexTime = dateAfter.after;
@@ -108,7 +108,7 @@ export default class MultipleHours extends Component {
         }
       }
       if(dateCurrent){
-        if(dateBefore.current_date!==null){
+        if(dateCurrent.current_date!==null){
         curDate = dateCurrent.current_date.from;
         CopyCurDate  =dateCurrent.current_date.from;
         curTime = dateCurrent.current;
@@ -186,7 +186,7 @@ export default class MultipleHours extends Component {
                         <div className='row createTimesBox py-3'>
                             <div className='col-sm-4 mb-4'>
                                 <h6 className='dayState'>PREVOUS DAY</h6>
-                                <h6 className='fullDate'>{preDate}</h6>
+                                <h6 className='fullDate'>{preDate?preDate:<b>(No previous date available)</b>}</h6>
                                     {previousTime}
                             </div>
                             <div className='col-sm-4 mb-4'>
@@ -196,7 +196,7 @@ export default class MultipleHours extends Component {
                             </div>
                             <div className='col-sm-4 mb-4'>
                             <h6 className='dayState'>NEXT DAY</h6>
-                                <h6 className='fullDate'>{nexDate}</h6>
+                                <h6 className='fullDate'>{nexDate?nexDate:<b>(No next date available)</b>}</h6>
                                     {nextTime}
                             </div>
                         </div>

@@ -392,9 +392,20 @@ export default class componentName extends Component {
         }
         else{
             if(bank_code===''){
-                this.setState({
-                    baknkTransferE:true
-                })
+                swal({
+                    title: "Warning",
+                    text: "Please select at least one payment method!",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: false,
+                  }) 
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        this.setState({
+                            isDisablePayment:false
+                        })
+                    }
+                  });
             }else{
             var confirmPay = {  
                 "transaction_code":this.props.transaction_code,
@@ -409,7 +420,7 @@ export default class componentName extends Component {
                   data:confirmPay
                 })
                 .then((res) => {
-                    if(res.data.response==='success'){
+                    if(res.data.diagnostic.status===200){
                         swal({
                             title: "Success",
                             text: "Payment has been made successfully!",
@@ -425,10 +436,58 @@ export default class componentName extends Component {
                             }
                           });
                     }
-                    else{
+                    else if(res.data.diagnostic.status===300){
                         swal({
                             title: res.data.diagnostic.error,
                             text: res.data.diagnostic.error_msgs,
+                            icon: "warning",
+                            button: true,
+                            dangerMode: false,
+                          })
+                          .then((willDelete) => {
+                            if (willDelete) {
+                                this.setState({
+                                    isShowVoucher:true,
+                                })
+                            } 
+                          });
+                    }
+                    else if(res.data.diagnostic.status===400){
+                        swal({
+                            title: res.data.diagnostic.error,
+                            text: res.data.diagnostic.error_msgs,
+                            icon: "error",
+                            button: true,
+                            dangerMode: true,
+                          })
+                          .then((willDelete) => {
+                            if (willDelete) {
+                                this.setState({
+                                    isDisablePayment:false
+                                })
+                            } 
+                          });
+                    }
+                    else if(res.data.diagnostic.status===401){
+                        swal({
+                            title: res.data.diagnostic.error,
+                            text: res.data.diagnostic.error_msgs,
+                            icon: "error",
+                            button: true,
+                            dangerMode: true,
+                          })
+                          .then((willDelete) => {
+                            if (willDelete) {
+                                this.setState({
+                                    isDisablePayment:false
+                                })
+                            } 
+                          });
+                    }
+                    else{
+                        swal({
+                            title: 'Failed',
+                            text: 'Server error',
                             icon: "error",
                             button: true,
                             dangerMode: false,
@@ -446,6 +505,10 @@ export default class componentName extends Component {
         }
         
     }
+
+    refreshRoute =() =>{
+        window.location.reload()
+     }
   render() {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
@@ -590,7 +653,7 @@ export default class componentName extends Component {
         {this.state.isExpired?
             <div className='col-md-9 cols9-center mainOuterDiv' style={{ textAlign:"center" }}>
                 <h3 className='expiredMessage'>Your booking has been expired</h3>
-                <button className='proceedToPayment mt-5' style={{ width:"20%" }}><i className='fa fa-arrow-left'></i> Go Back </button>
+                <button className='proceedToPayment mt-5'  onClick={this.refreshRoute} style={{ width:"20%" }}><i className='fa fa-arrow-left'></i> Go Back </button>
             </div>
             :
             this.state.isShowVoucher?
@@ -859,11 +922,11 @@ export default class componentName extends Component {
                     </div>
                     <div className='col-md-12 mt-5 text-center'>
                         <button className='confirm-payment' onClick={this.handleConfirmPayment} disabled={this.state.isDisablePayment}>Confirm Payment</button>
-                        {this.state.baknkTransferE?  
+                        {/* {this.state.baknkTransferE?  
                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
                                <strong>Error!</strong> Please select one of the bank.
                             </div>:''
-                            }
+                            } */}
                     </div>
                     
                 </div>

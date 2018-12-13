@@ -1080,7 +1080,7 @@ export default class componentName extends Component {
                 </div>  
 
                 <div className='row mt-5'>
-                    <div className='col-sm-12 px-0'>
+                    <div className='col-sm-12 px-2'>
                     <h2 className='CancelationPax border mx-1 p-2' style={{ margin:"0px" }}>PACKAGE</h2>
                     {otherPax}
                     {this.state.isPaxInvalid?
@@ -1097,10 +1097,10 @@ export default class componentName extends Component {
                 </div>   
                 <div className='row mt-5'>
                     <div className='col-sm-12 px-0'>
-                        <h2 className='CancelationPax'>ADDITIONAL PRODUCT</h2>
+                        <h2 className='CancelationPax' style={{ marginBottom:"0px" }}>ADDITIONAL PRODUCT</h2>
                         
                     </div>
-                    <div className='row'>
+                    <div className='row px-2'>
                     {a?
                     this.state.currency?
                     a.map((item,i) => (
