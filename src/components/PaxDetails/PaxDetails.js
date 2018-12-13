@@ -81,7 +81,7 @@ export default class componentName extends Component {
             {id:1,qty:0,quot:0},
      ],
      addProductsValue1:[
-        {id:1,qty:0},
+        // {id:38818,qty:0},
     ],
     addProductsValueQuota:[
         {id:1,qty:0,max_per_booking:0},
@@ -542,7 +542,6 @@ export default class componentName extends Component {
             else{
                 packg = this.state.packageValues;
             }
-            console.log(packg);
             //Validations Related to Pax
             if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!=false && isRequiredSelect!=false){
                 let quotaDiff = quota - used_quota,finalQuota;
@@ -574,7 +573,7 @@ export default class componentName extends Component {
                     this.setState({standardPaxE:true})
                     }
                     else{
-                        addProductsValue1.splice(0,1);
+                        // addProductsValue1.splice(0,1);
                         this.setState({reqiredE:false})
                         var databook = {
                             "token":"aadsfasdf",
@@ -696,10 +695,15 @@ export default class componentName extends Component {
 
             let adult=0,children=0,other=0,prodadd;
             if(addProductsValue1.length<2){
-                prodadd = this.state.rawAddPR
+                prodadd = this.state.rawAddPR;
             }
             else{
-                prodadd = addProductsValue1
+                // addProductsValue1.map(x=>{
+                //     if(x.id!==38818){
+                        prodadd = addProductsValue1;
+                //     }
+                // })
+               
             }
             standardPax.map(x=>{
                 if(x.name==='ADULT'){
@@ -813,7 +817,7 @@ export default class componentName extends Component {
         window.location.reload()
      }
   render() {
-      console.log(this.state.nameE);
+
     let {additionalDesc,cancellation_policy_pax,cancellation_policy_package,params,
         currency,detail_product,product,rates_pax_package} = this.state;
     let time = this.state.operation_time,productDate = new Date(this.state.date).toGMTString();
@@ -1266,7 +1270,7 @@ export default class componentName extends Component {
                             </label>  
                             </div>
                             <div className='col-6'>
-                            {this.state.depositAmt>0?
+                            {this.state.minimum_deposit>0?
                             <label htmlFor="defaultUncheckeds" className='cstmLabel'>
                                 <div className='row checkBoxDiv'>
                                     <div className='col-3'>
