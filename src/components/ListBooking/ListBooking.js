@@ -44,6 +44,11 @@ export default class componentName extends Component {
   render() {
       let {bookingList,bookingListExpire} = this.state;
       let boList,boListE;
+      function formatThousands(n, dp) {
+        var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
+        while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
+        return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
+      }
       if(bookingList.length!==0){
         boList =(
             bookingList.map((x,index)=>(
@@ -62,9 +67,9 @@ export default class componentName extends Component {
                         :
                         <h4 className="totalText">Total (<span className='totalPaidGreen'>PAID</span>)</h4>
                         }
-                        <h4 className='totalAmt'>IDR 1,11,000</h4>
+                        <h4 className='totalAmt'>IDR {formatThousands(x.paid_amount)}</h4>
                         {x.due>0?
-                        <h4 className='remainAmt'>IDR 1,10,000<span className='remainAmtLight'> remains</span></h4>
+                        <h4 className='remainAmt'>IDR {formatThousands(x.due)}<span className='remainAmtLight'> remains</span></h4>
                         :''}
                     </div>
                     </div>
@@ -105,9 +110,9 @@ export default class componentName extends Component {
                         :
                         <h4 className="totalText">Total (<span className='totalPaidGreen'>PAID</span>)</h4>
                         }
-                        <h4 className='totalAmt'>IDR 1,11,000</h4>
+                        <h4 className='totalAmt'>IDR {formatThousands(x.paid_amount)}</h4>
                         {x.due>0?
-                        <h4 className='remainAmt'>IDR 1,10,000<span className='remainAmtLight'> remains</span></h4>
+                        <h4 className='remainAmt'>IDR {formatThousands(x.due)}<span className='remainAmtLight'> remains</span></h4>
                         :''}
                     </div>
                     </div>

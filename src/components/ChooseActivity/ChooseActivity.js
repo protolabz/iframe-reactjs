@@ -64,7 +64,7 @@ export default class ChooseActivity extends Component {
             <div className='col-sm-12'>
                 <div className='Overlay fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+firstProduct[0].resource+"')"}}>
                     <p className='titleText'>{ firstProduct[0].name }</p>
-                    <p className='descriptionText'>{ firstProduct[0].brief_description }</p>
+                    {/* <p className='descriptionText'>{ firstProduct[0].brief_description }</p> */}
                     <NavLink className='bookNow' to={`product-detail/${firstProduct[0].code}`}>Book Now</NavLink>
                 </div>
             </div>
@@ -77,7 +77,7 @@ export default class ChooseActivity extends Component {
                     <div className='col-sm-6 mb-4'>
                         <div className='OverlayTwoCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+secondProduct[0].resource+"')"}}>
                             <p className='titleTextTwoCols'>{ secondProduct[0].name }</p>
-                            <p className='descriptionTextTwoCols'>{ secondProduct[0].brief_description } Central to the Java’s heritage, the city is where the Island’s culture is at its purest</p>
+                            {/* <p className='descriptionTextTwoCols'>{ secondProduct[0].brief_description } Central to the Java’s heritage, the city is where the Island’s culture is at its purest</p> */}
                             <NavLink className='bookNow' to={`product-detail/${secondProduct[0].code}`}>Book Now</NavLink>
                         </div>
                     </div>
@@ -85,7 +85,7 @@ export default class ChooseActivity extends Component {
                     <div className='col-sm-6'>
                         <div className='OverlayTwoCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+thirdProduct[0].resource+"')"}}>
                             <p className='titleTextTwoCols'>{ thirdProduct[0].name }</p>
-                            <p className='descriptionTextTwoCols'>{ thirdProduct[0].brief_description }</p>
+                            {/* <p className='descriptionTextTwoCols'>{ thirdProduct[0].brief_description }</p> */}
                             <NavLink className='bookNow' to={`product-detail/${thirdProduct[0].code}`}>Book Now</NavLink>
                         </div>
                      </div>
@@ -97,10 +97,10 @@ export default class ChooseActivity extends Component {
             listProducts.map((item, index) =>(
                 <div className='col-sm-4 mb-4' key={index}>
                     <div className='OverlayThreeCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+item.resource+"')"}}>
-                        <p className='titleTextThreeCols'>{item.name}</p>
+                        <p className='titleTextThreeCols mb-4'>{item.name}</p>
                         <br/>
-                        <p className='descriptionTextThreeCols'>{item.brief_description}</p>
-                        <br/>
+                        {/* <p className='descriptionTextThreeCols'>{item.brief_description}</p> */}
+                        {/* <br/> */}
                         <NavLink className='bookNow' to={`product-detail/${item.code}`}>Book Now</NavLink>
                     </div>
                 </div>

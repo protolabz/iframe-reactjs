@@ -394,7 +394,7 @@ export default class ActivityDetail extends Component {
     // Locations Data
     if(locations.length!==0){
         var location;
-        if(locations.length>1){
+        if(locations.length>0){
             mainCity = locations[0].city;
             location = locations;
             // location.splice(0,1)
@@ -544,7 +544,8 @@ export default class ActivityDetail extends Component {
                                         items={images}
                                         showFullscreenButton={false}
                                         showPlayButton={false}
-                                        disableArrowKeys={true}
+                                        disableArrowKeys={false}
+                                        disableSwipe={false}
                                         showBullets={true}
                                         showThumbnails={false}
                                     />
@@ -555,7 +556,7 @@ export default class ActivityDetail extends Component {
                     <div className='row px-md-5 mb-4 px-xs-1'>
                         <div className='col-sm-7'>
                             <h5 className="Location mb-4">LOCATION</h5>
-                            <p className='Ubud-Bali-Indonesi'>{mainCity}</p>
+                            {/* <p className='Ubud-Bali-Indonesi'>{mainCity}</p> */}
                             <ul className='locationList'>
                             {locs}
                             </ul>
