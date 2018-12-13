@@ -135,7 +135,7 @@ export default class ActivityDetail extends Component {
             if(checkDate(FullDate)===true){
             axios({
                 method: 'get',
-                url: `https://api.trabo.co/partner/activity/detail/A-09213790?date=${FullDate}`,
+                url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.id}?date=${FullDate}`,
             })
                 .then((res) => {
                     if(res.data.response.operation_times.length>0){
