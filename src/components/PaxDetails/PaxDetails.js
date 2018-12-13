@@ -694,12 +694,11 @@ export default class componentName extends Component {
             let pkg = [];
 
             let adult=0,children=0,other=0,prodadd;
-            if(addProductsValue1.length<0){
+            if(addProductsValue1.length>0){
                 prodadd = addProductsValue1;
             }
             else{
-                prodadd = this.state.rawAddPR;
-              
+                prodadd = this.state.rawAddPR
             }
             standardPax.map(x=>{
                 if(x.name==='ADULT'){
