@@ -73,8 +73,8 @@ export default class componentName extends Component {
   componentWillMount(){
     axios({
       method: 'get',
-      url: `https://api.trabo.co/partner/activity/payment?transaction_code=56713178-13-12-2018-7854`,
-    //   url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
+    //   url: `https://api.trabo.co/partner/activity/payment?transaction_code=56713178-13-12-2018-7854`,
+      url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
       })
       .then((res) => {
         var data = res.data;
@@ -926,8 +926,8 @@ setActive = (value) => {
                   <div className='row'>
                     <div className='col-6'>
                       <p className='bookingId mb-md-3'> BOOKING ID</p>
-                      {/* <h3 className='transId'>{this.props.transaction_code}</h3> */}
-                      <h3 className='transId'>{this.state.transactionCode}</h3>
+                      <h3 className='transId'>{this.props.transaction_code}</h3>
+                      {/* <h3 className='transId'>{this.state.transactionCode}</h3> */}
                     </div>
                     <div className='col-6 text-right'>
                     <QRCode 

@@ -14,7 +14,6 @@ class AdditionalPax extends Component {;
     }
     handleIncreement = (name,data)  => { 
        let {quota,usedQuota,maxPerBook} =this.state;
-       console.log(quota+"-"+usedQuota)
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;
        if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){

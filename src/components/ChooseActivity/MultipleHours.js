@@ -139,8 +139,13 @@ export default class MultipleHours extends Component {
             preTime.map((item,index) => (
                 <div className='row mb-2' key={item.time}>
                     <div className='col-sm-12'>
-                        <div className='bookingCard'>
-                            <span>{item.time}</span>
+                        <div className='bookingCardCurrent'>
+                            <span>{item.time} <br/>
+                            {
+                              item.quota-item.used_quota>0?
+                              <span className='quota-left-multiple'>{item.quota-item.used_quota} left</span>
+                            :''}  
+                            </span>
                             {
                               item.quota-item.used_quota>0?
                             <button onClick={() => this.handleCurrentDay(CopyPrevDate,item.time,item.quota,item.used_quota)} className='hourlyBookBtn'>Book</button>
@@ -180,7 +185,7 @@ export default class MultipleHours extends Component {
           nexTime.map((item,index) => (
               <div className='row mb-2' key={item.time}>
                   <div className='col-sm-12'>
-                      <div className='bookingCard'>
+                      <div className='bookingCardCurrent'>
                           <span>{item.time}<br/>
                           {
                               item.quota-item.used_quota>0?

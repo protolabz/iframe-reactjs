@@ -713,7 +713,7 @@ export default class componentName extends Component {
                 transaction_code = {this.props.transaction_code}
                 operation_date = {this.props.operationDate+" — "+this.props.operationTime}
                 product_name = {this.props.productName}
-                enail = {this.props.email}
+                email = {this.props.email}
                 phone_number = {"+"+this.props.phoneNumber}
                 currency= {this.props.currency}
              />:
