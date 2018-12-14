@@ -217,6 +217,15 @@ export default class componentName extends Component {
             cardNumber:e.target.value
         })
     }
+    handleCard = (e) => {
+        let num = e.target.value;
+        if(num===16){
+            e.preventDefault();
+            return false;
+            console.log(num)
+        }
+        console.log(e.target.value);
+    }
     handleCardCVCChange = (e) =>{
         let cvv = e.target.value;
         this.setState({
@@ -930,16 +939,16 @@ export default class componentName extends Component {
                         <div id="creditCard" className="container tab-pane px-md-4 py-md-5 px-sm-0 py-sm-5">
                             <div className='row'>
                             <CreditCardInput
-                                cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCardNumberChange }}
+                                cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCard }}
                                 cardExpiryInputProps={{ value: this.state.expiry, onChange: this.handleCardExpiryChange }}
                                 cardCVCInputProps={{ value: this.state.cvc, onChange: this.handleCardCVCChange }}
                                 holderNameProps ={{ value: this.state.cardHolderName, onChange: this.handleHolderName }}
+                                // cardNumberInputRenderer={this.handleCard}
                                 fieldClassName="input"
                             />
                             <div className='sc-bdVaJa1'>
                                 <input type='text' onChange={this.handleHolderName} name='holderName' className='form-control' placeholder='Card Holder Name' id={this.state.nameE===true?'errorBorder':''}/>
-                            </div>
-                                
+                            </div> 
                             </div>
                             {this.state.nameE===true?<p class='errorText' style={{ textAlign:"center" }}> only a-z , A-Z and (- , _ ) Allowed</p>:''}    
                         </div>

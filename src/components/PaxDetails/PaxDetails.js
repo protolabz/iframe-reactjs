@@ -52,8 +52,8 @@ export default class componentName extends Component {
      dateValue:null,
      max_per_booking:0,
      min_per_booking:0,
-     quota:0,
-     used_quota:0,
+     quota:this.props.quota,
+     used_quota:this.props.used_quota,
      packageValues:[],
      depositAmt:0,
      paymentType:'full payment',
@@ -175,8 +175,10 @@ export default class componentName extends Component {
               }
               let minBook = res.data.response.product.min_per_booking,
               maxBook = res.data.response.product.max_per_booking,
-              quota = res.data.response.product.quota,
-              usedQuota = res.data.response.product.used_quota, finalQuota;
+            //   quota = res.data.response.product.quota,
+                quota = this.props.quota,
+                usedQuota = this.props.used_quota, finalQuota;
+            //   usedQuota = res.data.response.product.used_quota, finalQuota;
               quota  = quota - usedQuota;
               if(quota<maxBook){
                 finalQuota = quota
@@ -203,8 +205,8 @@ export default class componentName extends Component {
               currency:res.data.diagnostic.currency,
               max_per_booking:res.data.response.product.max_per_booking,
               min_per_booking:res.data.response.product.min_per_booking,
-              quota:res.data.response.product.quota,
-              used_quota:res.data.response.product.used_quota,
+            //   quota:res.data.response.product.quota,
+            //   used_quota:res.data.response.product.used_quota,
               rawAddPR:rawAddProduct,
               standardPaxMAx:finalQuota,
               standardPaxMAx1:finalQuota,
@@ -863,8 +865,8 @@ export default class componentName extends Component {
                 key={item.id}
                 addiValue={0}
                 currency={this.state.currency}
-                usedQuota={item.used_quota} 
-                quota={item.quota} 
+                usedQuota={this.state.used_quota} 
+                quota={this.state.quota} 
                 maxPerBook ={item.max_per_booking}
                 countValuesIncre= {this.handleCountValuesIncrement}
                 countValuesDecre = {this.handleCountValuesDecrement}

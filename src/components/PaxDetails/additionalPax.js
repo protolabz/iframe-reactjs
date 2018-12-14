@@ -7,13 +7,14 @@ class AdditionalPax extends Component {;
         disablebutton:false, 
         maxPerBook:this.props.maxPerBook ,
         usedQuota:this.props.usedQuota,
+        quota:this.props.quota,
         maxQuota:this.props.maxQuota,
         min:this.props.min,
         max:this.props.max
     }
     handleIncreement = (name,data)  => { 
-
        let {quota,usedQuota,maxPerBook} =this.state;
+       console.log(quota+"-"+usedQuota)
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;
        if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){

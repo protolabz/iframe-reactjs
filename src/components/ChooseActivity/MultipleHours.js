@@ -129,6 +129,7 @@ export default class MultipleHours extends Component {
                     <div className='col-sm-12'>
                         <div className='bookingCard'>
                             <span>{item.time}</span>
+                            {/* {item.quota-item.used_quota>0?item.quota-item.used_quota:''}{item.quota-item.used_quota>0?<span className='quota-left'> left</span>:''} */}
                             <button onClick={() => this.handleCurrentDay(CopyPrevDate,item.time)} className='hourlyBookBtn'>Book</button>
                         </div>
                     </div>
@@ -143,7 +144,12 @@ export default class MultipleHours extends Component {
               <div className='row mb-2' key={item.time}>
                   <div className='col-sm-12'>
                       <div className='bookingCardCurrent'>
-                          <span>{item.time}</span>
+                          <span>{item.time} <br/>
+                          {
+                              item.quota-item.used_quota>0?
+                              <span className='quota-left-multiple'>{item.quota-item.used_quota} left</span>
+                          :''}
+                          </span>
                           <button onClick={() => this.handleCurrentDay(CopyCurDate,item.time)} className='hourlyBookBtnCurrent'>Book</button>
                       </div>
                   </div>
@@ -168,9 +174,15 @@ export default class MultipleHours extends Component {
     )
     return (
         this.state.showPaxPage?
-        <Paxpage boxValue={this.props.boxValue} selectValue={this.props.selectValue}
-         timeValue={this.state.selectedTime} dateValue={this.state.selectedDate} 
-         productId={this.props.productId}/>:
+        <Paxpage 
+            boxValue={this.props.boxValue} 
+            selectValue={this.props.selectValue}
+            timeValue={this.state.selectedTime} 
+            dateValue={this.state.selectedDate} 
+            productId={this.props.productId}
+            quota={this.props.quota}
+            used_quota={this.props.used_quota}
+        />:
            <div className='container mt-5 mb-5'>
            {this.state.isLoading?
                 <img className='loading' src='/images/loading.svg' alt='loading'/>
