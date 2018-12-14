@@ -36,28 +36,39 @@ export default class MultipleHours extends Component {
                 this.setState({success:'Alert: Something went wrong'});
             });
     }
-    handlePreviousDay = (d,t) => {
+    handlePreviousDay = (d,t,quota,used_quota) => {
         t = t.replace(/ /g,'-');
         this.setState({
             selectedTime:t,
             selectedDate:d,
-            showPaxPage:true
+            showPaxPage:true,
+            quota:quota,
+            used_quota:used_quota
         })
         // window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
 
 
     }
-    handleCurrentDay = (d,t) => {
+    handleCurrentDay = (d,t,quota,used_quota) => {
         t = t.replace(/ /g,'-');
         this.setState({
             selectedTime:t,
             selectedDate:d,
-            showPaxPage:true
+            showPaxPage:true,
+            quota:quota,
+            used_quota:used_quota
         })
         // window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
     }
-    handleNextDay = (d,t) => {
+    handleNextDay = (d,t,quota,used_quota) => {
         t = t.replace(/ /g,'-');
+        this.setState({
+            selectedTime:t,
+            selectedDate:d,
+            showPaxPage:true,
+            quota:quota,
+            used_quota:used_quota
+        })
         // window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
         // `/pax-details/${timeValue}/${dateValue}/${boxValue}/${selectValue}/${this.props.match.params.id}`
     }
@@ -65,6 +76,7 @@ export default class MultipleHours extends Component {
         window.location.reload();
     }
   render() {
+    
       const {dateBefore,dateAfter,dateCurrent} = this.state;
       let preDate;
       let curDate;
@@ -129,8 +141,10 @@ export default class MultipleHours extends Component {
                     <div className='col-sm-12'>
                         <div className='bookingCard'>
                             <span>{item.time}</span>
-                            {/* {item.quota-item.used_quota>0?item.quota-item.used_quota:''}{item.quota-item.used_quota>0?<span className='quota-left'> left</span>:''} */}
-                            <button onClick={() => this.handleCurrentDay(CopyPrevDate,item.time)} className='hourlyBookBtn'>Book</button>
+                            {
+                              item.quota-item.used_quota>0?
+                            <button onClick={() => this.handleCurrentDay(CopyPrevDate,item.time,item.quota,item.used_quota)} className='hourlyBookBtn'>Book</button>
+                            :''}
                         </div>
                     </div>
                 </div>
@@ -150,7 +164,10 @@ export default class MultipleHours extends Component {
                               <span className='quota-left-multiple'>{item.quota-item.used_quota} left</span>
                           :''}
                           </span>
-                          <button onClick={() => this.handleCurrentDay(CopyCurDate,item.time)} className='hourlyBookBtnCurrent'>Book</button>
+                          {
+                              item.quota-item.used_quota>0?
+                          <button onClick={() => this.handleCurrentDay(CopyCurDate,item.time,item.quota,item.used_quota)} className='hourlyBookBtnCurrent'>Book</button>
+                          :''}
                       </div>
                   </div>
               </div>
@@ -164,8 +181,16 @@ export default class MultipleHours extends Component {
               <div className='row mb-2' key={item.time}>
                   <div className='col-sm-12'>
                       <div className='bookingCard'>
-                          <span>{item.time}</span>
-                          <button onClick={() => this.handleCurrentDay(CopyNexDate,item.time)} className='hourlyBookBtn'>Book</button>
+                          <span>{item.time}<br/>
+                          {
+                              item.quota-item.used_quota>0?
+                              <span className='quota-left-multiple'>{item.quota-item.used_quota} left</span>
+                          :''}
+                          </span>
+                          {
+                              item.quota-item.used_quota>0?
+                          <button onClick={() => this.handleCurrentDay(CopyNexDate,item.time,item.quota,item.used_quota)} className='hourlyBookBtn'>Book</button>
+                          :''}
                       </div>
                   </div>
               </div>
@@ -180,8 +205,8 @@ export default class MultipleHours extends Component {
             timeValue={this.state.selectedTime} 
             dateValue={this.state.selectedDate} 
             productId={this.props.productId}
-            quota={this.props.quota}
-            used_quota={this.props.used_quota}
+            quota={this.state.quota}
+            used_quota={this.state.used_quota}
         />:
            <div className='container mt-5 mb-5'>
            {this.state.isLoading?

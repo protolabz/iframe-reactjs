@@ -274,6 +274,19 @@ handleCardNumberChange = (e) =>{
         cardNumber:e.target.value
     })
 }
+handleCard = (e) => {
+    let num = e.target.value;
+    if(num>16 || num<16){
+        this.setState({
+            cardNumber:null
+        })
+    }else{
+        this.setState({
+            cardNumber:num
+        })
+    }
+    
+}
 handleCardCVCChange = (e) =>{
     let cvv = e.target.value;
     this.setState({
@@ -571,20 +584,38 @@ handleConfirmPayment =() => {
   })
   if(paymentMethodType==='CreditCard'){
     if(expiry===null){
-
+        swal({
+            title: 'Warning',
+            text: "Expiry date cannot be null!",
+            icon: "warning",
+            button: true,
+            dangerMode: true,
+          }).then((willDelete) => {
+            if (willDelete) {
+                this.setState({
+                    isDisablePayment:false
+                })
+            } 
+          });
     }else{
         let dt = expiry.split('/'),mm,yy;
         mm = dt[0];
         yy = dt[1];
         yy = "20"+yy;
-        if(cardNumber===null && cvc===null && cardHolderName===null){
+        if(cardNumber===null || cvc===null || cardHolderName===null){
             swal({
                 title: 'Warning',
-                text: "All fields are required!",
+                text: "All fields should be valid!",
                 icon: "warning",
                 button: true,
                 dangerMode: true,
-              })
+              }).then((willDelete) => {
+                if (willDelete) {
+                    this.setState({
+                        isDisablePayment:false
+                    })
+                } 
+              });
         }else{
           window.Xendit.setPublishableKey(EX_API_KEY);
           var tokenData = this.getTokenData();
@@ -1214,7 +1245,7 @@ setActive = (value) => {
                         <div id="creditCard" className="container tab-pane px-md-4 py-md-5 px-sm-0 py-sm-5">
                             <div className='row'>
                             <CreditCardInput
-                                cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCardNumberChange }}
+                                cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCard }}
                                 cardExpiryInputProps={{ value: this.state.expiry, onChange: this.handleCardExpiryChange }}
                                 cardCVCInputProps={{ value: this.state.cvc, onChange: this.handleCardCVCChange }}
                                 holderNameProps ={{ value: this.state.cardHolderName, onChange: this.handleHolderName }}

@@ -219,12 +219,16 @@ export default class componentName extends Component {
     }
     handleCard = (e) => {
         let num = e.target.value;
-        if(num===16){
-            e.preventDefault();
-            return false;
-            console.log(num)
+        if(num>16 || num<16){
+            this.setState({
+                cardNumber:null
+            })
+        }else{
+            this.setState({
+                cardNumber:num
+            })
         }
-        console.log(e.target.value);
+        
     }
     handleCardCVCChange = (e) =>{
         let cvv = e.target.value;
@@ -318,6 +322,7 @@ export default class componentName extends Component {
 
     getTokenData () {
         let {cardNumber,expiry,cvc,cardHolderName} = this.state;
+
             let dt = expiry.split('/'),mm,yy;
             mm = dt[0];
             yy = dt[1];
@@ -392,6 +397,7 @@ export default class componentName extends Component {
         this.setState({
             isDisablePayment:true
         })
+
         if(paymentMethodType==='CreditCard'){
             if(expiry===null){
                 swal({
@@ -400,20 +406,32 @@ export default class componentName extends Component {
                     icon: "warning",
                     button: true,
                     dangerMode: true,
-                  })
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                        this.setState({
+                            isDisablePayment:false
+                        })
+                    } 
+                  });
             }else{
                 let dt = expiry.split('/'),mm,yy;
                 mm = dt[0];
                 yy = dt[1];
                 yy = "20"+yy;
-                if(cardNumber===null && cvc===null && cardHolderName===null){
+                if(cardNumber===null || cvc===null || cardHolderName===null){
                     swal({
                         title: 'Warning',
-                        text: "All Card fields are required!",
+                        text: "All fields should be valid!",
                         icon: "warning",
                         button: true,
                         dangerMode: true,
-                      })
+                      }).then((willDelete) => {
+                        if (willDelete) {
+                            this.setState({
+                                isDisablePayment:false
+                            })
+                        } 
+                      });
                 }else{
                     window.Xendit.setPublishableKey(EX_API_KEY);
                     // Request a token from Xendit:

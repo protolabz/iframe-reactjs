@@ -377,7 +377,7 @@ export default class ActivityDetail extends Component {
                         <div className="card-body">
                             <h5 className="card-title">{OperationDate}</h5>
                             <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
-                            <p className='quota'><button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>Book</button> {item.quota-item.used_quota>0?item.quota-item.used_quota:''}{item.quota-item.used_quota>0?<span className='quota-left'> left</span>:''}</p>
+                            {item.quota-item.used_quota>0?<p className='quota'><button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>Book</button> {item.quota-item.used_quota}<span className='quota-left'> left</span></p>:''}
                         </div>
                     </div>
                 ))
@@ -525,8 +525,6 @@ export default class ActivityDetail extends Component {
                 productId={this.props.match.params.id} 
                 dateValue={this.state.OperationDateNormal.date} 
                 selectValue={this.state.selectValHeading}
-                quota={this.state.quota}
-                used_quota={this.state.used_quota}
             />
             :
       <div className='container mt-5 mb-5'>
