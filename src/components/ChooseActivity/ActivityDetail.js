@@ -32,6 +32,7 @@ export default class ActivityDetail extends Component {
      boxValHeading:null,
      selectValHeading:null,
      selectValue:null,
+     textValue:null,
      timeValue:null,
      dateValue:null,
      showError:false,
@@ -53,6 +54,7 @@ export default class ActivityDetail extends Component {
             .then((res) => {
                 var data = res.data.response.product.additional_description.description;
                 var len = res.data.response.product.additional_description.description.length;
+                var descriptionWithText = [];
                     for(let i=0;i<=len-1;i++){
                         if(data[i].type==='check_box' && data[i].mandatory==='1'){
                             this.setState({isRequiredBox:false})
@@ -62,6 +64,15 @@ export default class ActivityDetail extends Component {
                             
                         }
                     }
+                    var textDesc = res.data.response.product.additional_description.description;
+                    textDesc.map(x=>{
+                        if(x.type==='text'){
+                            // descriptionWithText += {"heading":x.heading,"content":x.items};
+                            // descriptionWithText.concat([{"heading":x.heading,"content":x.items}]);
+                            descriptionWithText.push({"heading":x.heading,"content":x.items})
+                        }
+                    })
+
                 this.setState({
                     detail_product:res.data.response.detail_product,
                     product:res.data.response.product,
@@ -72,7 +83,8 @@ export default class ActivityDetail extends Component {
                     additionalDesc:res.data.response.product.additional_description.description,
                     bannerImg:res.data.response.detail_product.image,
                     dates:res.data.response.operationDate,
-                    isLoading:false
+                    isLoading:false,
+                    textValue:descriptionWithText
                 })
 
             })
@@ -518,6 +530,7 @@ export default class ActivityDetail extends Component {
                 timeValue={this.state.timeValue}
                 quota={this.state.quota}
                 used_quota={this.state.used_quota}
+                descriptionText={this.state.textValue}
             />
         : (this.state.showMultipleHrs?
             <MultipleHours 
@@ -525,6 +538,7 @@ export default class ActivityDetail extends Component {
                 productId={this.props.match.params.id} 
                 dateValue={this.state.OperationDateNormal.date} 
                 selectValue={this.state.selectValHeading}
+                descriptionText={this.state.textValue}
             />
             :
       <div className='container mt-5 mb-5'>

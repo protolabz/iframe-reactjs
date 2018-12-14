@@ -212,6 +212,7 @@ export default class MultipleHours extends Component {
             productId={this.props.productId}
             quota={this.state.quota}
             used_quota={this.state.used_quota}
+            descriptionText={this.props.descriptionText}
         />:
            <div className='container mt-5 mb-5'>
            {this.state.isLoading?

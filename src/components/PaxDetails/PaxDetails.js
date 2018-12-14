@@ -123,7 +123,8 @@ export default class componentName extends Component {
      depositValue:0,
      total_frontend_count:'',
      standardPaxDisable:false,
-     isPaxInvalid:false
+     isPaxInvalid:false,
+     textValuePax:null
   }
 
   componentWillMount(){
@@ -185,7 +186,15 @@ export default class componentName extends Component {
               }else{
                 finalQuota = maxBook
               }
-
+              var textDesc = res.data.response.product.additional_description.pax_details;
+              let descriptionWithText=[];
+              textDesc.map(x=>{
+                  if(x.type==='text'){
+                      // descriptionWithText += {"heading":x.heading,"content":x.items};
+                      // descriptionWithText.concat([{"heading":x.heading,"content":x.items}]);
+                      descriptionWithText.push({"heading":x.heading,"content":x.items})
+                  }
+              })
           this.setState({
               detail_product:res.data.response.detail_product,
               rawPackage:paxxArr,
@@ -205,12 +214,11 @@ export default class componentName extends Component {
               currency:res.data.diagnostic.currency,
               max_per_booking:res.data.response.product.max_per_booking,
               min_per_booking:res.data.response.product.min_per_booking,
-            //   quota:res.data.response.product.quota,
-            //   used_quota:res.data.response.product.used_quota,
               rawAddPR:rawAddProduct,
               standardPaxMAx:finalQuota,
               standardPaxMAx1:finalQuota,
-              isLoading:false
+              isLoading:false,
+              textValuePax:descriptionWithText
           })
 
       })
@@ -750,6 +758,13 @@ export default class componentName extends Component {
                 pax_select = {heading:selectHead,content:[]}
                 
             }
+            // [this.props.selectValue,this.props.boxValue,arr2]
+            let descriptionText = this.props.descriptionText;
+            descriptionText.push(this.props.selectValue);
+            descriptionText.push(this.props.boxValue);
+            let paxData = this.state.textValuePax;
+            paxData.push(pax_select);
+            paxData.push(pax_box);
             var dataProceeed = 
             {
                 "token": "popo11",
@@ -775,8 +790,8 @@ export default class componentName extends Component {
                 "user_code":"12345678",
                 "referral" : refferal,
                 "additional_description":{
-                    "description":[this.props.selectValue,this.props.boxValue],
-                    "pax_details":[pax_select,pax_box]
+                    "description":descriptionText,
+                    "pax_details":paxData
                   }
               }
               if(total_frontend<1){
