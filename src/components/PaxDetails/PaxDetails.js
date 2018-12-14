@@ -933,9 +933,10 @@ export default class componentName extends Component {
             ))
         )
     }
+
     if(cancellation_policy_package){
         CancelationPolicyPackage = (
-            cancellation_policy_pax.map((item,index) => (
+            cancellation_policy_package.map((item,index) => (
                 <div className='col-sm-12 ' key={index}>
                     <input className='form-control CancelationTextBox' name={"cancelationPackage"+index} type="text" value={item} readOnly/>
                 </div>
