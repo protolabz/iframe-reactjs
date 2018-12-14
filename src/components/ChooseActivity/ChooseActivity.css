@@ -658,11 +658,17 @@
     left: 25px;
     top: 160px;
   }
-  .image-gallery-left-nav{
-    display:none !important;
+  .image-gallery-left-nav:focus{
+    outline: none !important;
   }
-  .image-gallery-right-nav{
-    display:none !important;
+  .image-gallery-right-nav:focus{
+    outline: none !important;
+  }
+  .image-gallery-fullscreen-button:hover::before, .image-gallery-play-button:hover::before, .image-gallery-left-nav:hover::before, .image-gallery-right-nav:hover::before {
+    color: #f89655 !important;
+}
+  .image-gallery-right-nav:hover{
+    color: #f89655 !important;
   }
   .image-gallery-thumbnail{
     border-radius: 4px !important;
