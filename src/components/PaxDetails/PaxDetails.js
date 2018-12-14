@@ -849,8 +849,13 @@ export default class componentName extends Component {
         return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
       }
  //Rates Data
+ let haveStandardPax=false;
  if(rates_pax_package.length!==0){
-
+    rates_pax_package.map(x=>{
+        if(x.pax_type==='ADULT' || x.pax_type==='CHILD' || x.pax_type==='INFANT'){
+            haveStandardPax = true;
+        }
+    })
     standardPax = (
        rates_pax_package.map((item,index) => (
            item.amount>0 && (item.pax_type==='ADULT' || item.pax_type==='CHILD' || item.pax_type==='INFANT')?
@@ -1072,17 +1077,18 @@ export default class componentName extends Component {
                     {this.state.phoneE===true?<p class='errorText'> Phone number should be valid</p>:''}
                   </div>
                 </div>
-                 
+                 {haveStandardPax?
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
                         <h1 className='PAX-Details mt-4'>Tickets (Max {finalQuota})</h1>
                     </div>
                  </div>
+                 :''}
                  {standardPax}
                  {this.state.isPaxInvalid?
                     <p style={{ color:"red" }}>Quota limit exceeds</p>:''
                  }
-                 {CancelationPolicy?
+                 {CancelationPolicy.length>0?
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>CANCELATION POLICY PAX</h2>
@@ -1102,7 +1108,7 @@ export default class componentName extends Component {
                  </div>
                 </div>
                   :''}
-                 {CancelationPolicyPackage?   
+                 {CancelationPolicyPackage.length>0?   
                  <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
                         <h2 className='CancelationPax'>CANCELATION POLICY PACKAGE</h2>

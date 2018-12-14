@@ -932,11 +932,7 @@ setActive = (value) => {
                     <div className='col-6 text-right'>
                     <QRCode 
                       value={
-                        this.state.transactionCode+" "
-                        + this.state.leadPaxName+ " " 
-                        +this.state.productName+ " "
-                        +this.state.operationDateNormal+ " "
-                        +this.state.operationTime
+                       this.props.transaction_code
                       }
                     />
                     </div>
