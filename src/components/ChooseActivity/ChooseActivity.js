@@ -64,7 +64,7 @@ export default class ChooseActivity extends Component {
             <div className='col-sm-12'>
                 <div className='Overlay fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+firstProduct[0].resource+"')"}}>
                     <p className='titleText'>{ firstProduct[0].name }</p>
-                    {/* <p className='descriptionText'>{ firstProduct[0].brief_description }</p> */}
+                    <p className='descriptionText'>{ firstProduct[0].brief_description }</p>
                     <NavLink className='bookNow' to={`product-detail/${firstProduct[0].code}`}>Book Now</NavLink>
                 </div>
             </div>

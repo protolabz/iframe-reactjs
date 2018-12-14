@@ -45,7 +45,8 @@ export default class componentName extends Component {
         alfaMartData:true,
         paymentFail:false,
         isShowVoucher:false,
-        isDisablePayment:false
+        isDisablePayment:false,
+        nameE:false
     }
 
     componentWillMount(){
@@ -205,6 +206,13 @@ export default class componentName extends Component {
 
     }
     handleCardNumberChange = (e) =>{
+        let num = e.target.name;
+        console.log(num)
+        if(num===16){
+            // e.preventDefault();
+            // return false;
+            console.log(num)
+        }
         this.setState({
             cardNumber:e.target.value
         })
@@ -224,10 +232,27 @@ export default class componentName extends Component {
         })
     }
     handleHolderName = (e) =>{
+        let names = e.target.value;
+      if(/^[-\w ]+$/.test(names)){
         this.setState({
-            cardHolderName:e.target.value
-        })
+            cardHolderName:names,
+            nameE:false
+          })
+      }
+      else{ 
+        this.setState({
+            cardHolderName:names,
+            nameE:true,
+          })  
+    //   }
+    // this.setState({
+    //     cardHolderName:e.target.value
+    // })
+    //     this.setState({
+    //         cardHolderName:e.target.value
+    //     })
     }
+}
        
     displaySuccess (creditCardToken) {
         var requestData = Object.assign({}, this.getTokenData());
@@ -912,10 +937,11 @@ export default class componentName extends Component {
                                 fieldClassName="input"
                             />
                             <div className='sc-bdVaJa1'>
-                                <input type='text' name='holderName' className='form-control' placeholder='Card Holder Name'/>
+                                <input type='text' onChange={this.handleHolderName} name='holderName' className='form-control' placeholder='Card Holder Name' id={this.state.nameE===true?'errorBorder':''}/>
                             </div>
                                 
-                            </div>    
+                            </div>
+                            {this.state.nameE===true?<p class='errorText' style={{ textAlign:"center" }}> only a-z , A-Z and (- , _ ) Allowed</p>:''}    
                         </div>
                       </div>
                      

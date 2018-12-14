@@ -30,6 +30,8 @@ export default class componentName extends Component {
     cancelationPolicyPack:null,
     expirationDate:null,
     operationDateNormal:null,
+    location:null,
+    nameE:false,
         mandiri:null,
         bri:null,
         bni:null,
@@ -71,8 +73,8 @@ export default class componentName extends Component {
   componentWillMount(){
     axios({
       method: 'get',
-    //   url: `https://api.trabo.co/partner/activity/payment?transaction_code=56713178-13-12-2018-7854`,
-      url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
+      url: `https://api.trabo.co/partner/activity/payment?transaction_code=56713178-13-12-2018-7854`,
+    //   url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
       })
       .then((res) => {
         var data = res.data;
@@ -94,6 +96,7 @@ export default class componentName extends Component {
             operationDateNormal:res.data.transaction.operation_date,
             operationTime:data.transaction.operation_time,
             productName:data.activity.name,
+            location:data.activity.location,
             address:data.activity.address,
             companyEmail:data.company.email,
             companyPhone:data.company.phone_number,
@@ -102,7 +105,7 @@ export default class componentName extends Component {
             transactionCode:data.transaction.transaction_code,
             leadPaxName:data.customer.name,
             paymentType:data.total_status,
-            paxText:data.pax_text+" "+data.package_text,
+            paxText:data.pax_text,
             totalPaid:data.transaction.total_price,
             due:data.transaction.due,
             expirationDate:finalExDate,
@@ -286,9 +289,22 @@ handleCardExpiryChange = (e) =>{
     })
 }
 handleHolderName = (e) =>{
-    this.setState({
-        cardHolderName:e.target.value
-    })
+    let names = e.target.value;
+      if(/^[-\w ]+$/.test(names)){
+        this.setState({
+            cardHolderName:names,
+            nameE:false
+          })
+      }
+      else{ 
+        this.setState({
+            cardHolderName:names,
+            nameE:true,
+          })  
+      }
+    // this.setState({
+    //     cardHolderName:e.target.value
+    // })
 }
 
 handleSpecialNote = (e) =>{
@@ -706,7 +722,7 @@ setActive = (value) => {
   render() {
  
     let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
-      briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
+      briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName,location} = this.state;
     let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
     let cancelationPolicy;
     function formatThousands(n, dp) {
@@ -813,7 +829,14 @@ setActive = (value) => {
         ))
       )
     }
-    
+    let locs;
+    if(location!==null){
+    locs = (
+        location.map((item) =>(
+                <li key={item.city}>{item.city}</li>
+            ))
+    );
+    }
     return (
         this.state.isShowBooking?
             // <div className='' >
@@ -847,7 +870,7 @@ setActive = (value) => {
                 </div>
             </div>
             <div className='row pt-5 pb-4' id="voucherId">
-                <div className='col-md-6 voucherOrange p-md-4'>
+                <div className='col-md-6 voucherOrange p-4'>
                    <h3 className='operationDate'>{this.state.operationDate+" — "+this.state.operationTime}</h3>
                    <h3 className='productTitle'>{this.state.productName}</h3>
                    <p className='paxDetails'><span className='paxDetailsBold'>{this.state.paxText}</span></p>
@@ -860,6 +883,12 @@ setActive = (value) => {
                     <div className='col-7 p-0'>
                       <p className='contactDetailEmail'><span>{this.state.companyEmail}</span></p>
                     </div>
+                  </div>
+                  <div className='row mt-2'>
+                    <h2 className='activityLocation p-3'>Activity Location</h2>
+                    <ul className='locationList1'>
+                        {locs}
+                    </ul>
                   </div>
                 </div>
                 <div className='col-md-6 py-2 voucherWhite'>
@@ -940,7 +969,7 @@ setActive = (value) => {
                     <form className="form-inline" action="/action_page.php">
                       <div className="form-group" style={{ width:"100%" }} >
                         <input type="email" className="form-control email-textBox"id="email" style={{ width:"80%" }}  placeholder="Input e-mail address" name="email"/>
-                        <button type="submit" className="btn btn-default buttonEmail"  style={{ width:"10%" }}>Send e-mail</button>
+                        <button type="submit" className="btn btn-default buttonEmail">Send e-mail</button>
                       </div>
                     </form>
                   </div>
@@ -1191,10 +1220,11 @@ setActive = (value) => {
                                 holderNameProps ={{ value: this.state.cardHolderName, onChange: this.handleHolderName }}
                                 fieldClassName="input"
                             />
+
                             <div className='sc-bdVaJa1'>
-                                <input type='text' name='holderName' className='form-control' placeholder='Card Holder Name'/>
+                                <input type='text' onChange={this.handleHolderName} name='holderName' className='form-control' placeholder='Card Holder Name' id={this.state.nameE===true?'errorBorder':''}/>
                             </div>
-                                
+                            {this.state.nameE===true?<p class='errorText' style={{ textAlign:"center" }}> only a-z , A-Z and (- , _ ) Allowed</p>:''}
                             </div>    
                         </div>
                       </div>
