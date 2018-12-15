@@ -57,8 +57,8 @@ class AdditionalData extends Component {
 
     render(props) {
         return (
-            <div className='col-sm-12'>
-            <div className='row'>
+            // <div className='col-sm-12'>
+            <div className='row px-3'>
             <div className='col-sm-3 border p-2'>
             <label style={{ display:"flex" }} className='mt-2'>
             <button id="subs" onClick ={ () => this.handleDecreement(this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
@@ -72,7 +72,7 @@ class AdditionalData extends Component {
                 <p className="paxCountClass">(Maximum Per Booking = {this.props.it.max_per_booking})</p>
             </div>
             </div>
-            </div>
+            // </div>
         )
     }
 }

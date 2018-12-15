@@ -86,7 +86,7 @@ class AdditionalPax extends Component {;
 
     render(props) {
         return (
-            <div className={"row mx-1 " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
+            <div className={"row mx-0 " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
             <div className={'col-sm-3 border '+(this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':'p-2')}>
             <label style={{ display:"flex" }} className='mt-2'>
             <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>

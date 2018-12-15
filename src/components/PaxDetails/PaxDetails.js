@@ -1114,16 +1114,15 @@ export default class componentName extends Component {
                 :''}
                  {this.state.rawPackage.length>0?
                 <div className='row mt-5'>
-                    <div className='col-sm-12 px-2'>
-                    <h2 className='CancelationPax border mx-1 p-2' style={{ margin:"0px" }}>PACKAGE</h2>
-                    {otherPax}
+                    <div className='col-sm-12'>
+                    <h2 className='CancelationPax border p-2' style={{ margin:"0px" }}>PACKAGE</h2>
+                    </div>
+                </div>    
+                  :''}
+                  {otherPax}
                     {this.state.isPaxInvalid?
                     <p style={{ color:"red" }}>Quota limit exceeds</p>:''
                     }
-                    
-                 </div>
-                </div>
-                  :''}
                  {CancelationPolicyPackage.length>0?   
                  <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
@@ -1135,13 +1134,14 @@ export default class componentName extends Component {
                 {packCount? 
                 <div className='row mt-5'>
                    {packCount}
-                    <div className='row px-2'>
+                    {/* <div className='row'> */}
                     {a?
                     this.state.currency?
                     a.map((item,i) => (
-                        <div className='col-sm-12' key = {i}>
+                        // <div className='row' key = {i}>
+                        <div className='col-sm-12'>
                         <h5 className='Meals mt-4 p-2 border' style={{ margin:"0px" }}>{item.name}</h5>
-                        {/* <hr/> */}
+                        {/* </div> */}
                         {
                             item.details.map((it,i) => (
                                 this.state.addProductsValue.map(x=> (
@@ -1166,7 +1166,7 @@ export default class componentName extends Component {
                     
                     :''
                     :''}
-                    </div>
+                    {/* </div> */}
                 </div>
                 :''}
                 {addDescText=='' || addDescCheck=='' || addDescCheck==''?
