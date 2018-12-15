@@ -423,6 +423,7 @@
   .include{
     list-style: none;
     text-transform: capitalize;
+    padding-left: 21px !important;
   }
   .include li:before {
     content: '';
@@ -432,12 +433,13 @@
     background-image: url('/images/check.png');
     background-size: contain;
     background-repeat: no-repeat;
-    margin-left: -42px;
+    margin-left: -22px;
     
 }
 .exclude{
   list-style: none;
   text-transform: capitalize;
+  padding-left: 21px !important;
 }
 .exclude li:before {
   content: '';
@@ -447,7 +449,7 @@
   background-image: url('/images/cross.png');
   background-size: contain;
   background-repeat: no-repeat;
-  margin-left: -42px;
+  margin-left: -22px;
 }
 .include>li {
   /* width: 103px;
