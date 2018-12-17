@@ -666,7 +666,7 @@ export default class componentName extends Component {
          else{
             var dataProm =
             {
-               "token": "popo11",
+               "token":this.props.token,
             //    "product_code": "A-09213790",
                "product_code": this.state.productCode,
                // "promo_code" : "MUSIAMO",
@@ -767,7 +767,7 @@ export default class componentName extends Component {
             paxData.push(pax_box);
             var dataProceeed = 
             {
-                "token": "popo11",
+                "token": this.props.token,
                 "name": name,
                 "phone" : phone,
                 "email" : email,

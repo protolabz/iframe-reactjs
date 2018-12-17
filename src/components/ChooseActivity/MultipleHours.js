@@ -213,6 +213,7 @@ export default class MultipleHours extends Component {
             quota={this.state.quota}
             used_quota={this.state.used_quota}
             descriptionText={this.props.descriptionText}
+            token={this.props.token}
         />:
            <div className='container mt-5 mb-5'>
            {this.state.isLoading?

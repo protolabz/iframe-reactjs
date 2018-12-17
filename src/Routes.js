@@ -14,8 +14,8 @@ export default class componentName extends Component {
     return (
         <Router>
             <Switch>
-                <Route exact path="/" component={ChooseActivity}/>
-                <Route path="/product-detail/:id" component={ActivityDetail}/>
+                <Route exact path="/:token" component={ChooseActivity}/>
+                <Route path="/product-detail/:id/:token" component={ActivityDetail}/>
                 <Route path="/select-hours/:params/:date" component={MultipleHours}/>
                 <Route path="/pax-details/:time/:date/:checked/:selected/:id" component={Paxdetails}/>
                 <Route path="/payment" component={Payment}/>

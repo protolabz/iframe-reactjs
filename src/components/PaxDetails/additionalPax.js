@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import './PaxDetails.css';
 
-class AdditionalPax extends Component {;
+class AdditionalPax extends Component {
     state = {
         value: 0, 
         disablebutton:false, 

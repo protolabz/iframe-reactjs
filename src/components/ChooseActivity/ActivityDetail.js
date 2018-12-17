@@ -8,6 +8,7 @@ import 'react-day-picker/lib/style.css';
 import PaxDetails from '../PaxDetails/PaxDetails';
 import MultipleHours from './MultipleHours';
 import Alert from 'react-s-alert';
+import swal from 'sweetalert';
 
 export default class ActivityDetail extends Component {
     state ={
@@ -41,10 +42,12 @@ export default class ActivityDetail extends Component {
      showModal:false,
      isLoading:true,
      quota:null,
-     used_quota:null
+     used_quota:null,
+     token:this.props.match.params.token
     }
 
     componentWillMount(){
+        // console.log(this.props.match.params.token);
         axios({
             method: 'get',
             url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.id}`,
@@ -293,7 +296,14 @@ export default class ActivityDetail extends Component {
                 else{
                     // console.log("else");
                     if(this.state.showError===false){
-                        this.setState({showError:true})
+                        // this.setState({showError:true})
+                        swal({
+                            title: "Alert",
+                            text: "Fields indicates with * are mandatory!",
+                            icon: "warning",
+                            button: true,
+                            dangerMode: true,
+                          })
                     }
                     
                 }
@@ -531,6 +541,7 @@ export default class ActivityDetail extends Component {
                 quota={this.state.quota}
                 used_quota={this.state.used_quota}
                 descriptionText={this.state.textValue}
+                token={this.state.token}
             />
         : (this.state.showMultipleHrs?
             <MultipleHours 
@@ -539,6 +550,7 @@ export default class ActivityDetail extends Component {
                 dateValue={this.state.OperationDateNormal.date} 
                 selectValue={this.state.selectValHeading}
                 descriptionText={this.state.textValue}
+                token={this.state.token}
             />
             :
       <div className='container mt-5 mb-5'>
