@@ -8,7 +8,8 @@ export default class componentName extends Component {
         bookingList:[],
         bookingListExpire:[],
         showVoucher:false,
-        transaction_code:null
+        transaction_code:null,
+        
     }
 
     componentWillMount(){
@@ -53,6 +54,7 @@ export default class componentName extends Component {
             })
         }
   render() {
+      console.log(this.state.transaction_code)
       let {bookingList,bookingListExpire} = this.state;
       let boList,boListE;
       function formatThousands(n, dp) {

@@ -18,7 +18,7 @@ export default class componentName extends Component {
             url: `https://api.trabo.co/partner/activity/transactions?email=${this.props.userEmail}`,
             })
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 var bLi =[],bLiE =[];
                 var list = res.data;
                 if(res.data.length>1){

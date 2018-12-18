@@ -130,6 +130,7 @@ export default class componentName extends Component {
           data:data
         })
         .then((res) => {
+            console.log(res);
             if(res.data.diagnostic.status===400){
                 this.setState({
                     isExpired:true,
