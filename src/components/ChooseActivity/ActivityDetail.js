@@ -561,7 +561,7 @@ export default class ActivityDetail extends Component {
                 <div className='col-sm-9 cols9-center mainOuterDiv'>
                 <div className='row mb-4'>
                     <div className='col-sm-12'>
-                        <NavLink to='/' className='Select-another-activ'><i className='fa fa-angle-left'> </i> Select another activity</NavLink>
+                        <NavLink to={`/${this.state.token}`} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Select another activity</NavLink>
                     </div>
                 </div>
                     <div className='row mb-3'>

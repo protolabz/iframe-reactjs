@@ -17,7 +17,7 @@ export default class ChooseActivity extends Component {
         // Get All List data using axios
         axios({
             method: 'get',
-            url: `https://api.trabo.co//partner/activity/${this.props.match.params.token}`,
+            url: `https://api.trabo.co/partner/activity/${this.props.match.params.token}`,
         })
             .then((res) => {
                 var details = res.data.response,first=[],second=[],third=[],listPro = [];

@@ -14,20 +14,32 @@ export default class componentName extends Component {
     componentWillMount(){
         axios({
             method: 'get',
-            // url: `https://api.trabo.co/partner/activity/transactions?email=jagdishprotolabz@gmail.com`,
+            // url: `https://api.trabo.co/partner/activity/transactions?email=umag@gmail.com`,
             url: `https://api.trabo.co/partner/activity/transactions?email=${this.props.userEmail}`,
             })
             .then((res) => {
+                console.log(res)
                 var bLi =[],bLiE =[];
                 var list = res.data;
-                list.map(x=>{
-                    if(x.status_name==='Paid'){
-                       bLi.push(x)
-                    }
-                    else{
-                        bLiE.push(x)
-                    }
-                })
+                if(res.data.length>1){
+                    list.map(x=>{
+                        if(x.status_name==='Paid'){
+                           bLi.push(x)
+                        }
+                        else{
+                            bLiE.push(x)
+                        }
+                    })
+                }
+                else{
+                    if(res.data[0].status_name==='Paid'){
+                        bLi.push(res.data[0])
+                     }
+                     else{
+                        bLi.push(res.data[0])
+                     }
+                }
+
                 this.setState({
                     bookingList:bLi,
                     bookingListExpire:bLiE

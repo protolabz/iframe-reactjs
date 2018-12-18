@@ -751,7 +751,6 @@ setActive = (value) => {
     window.location.reload()
  }
   render() {
- 
     let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
       briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName,location} = this.state;
     let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
