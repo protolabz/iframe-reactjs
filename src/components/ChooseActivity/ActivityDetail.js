@@ -457,7 +457,7 @@ export default class ActivityDetail extends Component {
            ))
        )
     }  
-
+    let includes=false, excludes = false;
     // Include Exclude Data
     if(include_exclude.length!==0){
     
@@ -471,7 +471,17 @@ export default class ActivityDetail extends Component {
                 item.type === 1 ? (<li key={item.id}>{item.description}</li>) : 
             ''
             ));
+            include_exclude.map((item,index) =>{
+                if(item.type===0){
+                        includes=true;
+                }
+                if(item.type===1){
+                        excludes=true;
+                }
+            });  
+
     }  
+
 
     //Additional Description
     if(additionalDesc.length!==''){
@@ -640,7 +650,7 @@ export default class ActivityDetail extends Component {
                             </div>
                           :''} 
                             {/* <div className='row mt-4'> */}
-                            {include_exclude.length>0?
+                            {includes?
                              <div className='col-sm-6'>
                                     <h5 className='Include mb-3'>INCLUDE</h5>
                                         <ul className='include'>
@@ -649,7 +659,7 @@ export default class ActivityDetail extends Component {
                                 </div>
                                 :''
                                 }
-                               {include_exclude.length>0?
+                               {excludes?
                                 <div className='col-sm-6'>
                                     <h5 className='Exclude mb-3'>EXCLUDE</h5>
                                     <ul className='exclude'>
