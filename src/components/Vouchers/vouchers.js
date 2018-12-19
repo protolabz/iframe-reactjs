@@ -978,10 +978,10 @@ setActive = (value) => {
                   <div className='row'>
                     <div className='col-6'>
                     {this.state.paymentType==='DEPOSIT' || this.state.paymentType==='REVERSE'?
-                     <h3 className='totalPaidTitle '> Paid <br/>
+                     <h3 className='totalPaidTitle '> PAID <br/>
                      (<span className='totalPaidTitleRed'>{this.state.paymentType}</span>)</h3>
                     :
-                    <h3 className='totalPaidTitle '> Paid <br/>
+                    <h3 className='totalPaidTitle '> PAID <br/>
                     (<span className='totalPaidTitleGreen'>{this.state.paymentType}</span>)</h3>
                     }
                       
