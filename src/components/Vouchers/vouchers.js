@@ -1004,7 +1004,7 @@ setActive = (value) => {
                     </div>
                   </div>
                   :''}
-                  <div className='row pt-3 borderDashed'>
+                  <div className='row pt-3 borderDashed px-2'>
                     {cancelationPolicy}
                  
                   </div>
