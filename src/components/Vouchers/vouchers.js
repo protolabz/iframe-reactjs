@@ -1293,11 +1293,11 @@ setActive = (value) => {
                     </div>
                     <div className='col-md-12 mt-5 text-center'>
                         <button className='confirm-payment' onClick={this.handleConfirmPayment}>Confirm Payment</button>
-                        {this.state.baknkTransferE?  
+                        {/* {this.state.baknkTransferE?  
                            <div className="alert alert-danger mt-3 mb-5" style={{ padding:"0.25rem 1.25rem",fontSize:"12px" }}>
                                <strong>Error!</strong> Please select one of the bank.
                             </div>:''
-                            }
+                            } */}
                     </div>
                     
                 </div>
