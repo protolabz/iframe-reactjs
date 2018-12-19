@@ -162,7 +162,7 @@
     font-weight: bold;
     font-style: normal;
     font-stretch: normal;
-    line-height: 32px;
+    /* line-height: 32px; */
     letter-spacing: normal;
     color: #aaaaaa;
   }
