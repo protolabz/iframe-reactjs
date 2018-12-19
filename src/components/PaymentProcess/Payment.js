@@ -697,7 +697,7 @@ export default class componentName extends Component {
             onClose={this.onCloseModal} 
             blockScroll={true}
             center>
-                <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
+                <iframe title="Of" height="450" style={{ width:"100%" }} id="sample-inline-frame" name="sample-inline-frame"> </iframe>
          </Modal>
          {this.state.isLoading?
             <img className='loading' src='/images/loading.svg' alt='loading'/>

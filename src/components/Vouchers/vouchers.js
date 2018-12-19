@@ -78,6 +78,7 @@ export default class componentName extends Component {
       url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
       })
       .then((res) => {
+          console.log(res)
         var data = res.data;
         let opDate = new Date(res.data.transaction.operation_date).toGMTString();
             let dts = (opDate.split(' '));
@@ -913,7 +914,7 @@ setActive = (value) => {
             onClose={this.onCloseModal} 
             blockScroll={true}
             center>
-                <iframe title="Of" height="450" width="550" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
+                <iframe title="Of" style={{ width:"100%" }} height="450" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
          </Modal>
          
           <div className='col-md-9 cols9-center mainOuterDiv' >
