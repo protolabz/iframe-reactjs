@@ -108,7 +108,7 @@ export default class componentName extends Component {
             leadPaxName:data.customer.name,
             paymentType:data.total_status,
             paxText:data.pax_text,
-            totalPaid:data.transaction.total_price,
+            totalPaid:data.transaction.paid_amount,
             due:data.transaction.due,
             expirationDate:finalExDate,
             cancelationPolicyPack:data.cancellation_policy.cancellation_policy_package,
