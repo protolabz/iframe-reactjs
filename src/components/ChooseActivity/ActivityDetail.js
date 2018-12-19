@@ -619,8 +619,7 @@ export default class ActivityDetail extends Component {
                             :''}
                             </div>
 
-                   
-                    <div className='col-sm-5 calendarOuter'>
+                        <div className='col-sm-5 calendarOuter d-none d-xs-none d-sm-none d-md-block'>
                         <p className='pickDate'>PICK A DATE</p>
                         <DayPicker 
                             initialMonth={new Date()} 
@@ -634,13 +633,6 @@ export default class ActivityDetail extends Component {
                         <div className='cardParent'>
                             {oTime}
                         </div>
-                          {/* {nextBtn} */}
-                          {
-                              this.state.showError?
-                              <p style={{ padding:"10px" }} className='alert-danger mt-4'>Note- Fields with * are mandatory.</p>
-                              :''
-                          }
-                          
                         </div>
                         <div className='row mx-2'>
                           {detail_product.brief_description!==''?
@@ -693,7 +685,21 @@ export default class ActivityDetail extends Component {
                             <p className='specialText'>{product.spesial_note}</p>
                             </div>
                             :''}
-                             
+                        <div className='col-sm-12 d-xs-block d-sm-block d-md-none'>
+                        <p className='pickDate'>PICK A DATE</p>
+                        <DayPicker 
+                            initialMonth={new Date()} 
+                            fromMonth={new Date()}
+                            selectedDays={sDays}
+                            onDayClick={this.handleDayClick}
+                            onDayMouseEnter={this.handleMouseHover}
+                            onDayMouseLeave={this.onDayMouseLeave}
+                            disabledDays={hDays}
+                        />
+                        <div className='cardParent'>
+                            {oTime}
+                        </div>
+                        </div>
                         </div>
                         </div>
                         
