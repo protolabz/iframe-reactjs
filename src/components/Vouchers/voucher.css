@@ -66,7 +66,7 @@
 }
 .location span {
     display:block;
-    padding-left:25px;
+    padding-left:14px;
 }
 .location:before{
     content:'\f041';
@@ -90,7 +90,7 @@
 }
 .contactDetail span {
     display:block;
-    padding-left:15px;
+    padding-left:14px;
 }
 .contactDetail:before{
     content:'\f095';
@@ -202,10 +202,10 @@
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  text-align: right;
+  text-align: left !important;
   color: #4f4f4f;
   text-align: center;
-  width: 100%;
+  width: 95%;
 }
 .borderDashed{
     border-top: 1px dashed #cccccc;

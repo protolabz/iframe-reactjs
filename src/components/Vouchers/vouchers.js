@@ -936,10 +936,10 @@ setActive = (value) => {
                    {this.state.address?<p className='location my-4'><span>{this.state.address}</span></p>:''}
                   
                   <div className='row mt-md-2'>
-                    <div className='col-5'>
+                    <div className='col-sm-5'>
                       <p className='contactDetail'><span>{this.state.companyPhone}</span></p>
                     </div>
-                    <div className='col-7 p-0'>
+                    <div className='col-sm-7'>
                       <p className='contactDetailEmail'><span>{this.state.companyEmail}</span></p>
                     </div>
                   </div>
