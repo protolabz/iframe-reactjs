@@ -78,7 +78,7 @@ export default class componentName extends Component {
       url: `https://api.trabo.co/partner/activity/payment?transaction_code=${this.props.transaction_code}`,
       })
       .then((res) => {
-          console.log(res)
+        //   console.log(res)
         var data = res.data;
         let opDate = new Date(res.data.transaction.operation_date).toGMTString();
             let dts = (opDate.split(' '));
@@ -977,16 +977,14 @@ setActive = (value) => {
                   </div>
                   <div className='row'>
                     <div className='col-6'>
-                    {this.state.paymentType==='DEPOSIT' || this.state.paymentType==='REVERSE'?
+                    {this.state.paymentType==='DEPOSIT' || this.state.paymentType==='RESERVE'?
                      <h3 className='totalPaidTitle '> PAID <br/>
                      (<span className='totalPaidTitleRed'>{this.state.paymentType}</span>)</h3>
                     :
                     <h3 className='totalPaidTitle '> PAID <br/>
                     (<span className='totalPaidTitleGreen'>{this.state.paymentType}</span>)</h3>
                     }
-                      
-                      
-                      {/* <h3 className='transId'>{this.props.transaction_code}</h3> */}
+
                       
                     </div>
                     <div className='col-6'>
@@ -994,7 +992,7 @@ setActive = (value) => {
                       <h3 className='totalPaidValue text-right'>IDR {formatThousands(this.state.totalPaid)}</h3>
                     </div>
                   </div>
-                  {this.state.paymentType==='DEPOSIT'?
+                  {this.state.paymentType==='DEPOSIT' || this.state.paymentType==='RESERVE'?
                   <div className='row'>
                     <div className='col-6'>
                       <h3 className='totalPaidTitle '> REMAINING </h3>

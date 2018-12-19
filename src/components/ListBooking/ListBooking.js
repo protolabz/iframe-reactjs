@@ -74,10 +74,10 @@ export default class componentName extends Component {
                         <h4 className='paxDet pt-2'><span className='paxDetLight'>for </span>{x.paxes}</h4>
                     </div>
                     <div className='col-5 text-right'>
-                        {x.due>0?
-                        <h4 className="totalText">Total (<span className='totalPaidRed'>DEPOSIT</span>)</h4>
+                    {x.due>0?
+                        <h4 className="totalText">PAID (<span className='totalPaidRed'>{x.status_name}</span>)</h4>
                         :
-                        <h4 className="totalText">Total (<span className='totalPaidGreen'>PAID</span>)</h4>
+                        <h4 className="totalText">PAID (<span className='totalPaidGreen'>{x.status_name}</span>)</h4>
                         }
                         <h4 className='totalAmt'>IDR {formatThousands(x.paid_amount)}</h4>
                         {x.due>0?
@@ -117,10 +117,10 @@ export default class componentName extends Component {
                         <h4 className='paxDet pt-2'><span className='paxDetLight'>for</span>{x.paxes}</h4>
                     </div>
                     <div className='col-5 text-right'>
-                        {x.due>0?
-                        <h4 className="totalText">Total (<span className='totalPaidRed'>DEPOSIT</span>)</h4>
+                    {x.due>0?
+                        <h4 className="totalText">PAID (<span className='totalPaidRed'>{x.status_name}</span>)</h4>
                         :
-                        <h4 className="totalText">Total (<span className='totalPaidGreen'>PAID</span>)</h4>
+                        <h4 className="totalText">PAID (<span className='totalPaidGreen'>{x.status_name}</span>)</h4>
                         }
                         <h4 className='totalAmt'>IDR {formatThousands(x.paid_amount)}</h4>
                         {x.due>0?
