@@ -904,7 +904,7 @@ setActive = (value) => {
             />
             // </div>
             :
-        <div className="container mt-5 mb-5">
+        <div className="container mt-5 mb-5 px-0">
          <Modal 
             open={this.state.showModal} 
             closeOnEsc={false} 

@@ -1288,7 +1288,12 @@ export default class componentName extends Component {
                                 <h5 className='subTotalText'>TOTAL ({this.state.total_frontend_count})</h5>
                             </div>
                             <div className='col-6'>
-                                <h5 className='subTotalValLight'>{currency}<span className='totalAmtText'>&nbsp;&nbsp;{formatThousands(this.state.total_frontend)}</span></h5>
+                                <h5 className='subTotalValLight'>
+                                {currency}
+                                <span className='totalAmtText'>
+                                &nbsp;&nbsp;{formatThousands(this.state.total_frontend)}
+                                </span>
+                                </h5>
                             </div>                        
                         </div>  
                         <div className='row mt-4'>
@@ -1297,7 +1302,7 @@ export default class componentName extends Component {
                             </div>                        
                         </div>
                         <div className='row mt-3'>
-                            <div className='col-6'>
+                            <div className='col-sm-6'>
                             <label htmlFor="defaultUnchecked" className='cstmLabel'>
                             <div className='row checkBoxDiv'>
                                 <div className='col-3'>
@@ -1314,7 +1319,7 @@ export default class componentName extends Component {
                             </div>  
                             </label>  
                             </div>
-                            <div className='col-6'>
+                            <div className='col-sm-6'>
                             {this.state.minimum_deposit>0?
                             <label htmlFor="defaultUncheckeds" className='cstmLabel'>
                                 <div className='row checkBoxDiv'>
