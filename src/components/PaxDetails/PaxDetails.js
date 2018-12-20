@@ -1041,7 +1041,7 @@ export default class componentName extends Component {
             total_frontend_count={this.state.total_frontend_count}
         />
         :
-      <div className='container mt-5 mb-5'>
+      <div className='container-fluid mt-5 mb-5'>
       {this.state.isLoading?
       <img className='loading' src='/images/loading.svg' alt='loading'/>
         :

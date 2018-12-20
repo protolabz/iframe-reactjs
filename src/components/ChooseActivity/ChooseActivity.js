@@ -108,7 +108,7 @@ export default class ChooseActivity extends Component {
         );
     }   
     return (
-      <div className='container noPadding mainOuterDiv'>
+      <div className='container-fluid'>
        {this.state.isLoading?
             <img className='loading' src='/images/loading.svg' alt='loading'/>
         :

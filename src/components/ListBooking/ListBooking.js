@@ -169,7 +169,7 @@ export default class componentName extends Component {
              transaction_code = {this.state.transaction_code}
             />
             :
-        <div className="container mt-5 mb-5">
+        <div className="container-fluid mt-5 mb-5">
             
             <div className='col-md-9 cols9-center mainOuterDiv' >
                 <div className='row'>

@@ -563,7 +563,7 @@ export default class ActivityDetail extends Component {
                 token={this.state.token}
             />
             :
-      <div className='container mt-5 mb-5'>
+      <div className='container-fluid mt-5 mb-5'>
             {this.state.isLoading?
                 <img className='loading' src='/images/loading.svg' alt='loading'/>
             :

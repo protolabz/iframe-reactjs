@@ -687,7 +687,7 @@ export default class componentName extends Component {
 
     return (
 
-        <div className="container mt-5 mb-5">
+        <div className="container-fluid mt-5 mb-5">
  
         <Modal 
             open={this.state.showModal} 
