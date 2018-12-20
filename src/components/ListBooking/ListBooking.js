@@ -23,11 +23,11 @@ export default class componentName extends Component {
                 var list = res.data;
                 if(res.data.length>1){
                     list.map(x=>{
-                        if(x.status_name==='Paid' || x.status_name==='Deposit'){
-                           bLi.push(x)
+                        if(x.status_name==='Expired'){
+                            bLiE.push(x)
                         }
                         else{
-                            bLiE.push(x)
+                            bLi.push(x)
                         }
                     })
                 }
