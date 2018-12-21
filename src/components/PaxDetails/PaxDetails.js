@@ -533,7 +533,7 @@ export default class componentName extends Component {
             
             standardPax.map(x=>{
                 if(x.name==='ADULT'){
-                    adult=x.qty;
+                    adult=x.qty;    
                 }
                 if(x.name==='CHILD'){
                     children=x.qty;
@@ -568,7 +568,7 @@ export default class componentName extends Component {
                     for(let i=0;i<=addProductsValueQuota.length-1;i++){
                         if(addProductsValueQuota[i].value>addProductsValueQuota[i].max_per_booking){
                             this.setState({quotaE:true});
-                            console.log(addProductsValueQuota[i].value+">"+addProductsValueQuota[i].max_per_booking);
+                            // console.log(addProductsValueQuota[i].value+">"+addProductsValueQuota[i].max_per_booking);
                                 }
                             }
                         }

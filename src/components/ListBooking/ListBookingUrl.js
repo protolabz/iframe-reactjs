@@ -56,13 +56,14 @@ export default class componentName extends Component {
   render() {
     //   console.log(this.state.transaction_code)
       let {bookingList,bookingListExpire} = this.state;
+
       let boList,boListE;
       function formatThousands(n, dp) {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
         while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
         return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
       }
-      if(bookingList.length!==0){
+      if(bookingList.length>0){
         boList =(
             bookingList.map((x,index)=>(
                 <div key={index}>
@@ -72,7 +73,7 @@ export default class componentName extends Component {
                     <div className='col-7'>
                         <h4 className="opDate">{x.operation_date}</h4>
                         <h4 className='proTitle pt-2'>{x.product_name}</h4>
-                        <h4 className='paxDet pt-2'><span className='paxDetLight'>{x.paxes? 'for': ''} </span>{x.paxes} {x.item}</h4>
+                        <h4 className='paxDet pt-2'><span className='paxDetLight'>for </span>{x.pax_text} {x.item_text}</h4>
                     </div>
                     <div className='col-5 text-right'>
                     {x.due>0?
@@ -115,7 +116,7 @@ export default class componentName extends Component {
                     <div className='col-7'>
                         <h4 className="opDate">{x.operation_date}</h4>
                         <h4 className='proTitle pt-2'>{x.product_name}</h4>
-                        <h4 className='paxDet pt-2'><span className='paxDetLight'>{x.paxes? 'for': ''} </span>{x.paxes} {x.item}</h4>
+                        <h4 className='paxDet pt-2'><span className='paxDetLight'>for </span>{x.pax_text} {x.item_text}</h4>
                     </div>
                     <div className='col-5 text-right'>
                         {x.due>0?
