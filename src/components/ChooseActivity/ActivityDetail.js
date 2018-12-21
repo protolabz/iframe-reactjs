@@ -469,10 +469,10 @@ export default class ActivityDetail extends Component {
                  <div className='col-sm-8 col-xs-8 px-1'>
                  <p className='participants'>{item.description} 
                  <br/>
-                <span style={{ fontSize:"10px",textTransform:"capitalize" }}>Maximum : {item.max_per_booking} PAX</span>
+                <span style={{ fontSize:"10px",textTransform:"capitalize" }}>Maximum : {item.max_per_booking} {item.pricing_type}</span>
                  </p>
                  </div>
-                 <div className='col-sm-4 col-xs-4 px-1'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
+                 <div className='col-sm-4 col-xs-4 px-1' style={{ textTransform:"capitalize" }}><p className='currency'>IDR {formatThousands(item.amount)}/{item.pricing_type}</p></div>
              </div>
              :''
             ))
