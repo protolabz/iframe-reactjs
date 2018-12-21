@@ -17,6 +17,7 @@ export default class componentName extends Component {
     userEmail:null,
     userPhone:null,
     paxText:null,
+    itemText:'',
     operationDate:null,
     opertaionTime:null,
     productName:null,
@@ -108,6 +109,7 @@ export default class componentName extends Component {
             leadPaxName:data.customer.name,
             paymentType:data.total_status,
             paxText:data.pax_text,
+            itemText:data.item_text,
             totalPaid:data.transaction.paid_amount,
             due:data.transaction.due,
             expirationDate:finalExDate,
@@ -949,7 +951,7 @@ setActive = (value) => {
                 <div className='col-md-6 voucherOrange p-4'>
                    <h3 className='operationDate'>{this.state.operationDate+" — "+this.state.operationTime}</h3>
                    <h3 className='productTitle'>{this.state.productName}</h3>
-                   <p className='paxDetails'><span className='paxDetailsBold'>{this.state.paxText}</span></p>
+                   <p className='paxDetails'><span className='paxDetailsBold'>{this.state.paxText} {this.state.itemText}</span></p>
                    {this.state.address?<p className='location my-4'><span>{this.state.address}</span></p>:''}
                   
                   <div className='row mt-md-2'>

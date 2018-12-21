@@ -72,7 +72,7 @@ export default class componentName extends Component {
                     <div className='col-7'>
                         <h4 className="opDate">{x.operation_date}</h4>
                         <h4 className='proTitle pt-2'>{x.product_name}</h4>
-                        <h4 className='paxDet pt-2'><span className='paxDetLight'>for </span>{x.paxes}</h4>
+                        <h4 className='paxDet pt-2'><span className='paxDetLight'>{x.paxes? 'for': ''} </span>{x.paxes} {x.item}</h4>
                     </div>
                     <div className='col-5 text-right'>
                     {x.due>0?
@@ -115,7 +115,7 @@ export default class componentName extends Component {
                     <div className='col-7'>
                         <h4 className="opDate">{x.operation_date}</h4>
                         <h4 className='proTitle pt-2'>{x.product_name}</h4>
-                        <h4 className='paxDet pt-2'><span className='paxDetLight'>for</span>{x.paxes}</h4>
+                        <h4 className='paxDet pt-2'><span className='paxDetLight'>{x.paxes? 'for': ''} </span>{x.paxes} {x.item}</h4>
                     </div>
                     <div className='col-5 text-right'>
                         {x.due>0?
