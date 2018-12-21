@@ -128,9 +128,11 @@ export default class componentName extends Component {
   }
 
   componentWillMount(){
+      let timeVal = this.props.timeValue;
+      timeVal = timeVal.replace(/-/g,' ');
     axios({
       method: 'get',
-      url: `https://api.trabo.co/partner/activity/detail/${this.props.productId}`, 
+      url: `https://api.trabo.co/partner/activity/detail/${this.props.productId}?date=${this.props.dateValue}&&time=${timeVal}&&multi=true`, 
     //   url: `https://api.trabo.co/partner/activity/detail/${this.props.productId}?date=${this.props.dateValue}&time=${this.props.timeValue}`,
     //  url: `https://api.trabo.co/partner/activity/detail/A-09213790`,
       })
