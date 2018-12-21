@@ -1271,7 +1271,12 @@ setActive = (value) => {
                         <div id="retailTransfer" className="container tab-pane px-md-5 px-sm-0">
                             <div className='row'>
                                 <div className='col-md-12 my-5 border-bottom'>
-                                    <img src='/images/alfa.jpg' alt='alpha'/>
+                                <p className="bankImage custom-radio" data-toggle="collapse" data-target="#bni" data-parent="#bankTransfers">
+                                    <input type='radio' className='custom-control-input' value={'ALFAMART'} checked='true' name='checkRetail' id='checkAlfa'/>
+                                        <label htmlFor='checkBni' className='custom-control-label'> 
+                                        <img src='/images/alfa.jpg' alt='alpha'/>
+                                    </label>
+                                </p>   
                                 </div>
                                 
                                 <div className='col-md-12'>
