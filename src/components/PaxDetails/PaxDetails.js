@@ -1062,37 +1062,6 @@ export default class componentName extends Component {
 
           <div className='row mb-3 mx-2'>
               <div className='col-sm-12'>
-              <h1 className='PAX-Details mb-4'>PAX Details</h1>
-                <div className='row'>
-                <div className='col-sm-6 mb-3'>
-                <label className='Name'>NAME <i className='fa fa-asterisk requiredField'></i></label>
-                  <input ref={el => this.nameValue=el} value={this.state.name}  onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' id={this.state.nameE===true?'errorBorder':''}/>
-                  {this.state.nameE===true?<p class='errorText'> only a-z , A-Z and (- , _ ) Allowed</p>:''}
-                </div>
-                <div className='col-sm-6 mb-3'>
-                <label className='Name'>E-MAIL <i className='fa fa-asterisk requiredField'></i></label>
-                  <input ref={el => this.nameValue=el}  onChange={this.handleChangeEmail} type='email' name='email' className='Text-Box mt-2 mb-3 emailTrans' id={this.state.emailE===true?'errorEmail':''}/>
-                  {this.state.emailE===true?<p class='errorText'> e-mail address should be valid</p>:''}
-                </div>
-                </div>
-                <label className='Name'>PHONE NUMBER <i className='fa fa-asterisk requiredField'></i></label>
-                <div className='row'>
-                  <div className='col-sm-6 pr-3'>
-                        <IntlTelInput 
-                        fieldName='mobile'
-                        value={this.state.mobileNumber}
-                        id={this.state.phoneE===true?'errorPhone':''}
-                        placeholder={''}
-                        style={this.state.phoneE===true?errorPhone:'' }
-                        onPhoneNumberChange={ this.handler }
-                        onPhoneNumberBlur={ this.handler }
-                            preferredCountries={['id']}
-                            css={ ['intl-tel-input', 'form-control'] }
-                            utilsScript={ 'libphonenumber.js' } 
-                        />
-                    {this.state.phoneE===true?<p class='errorText'> Phone number should be valid</p>:''}
-                  </div>
-                </div>
                  {haveStandardPax?
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
@@ -1126,7 +1095,7 @@ export default class componentName extends Component {
                  {CancelationPolicyPackage.length>0?   
                  <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
-                        <h2 className='CancelationPax'>CANCELATION POLICY PACKAGE</h2>
+                        <h2 className='CancelationPax'>CANCELATION POLICY</h2>
                     </div>
                     {CancelationPolicyPackage}
                 </div>
@@ -1169,6 +1138,40 @@ export default class componentName extends Component {
                     {/* </div> */}
                 </div>
                 :''}
+
+                <h1 className='PAX-Details mb-4 mt-4'>PAX Details</h1>
+                <div className='row'>
+                <div className='col-sm-6 mb-3'>
+                <label className='Name'>NAME <i className='fa fa-asterisk requiredField'></i></label>
+                  <input ref={el => this.nameValue=el} value={this.state.name}  onChange={this.handleChangeName} type='text' name='name' className='Text-Box mt-2 mb-3' id={this.state.nameE===true?'errorBorder':''}/>
+                  {this.state.nameE===true?<p class='errorText'> only a-z , A-Z and (- , _ ) Allowed</p>:''}
+                </div>
+                <div className='col-sm-6 mb-3'>
+                <label className='Name'>E-MAIL <i className='fa fa-asterisk requiredField'></i></label>
+                  <input ref={el => this.nameValue=el}  onChange={this.handleChangeEmail} type='email' name='email' className='Text-Box mt-2 mb-3 emailTrans' id={this.state.emailE===true?'errorEmail':''}/>
+                  {this.state.emailE===true?<p class='errorText'> e-mail address should be valid</p>:''}
+                </div>
+                </div>
+                <label className='Name'>PHONE NUMBER <i className='fa fa-asterisk requiredField'></i></label>
+                <div className='row'>
+                  <div className='col-sm-6 pr-3'>
+                        <IntlTelInput 
+                        fieldName='mobile'
+                        value={this.state.mobileNumber}
+                        id={this.state.phoneE===true?'errorPhone':''}
+                        placeholder={''}
+                        style={this.state.phoneE===true?errorPhone:'' }
+                        onPhoneNumberChange={ this.handler }
+                        onPhoneNumberBlur={ this.handler }
+                            preferredCountries={['id']}
+                            css={ ['intl-tel-input', 'form-control'] }
+                            utilsScript={ 'libphonenumber.js' } 
+                        />
+                    {this.state.phoneE===true?<p class='errorText'> Phone number should be valid</p>:''}
+                  </div>
+                </div>
+
+
                 {addDescText=='' || addDescCheck=='' || addDescCheck==''?
                 ''
                 : 

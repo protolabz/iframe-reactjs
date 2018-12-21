@@ -284,6 +284,7 @@ export default class componentName extends Component {
                   data:data
                 })
                 .then((res) => {
+                    console.log(res)
                     if(res.data.diagnostic.status===200){
                         swal({
                             title: "Success",
@@ -317,6 +318,22 @@ export default class componentName extends Component {
                           });
                     }
                 })
+                .catch(function (err) {
+                    swal({
+                        title: "Error!",
+                        text: "Incorrect password",
+                        icon: "warning",
+                        button: true,
+                        dangerMode: true,
+                      })
+                      .then((willDelete) => {
+                        if (willDelete) {
+                            this.setState({
+                                isDisablePayment:false
+                            })
+                        }
+                      });
+                  });
         }
     }
 
@@ -363,8 +380,8 @@ export default class componentName extends Component {
             } 
           });
         //   console.log(requestData);
-        // console.log(err);
-        // console.log(requestData);
+        console.log(err);
+        console.log(requestData);
     }
     xenditResponseHandler (err, creditCardToken) {
         if (err) {

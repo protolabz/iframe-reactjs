@@ -15,6 +15,7 @@ export default class ActivityDetail extends Component {
      detail_product:[],
      locations:[],
      rates_pax_package:[],
+     rates_additional_product:[],
      include_exclude:[],
      pax_details:[],
      additionalDesc:[],
@@ -80,6 +81,7 @@ export default class ActivityDetail extends Component {
                     detail_product:res.data.response.detail_product,
                     product:res.data.response.product,
                     rates_pax_package:res.data.response.detail_product.rates_pax_package,
+                    rates_additional_product:res.data.response.detail_product.rates_additional_product,
                     include_exclude:res.data.response.detail_product.include_exclude,
                     locations:res.data.response.detail_product.location,
                     pax_details:res.data.response.product.additional_description.pax_details,
@@ -342,7 +344,9 @@ export default class ActivityDetail extends Component {
 
 
   render() {  
-      let {OperationDate,holidaysRows,detail_product,product,locations,rates_pax_package,include_exclude,additionalDesc,bannerImg,dates,OperationTime} = this.state;
+      let {OperationDate,holidaysRows,detail_product,product,locations,
+            rates_pax_package,rates_additional_product,include_exclude,
+            additionalDesc,bannerImg,dates,OperationTime} = this.state;
       let mainCity;
       let locs;
       let rates;
@@ -357,7 +361,7 @@ export default class ActivityDetail extends Component {
       let hDays =[];
       let hNames = [];
       let oTime;
-      var hol;
+      var hol,ratesAdditional;
       var fullYear = new Date().getFullYear();
       let lastYear = fullYear - 1;
       let quota = product.quota - product.used_quota;
@@ -434,13 +438,13 @@ export default class ActivityDetail extends Component {
 
     }
 
+    function formatThousands(n, dp) {
+        var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
+        while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
+        return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
+      }
     //Rates Data
     if(rates_pax_package.length!==0){
-        function formatThousands(n, dp) {
-            var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
-            while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
-            return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
-          }
        rates = (
            rates_pax_package.map((item,index) => (
                item.amount>0?
@@ -457,6 +461,23 @@ export default class ActivityDetail extends Component {
            ))
        )
     }  
+    if(rates_additional_product.length>0){
+        ratesAdditional = (
+            rates_additional_product.map((item,index) => (
+                item.amount>0?
+             <div className='row px-3' key={item.description}>
+                 <div className='col-sm-8 col-xs-8 px-1'>
+                 <p className='participants'>{item.description} 
+                 <br/>
+                <span style={{ fontSize:"10px",textTransform:"capitalize" }}>Maximum : {item.max_per_booking} PAX</span>
+                 </p>
+                 </div>
+                 <div className='col-sm-4 col-xs-4 px-1'><p className='currency'>IDR {formatThousands(item.amount)}</p></div>
+             </div>
+             :''
+            ))
+        )
+    }
     let includes=false, excludes = false;
     // Include Exclude Data
     if(include_exclude.length!==0){
@@ -607,6 +628,7 @@ export default class ActivityDetail extends Component {
                             <h5 className='Rates mb-4 mt-5'>RATES</h5>
                             :''}
                             {rates}
+                            {ratesAdditional}
                             <hr />
 
                             {incidence?

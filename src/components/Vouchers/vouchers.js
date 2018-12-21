@@ -534,6 +534,22 @@ displaySuccess (creditCardToken) {
                       });
                 }
             })
+            .catch(function (err) {
+                swal({
+                    title: "Error!",
+                    text: "Incorrect password",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true,
+                  })
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        this.setState({
+                            isDisablePayment:false
+                        })
+                    }
+                  });
+              });
     }
 }
 
