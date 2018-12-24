@@ -1094,14 +1094,6 @@ export default class componentName extends Component {
                     {this.state.isPaxInvalid?
                     <p style={{ color:"red" }}>Quota limit exceeds</p>:''
                     }
-                 {CancelationPolicyPackage.length>0?   
-                 <div className='row mt-4'>
-                    <div className='col-sm-12 px-0'>
-                        <h2 className='CancelationPax'>CANCELATION POLICY</h2>
-                    </div>
-                    {CancelationPolicyPackage}
-                </div>
-                :''}
                 {packCount? 
                 <div className='row mt-5'>
                    {packCount}
@@ -1140,7 +1132,14 @@ export default class componentName extends Component {
                     {/* </div> */}
                 </div>
                 :''}
-
+                {CancelationPolicyPackage.length>0?   
+                 <div className='row mt-4'>
+                    <div className='col-sm-12 px-0'>
+                        <h2 className='CancelationPax'>CANCELATION POLICY</h2>
+                    </div>
+                    {CancelationPolicyPackage}
+                </div>
+                :''}
                 <h1 className='PAX-Details mb-4 mt-4'>PAX Details</h1>
                 <div className='row'>
                 <div className='col-sm-6 mb-3'>

@@ -112,7 +112,7 @@ export default class ChooseActivity extends Component {
        {this.state.isLoading?
             <img className='loading' src='/images/loading.svg' alt='loading'/>
         :
-        <div className='row'>
+        <div className='row' style={{ marginLeft:"0px",marginRight:"0px" }}>
             <div className='col-sm-8 offset-sm-2 noPadding'>
                 {firstPro}
                 <br/>
