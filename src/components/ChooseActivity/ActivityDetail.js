@@ -586,7 +586,11 @@ export default class ActivityDetail extends Component {
             :
       <div className='container-fluid mt-5 mb-5'>
             {this.state.isLoading?
-                <img className='loading' src='/images/loading.svg' alt='loading'/>
+                <div className='row'>
+                    <div className='col-md-1 offset-md-5'>
+                        <img className='loading' src='/images/loading.svg' alt='loading'/>
+                    </div>
+                </div>
             :
             <div className='row'>
                 <div className='col-sm-9 cols9-center mainOuterDiv'>
