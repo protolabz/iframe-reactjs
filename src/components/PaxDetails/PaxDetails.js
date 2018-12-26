@@ -52,6 +52,7 @@ export default class componentName extends Component {
      dateValue:null,
      max_per_booking:0,
      min_per_booking:0,
+     maxQuota:this.props.maxQuota,
      quota:this.props.quota,
      used_quota:this.props.used_quota,
      packageValues:[],
@@ -119,6 +120,7 @@ export default class componentName extends Component {
      showPaymentPage:false,
      standardPaxMAx:0,
      standardPaxMAx1:0,
+     balance_pax:0,
      isDeposit:false,
      depositValue:0,
      total_frontend_count:'',
@@ -180,14 +182,14 @@ export default class componentName extends Component {
               maxBook = res.data.response.product.max_per_booking,
             //   quota = res.data.response.product.quota,
                 quota = this.props.quota,
-                usedQuota = this.props.used_quota, finalQuota;
+                usedQuota = this.props.used_quota, finalQuota = this.props.maxQuota;
             //   usedQuota = res.data.response.product.used_quota, finalQuota;
-              quota  = quota - usedQuota;
-              if(quota<maxBook){
-                finalQuota = quota
-              }else{
-                finalQuota = maxBook
-              }
+            //   quota  = quota - usedQuota;
+            //   if(quota<maxBook){
+            //     finalQuota = quota
+            //   }else{
+            //     finalQuota = maxBook
+            //   }
               var textDesc = res.data.response.product.additional_description.pax_details;
               let descriptionWithText=[];
               textDesc.map(x=>{
@@ -214,6 +216,7 @@ export default class componentName extends Component {
               cancellation_policy_pax:res.data.response.product.cancellation_policy.cancellation_policy_pax,
               cancellation_policy_package:res.data.response.product.cancellation_policy.cancellation_policy_package,
               currency:res.data.diagnostic.currency,
+              balance_pax:res.data.response.product.balance_pax,
               max_per_booking:res.data.response.product.max_per_booking,
               min_per_booking:res.data.response.product.min_per_booking,
               rawAddPR:rawAddProduct,
@@ -330,8 +333,7 @@ export default class componentName extends Component {
   }
   handleCountValuesIncrement =(name,data,count) =>{
     // this.forceUpdate();
-    // console.log(name);
-      var max=this.state.standardPaxMAx;
+    var max=this.state.balance_pax;
       var staData = [this.state.standardPax];
       var val=0;
       var qtyAdult=0;
@@ -889,6 +891,8 @@ export default class componentName extends Component {
                 currency={this.state.currency}
                 usedQuota={this.state.used_quota} 
                 quota={this.state.quota} 
+                balance_pax={this.state.balance_pax}
+                balance_package={item.balance_package} 
                 maxPerBook ={item.max_per_booking}
                 countValuesIncre= {this.handleCountValuesIncrement}
                 countValuesDecre = {this.handleCountValuesDecrement}
@@ -914,7 +918,9 @@ export default class componentName extends Component {
         addiValue={0}
         totalPax={paxTotal}
         currency={this.state.currency}
-        usedQuota={item.used_quota} 
+        usedQuota={item.used_quota}
+        balance_pax={this.state.balance_pax}
+        balance_package={item.balance_package}  
         quota={item.quota} 
         maxPerBook ={item.max_per_booking}
         countValuesIncre= {this.handleCountValuesIncrement}
@@ -1071,7 +1077,7 @@ export default class componentName extends Component {
                  {haveStandardPax?
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
-                        <h1 className='PAX-Details mt-4'>Tickets (Max {finalQuota})</h1>
+                        <h1 className='PAX-Details mt-4'>Tickets (Max {this.state.balance_pax})</h1>
                     </div>
                  </div>
                  :''}
@@ -1121,7 +1127,8 @@ export default class componentName extends Component {
                                         currency={this.state.currency} 
                                         usedQuota={it.used_quota} 
                                         quota={it.quota} 
-                                        maxPerBook ={it.max_per_booking} 
+                                        maxPerBook ={it.max_per_booking}
+                                        balance_additional ={it.balance_additional} 
                                         data={a}>
                                     </AdditionalData>  
                                 ))

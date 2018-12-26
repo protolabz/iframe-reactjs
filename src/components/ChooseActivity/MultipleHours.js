@@ -13,6 +13,7 @@ export default class MultipleHours extends Component {
         selectedDate:null,
         showPaxPage:false,
         showActivityDetail:false,
+        maxQuota:null,
         isLoading:true
     }
 
@@ -49,14 +50,13 @@ export default class MultipleHours extends Component {
 
 
     }
-    handleCurrentDay = (d,t,quota,used_quota) => {
+    handleCurrentDay = (d,t,maxQuota) => {
         t = t.replace(/ /g,'-');
         this.setState({
             selectedTime:t,
             selectedDate:d,
             showPaxPage:true,
-            quota:quota,
-            used_quota:used_quota
+            maxQuota:maxQuota,
         })
         // window.location = `/pax-details/${t}/${d}/boxvalue/selectValue/${this.props.match.params.params}`
     }
@@ -142,14 +142,17 @@ export default class MultipleHours extends Component {
                         <div className='bookingCardCurrent'>
                             <span>{item.time} <br/>
                             {
-                              item.quota-item.used_quota>0?
-                              <span className='quota-left-multiple'>{item.quota-item.used_quota} left</span>
+                              item.balance>0?
+                              <span className='quota-left-multiple'>{item.balance} left</span>
+                              
                             :''}  
                             </span>
                             {
-                              item.quota-item.used_quota>0?
-                            <button onClick={() => this.handleCurrentDay(CopyPrevDate,item.time,item.quota,item.used_quota)} className='hourlyBookBtn'>Book</button>
-                            :''}
+                              item.balance>0?
+                            <button onClick={() => this.handleCurrentDay(CopyPrevDate,item.time,item.balance)} className='hourlyBookBtn'>Book</button>
+                            :
+                            <button onClick={() => this.handleCurrentDay(CopyPrevDate,item.time,item.balance)} disabled='true' className='hourlyBookBtn'>Book</button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -171,8 +174,10 @@ export default class MultipleHours extends Component {
                           </span>
                           {
                               item.quota-item.used_quota>0?
-                          <button onClick={() => this.handleCurrentDay(CopyCurDate,item.time,item.quota,item.used_quota)} className='hourlyBookBtnCurrent'>Book</button>
-                          :''}
+                          <button onClick={() => this.handleCurrentDay(CopyCurDate,item.time,item.balance)} className='hourlyBookBtnCurrent'>Book</button>
+                          :
+                          <button onClick={() => this.handleCurrentDay(CopyCurDate,item.time,item.balance)} disabled='true' className='hourlyBookBtn'>Book</button>
+                          }
                       </div>
                   </div>
               </div>
@@ -194,8 +199,10 @@ export default class MultipleHours extends Component {
                           </span>
                           {
                               item.quota-item.used_quota>0?
-                          <button onClick={() => this.handleCurrentDay(CopyNexDate,item.time,item.quota,item.used_quota)} className='hourlyBookBtn'>Book</button>
-                          :''}
+                          <button onClick={() => this.handleCurrentDay(CopyNexDate,item.time,item.balance)} className='hourlyBookBtn'>Book</button>
+                          :
+                          <button onClick={() => this.handleCurrentDay(CopyNexDate,item.time,item.balance)} disabled='true' className='hourlyBookBtn'>Book</button>
+                          }
                       </div>
                   </div>
               </div>
@@ -211,6 +218,7 @@ export default class MultipleHours extends Component {
             dateValue={this.state.selectedDate} 
             productId={this.props.productId}
             quota={this.state.quota}
+            maxQuota={this.state.maxQuota}
             used_quota={this.state.used_quota}
             descriptionText={this.props.descriptionText}
             token={this.props.token}

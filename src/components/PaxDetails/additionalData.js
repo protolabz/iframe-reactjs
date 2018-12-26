@@ -6,6 +6,7 @@ class AdditionalData extends Component {
         value: this.props.addiValue.qty, 
         disablebutton:false, 
         maxPerBook:this.props.maxPerBook ,
+        balance_additional:this.props.balance_additional ,
         usedQuota:this.props.usedQuota,
         quota:this.props.quota
     }
@@ -16,13 +17,14 @@ class AdditionalData extends Component {
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
         this.setState({value:count});       
-        if(FirstVal<SecondVal){
-            finQuota = FirstVal;
-        }
-        else{
-            finQuota = SecondVal;
-        }
-        this.props.myFun(id.id,count,id.max_per_booking);
+        // if(FirstVal<SecondVal){
+        //     finQuota = FirstVal;
+        // }
+        // else{
+        //     finQuota = SecondVal;
+        // }
+        finQuota = this.state.balance_additional;
+        this.props.myFun(id.id,count,id.balance_additional);
 
         if(this.state.value===finQuota - 1){
             this.setState({
@@ -69,7 +71,7 @@ class AdditionalData extends Component {
             <div className='col-sm-9 border p-2'>
                 <h5 className='addProductRightHead'>{this.props.it.description} <span className='productAmt'> ({this.props.currency} {this.formatThousands(this.props.it.amount)}) </span></h5>
                 <p className='Remark' >Remark:{this.props.it.remark} </p>
-                <p className="paxCountClass">(Maximum Per Booking = {this.props.it.max_per_booking})</p>
+                <p className="paxCountClass">(Maximum Per Booking = {this.props.it.balance_additional})</p>
             </div>
             </div>
             // </div>

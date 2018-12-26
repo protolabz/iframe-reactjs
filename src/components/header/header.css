@@ -1,0 +1,21 @@
+/* .dropdown .dropdown-menu {
+    height: 0px;
+    display: block;
+    overflow: hidden;
+    opacity:0;
+-webkit-transition: height 1s ease;
+-moz-transition: height 1s ease;
+-ms-transition: height 1s ease;
+-o-transition: height 1s ease;
+transition: height 1s ease;
+
+}
+
+.dropdown.open .dropdown-menu {
+    height:200px;
+    opacity: 1;
+
+} */
+/* body{
+    background-color:rgba(0,0,0,0.8) !important;
+} */

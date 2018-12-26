@@ -8,35 +8,38 @@ class AdditionalPax extends Component {
         maxPerBook:this.props.maxPerBook ,
         usedQuota:this.props.usedQuota,
         quota:this.props.quota,
-        maxQuota:this.props.maxQuota,
+        maxQuota:this.props.balance_pax,
         min:this.props.min,
         max:this.props.max
     }
     handleIncreement = (name,data)  => { 
+        // console.log(data);
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;
        if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
-        if(maxPerBook<data.maximum){
-            val2 = maxPerBook;
-        }
-        else{
-            val2 = data.maximum;
-        }
-        if(val1<val2){
-            maxQutVal = val1;
-        }
-        else{
-            maxQutVal = val2;
-        }
+        // if(maxPerBook<data.maximum){
+        //     val2 = maxPerBook;
+        // }
+        // else{
+        //     val2 = data.maximum;
+        // }
+        // if(val1<val2){
+        //     maxQutVal = val1;
+        // }
+        // else{
+        //     maxQutVal = val2;
+        // }
+        maxQutVal = this.props.balance_pax;
+        var maxPackage = this.props.balance_package;
         if(data.minimum>0 && count===0){
             count =data.minimum;
         }
         else{
             count= count +1;
         }
-        if(count>maxQutVal){
-            count = maxQutVal
+        if(count>maxPackage){
+            count = maxPackage
         }
        }else{
         // if(data.minimum>0 && count==0){

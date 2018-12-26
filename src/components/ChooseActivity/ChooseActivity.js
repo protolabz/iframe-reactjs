@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import './ChooseActivity.css';
+import Header from '../header/header';
 import { NavLink } from 'react-router-dom';
 export default class ChooseActivity extends Component {
 
@@ -97,7 +98,7 @@ export default class ChooseActivity extends Component {
             listProducts.map((item, index) =>(
                 <div className='col-sm-4 mb-4' key={index}>
                     <div className='OverlayThreeCols fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+item.resource+"')"}}>
-                        <p className='titleTextThreeCols mb-4'>{item.name}</p>
+                        <p className='titleTextThreeCols mb-3'>{item.name}</p>
                         <br/>
                         {/* <p className='descriptionTextThreeCols'>{item.brief_description}</p> */}
                         {/* <br/> */}
@@ -109,6 +110,9 @@ export default class ChooseActivity extends Component {
     }   
     return (
       <div className='container-fluid'>
+      {/* {this.state.isLoading?
+      '':
+      <Header />} */}
        {this.state.isLoading?
             <div className='row'>
                 <div className='col-md-1 offset-md-5'>

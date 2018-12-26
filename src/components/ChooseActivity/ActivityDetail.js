@@ -42,8 +42,7 @@ export default class ActivityDetail extends Component {
      showMultipleHrs:false,
      showModal:false,
      isLoading:true,
-     quota:null,
-     used_quota:null,
+     maxQuota:null,
      token:this.props.match.params.token
     }
 
@@ -161,7 +160,7 @@ export default class ActivityDetail extends Component {
                         this.setState({
                             OperationTime:res.data.response.operation_times,
                             OperationDate:dateFormat,
-                            OperationDateNormal:nextPgData
+                            OperationDateNormal:nextPgData,
                         })
                     }
 
@@ -213,13 +212,12 @@ export default class ActivityDetail extends Component {
             }
 
         }
-        selectTimeFrame = (date,time,quota,used_quota) => {
+        selectTimeFrame = (date,time,maxQuota) => {
             this.setState({
                 isTimeSelected:true,
                 timeValue:time,
                 dateValue:date,
-                quota:quota,
-                used_quota:used_quota
+                maxQuota:maxQuota
             })
         }
 
@@ -399,11 +397,28 @@ export default class ActivityDetail extends Component {
         if(OperationTime.length<=5){
             oTime =(
                 OperationTime.map((item,index) => (
-                    <div className="card timeCard mb-2" key={index} onClick={()=>this.selectTimeFrame(this.state.OperationDateNormal.date,item.time,item.quota,item.used_quota)}>
+                    <div className="card timeCard mb-2" key={index} onClick={()=>this.selectTimeFrame(this.state.OperationDateNormal.date,item.time,item.balance)}>
                         <div className="card-body">
                             <h5 className="card-title">{OperationDate}</h5>
                             <p className="card-text">Starts at<span className='boldCardText'> {item.time}</span></p>
-                            {item.quota-item.used_quota>0?<p className='quota'><button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>Book</button> {item.quota-item.used_quota}<span className='quota-left'> left</span></p>:''}
+                            {
+                                item.balance>0?
+                            <p className='quota'>
+                            <button onClick={() => this.handleBookButton(item.time)} className='inCalBook'>
+                            Book
+                            </button>
+                             {item.balance}<span className='quota-left'> left
+                             </span>
+                             </p>
+                             :
+                             <p className='quota'>
+                            <button onClick={() => this.handleBookButton(item.time)} disabled='true' className='inCalBook'>
+                            Book
+                            </button>
+                             {item.balance}<span className='quota-left'> left
+                             </span>
+                             </p>
+                             }
                         </div>
                     </div>
                 ))
@@ -569,6 +584,7 @@ export default class ActivityDetail extends Component {
                 selectValue={this.state.selectValHeading} 
                 dateValue={this.state.dateValue} 
                 timeValue={this.state.timeValue}
+                maxQuota={this.state.maxQuota}
                 quota={this.state.quota}
                 used_quota={this.state.used_quota}
                 descriptionText={this.state.textValue}
