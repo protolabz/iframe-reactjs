@@ -135,7 +135,7 @@ export default class componentName extends Component {
                     <div className='col-12'>
                         <div className='row'>
                             <div className='col-7'>
-                            <h4 className='paxDet'><span className='paxDetLight'>Booked on </span>{x.booked_on}</h4>
+                                <h4 className='paxDet'><span className='paxDetLight'>Booked on </span>{x.booked_on}</h4>
                             </div>
                             <div className='col-5 text-right'>
                                 <h4 onClick={(e)=>this.handleDetail(x.transaction_code)} className='details'>Detials <i className='fa fa-angle-right'></i></h4>
