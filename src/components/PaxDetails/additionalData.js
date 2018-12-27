@@ -16,7 +16,7 @@ class AdditionalData extends Component {
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
-        this.setState({value:count});       
+        // this.setState({value:count});       
         // if(FirstVal<SecondVal){
         //     finQuota = FirstVal;
         // }
@@ -25,12 +25,18 @@ class AdditionalData extends Component {
         // }
         finQuota = this.state.balance_additional;
         this.props.myFun(id.id,count,id.balance_additional);
-
+        if(finQuota<=0){
+            count = 0;
+            this.setState({
+                disablebutton:true
+            })
+        }
         if(this.state.value===finQuota - 1){
             this.setState({
                 disablebutton:true
             })
         }
+        this.setState({value:count});
     
     }
 
