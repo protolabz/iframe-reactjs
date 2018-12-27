@@ -1049,17 +1049,17 @@ export default class componentName extends Component {
             total_frontend_count={this.state.total_frontend_count}
         />
         :
-      <div className='container-fluid mt-5 mb-5'>
+      <div className='container-fluid mb-5'>
       {this.state.isLoading?
-        <div className='row'>
+        <div className='row mt-5'>
             <div className='col-md-1 offset-md-5'>
                 <img className='loading' src='/images/loading.svg' alt='loading'/>
             </div>
         </div>
         :
       <div className='row'>
-          <div className='col-sm-9 cols9-center mainOuterDiv' style={{     border: "1px solid #efefef",borderTop:"none",borderBottom:"none" }}>
-          <div className='row mb-4'>
+          <div className='col-sm-9 cols9-center mainOuterDiv mt-5' style={{ border: "1px solid #efefef",borderTop:"none",borderBottom:"none" }}>
+          <div className='row mb-4 mt-3'>
               <div className='col-sm-12'>
                   <a href="#" onClick={this.refreshRoute} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</a>
               </div>

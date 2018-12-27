@@ -704,7 +704,7 @@ export default class componentName extends Component {
 
     return (
 
-        <div className="container-fluid mt-5 mb-5">
+        <div className="container-fluid mb-5">
  
         <Modal 
             open={this.state.showModal} 
@@ -717,14 +717,14 @@ export default class componentName extends Component {
                 <iframe title="Of" height="450" style={{ width:"100%" }} id="sample-inline-frame" name="sample-inline-frame"> </iframe>
          </Modal>
          {this.state.isLoading?
-            <div className='row'>
+            <div className='row mt-5'>
                 <div className='col-md-1 offset-md-5'>
                     <img className='loading' src='/images/loading.svg' alt='loading'/>
                 </div>
             </div>
         :''}
         {this.state.isExpired?
-            <div className='col-md-9 cols9-center mainOuterDiv' style={{ textAlign:"center" }}>
+            <div className='col-md-9 cols9-center mainOuterDiv mt-5' style={{ textAlign:"center" }}>
                 <h3 className='expiredMessage'>Your booking has been expired</h3>
                 <button className='proceedToPayment mt-5'  onClick={this.refreshRoute} style={{ width:"20%" }}><i className='fa fa-arrow-left'></i> Go Back </button>
             </div>

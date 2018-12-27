@@ -9,6 +9,8 @@ import PaxDetails from '../PaxDetails/PaxDetails';
 import MultipleHours from './MultipleHours';
 import Alert from 'react-s-alert';
 import swal from 'sweetalert';
+import Header from '../header/header';
+import Footer from '../footer/footer';
 
 export default class ActivityDetail extends Component {
     state ={
@@ -577,6 +579,11 @@ export default class ActivityDetail extends Component {
     }
     // console.log(this.state.boxValHeading);
     return (
+        <div>
+        {this.state.isLoading?
+        '':
+        <Header />}
+        {
         this.state.showPaxPage?
             <PaxDetails 
                 productId={this.props.match.params.id} 
@@ -600,7 +607,7 @@ export default class ActivityDetail extends Component {
                 token={this.state.token}
             />
             :
-      <div className='container-fluid mt-5 mb-5'>
+      <div className='container-fluid mb-5'>
             {this.state.isLoading?
                 <div className='row'>
                     <div className='col-md-1 offset-md-5'>
@@ -609,8 +616,8 @@ export default class ActivityDetail extends Component {
                 </div>
             :
             <div className='row'>
-                <div className='col-sm-9 cols9-center mainOuterDiv'>
-                <div className='row mb-4'>
+                <div className='col-sm-9 cols9-center mainOuterDiv mt-5'>
+                <div className='row mb-4 mt-5'>
                     <div className='col-sm-12'>
                         <NavLink to={`/${this.state.token}`} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Select another activity</NavLink>
                     </div>
@@ -752,8 +759,11 @@ export default class ActivityDetail extends Component {
                 <Alert stack={{limit: 1}} timeout={2000}/>
                
             </div>
-            )
-
+            )}
+            {this.state.isLoading?
+            '':
+            <Footer />}
+            </div>
     )
   }
 }

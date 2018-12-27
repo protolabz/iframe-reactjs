@@ -169,11 +169,11 @@ export default class componentName extends Component {
              transaction_code = {this.state.transaction_code}
             />
             :
-        <div className="container-fluid mt-5 mb-5">
+        <div className="container-fluid mb-5">
             
             <div className='col-md-9 cols9-center mainOuterDiv' >
-                <div className='row'>
-                    <div className='col-sm-12 p-0'>
+                <div className='row pt-3'>
+                    <div className='col-sm-12 p-0 mt-5'>
                         <div className='col-sm-3 bookingsHeading p-0'>
                             <h4 className="bookingText py-2"><i className='fa fa-file-text-o bookingIcon'>&nbsp; </i>Bookings</h4>
                         </div>

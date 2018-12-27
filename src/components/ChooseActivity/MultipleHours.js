@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 // import { NavLink } from 'react-router-dom';
+import Header from '../header/header';
+import Footer from '../footer/footer';
 import Paxpage from '../PaxDetails/PaxDetails'
 import './ChooseActivity.css';
 
@@ -210,6 +212,11 @@ export default class MultipleHours extends Component {
         )
     )
     return (
+        <div>
+        {this.state.isLoading?
+        '':
+        <Header />}
+        {
         this.state.showPaxPage?
         <Paxpage 
             boxValue={this.props.boxValue} 
@@ -223,16 +230,16 @@ export default class MultipleHours extends Component {
             descriptionText={this.props.descriptionText}
             token={this.props.token}
         />:
-           <div className='container-fluid mt-5 mb-5'>
+           <div className='container-fluid mb-5'>
            {this.state.isLoading?
-                <div className='row'>
+                <div className='row mt-5'>
                     <div className='col-md-1 offset-md-5'>
                         <img className='loading' src='/images/loading.svg' alt='loading'/>
                     </div>
                 </div>
             :
                 <div className='row'>
-                    <div className='col-sm-9 cols9-center mainOuterDiv'>
+                    <div className='col-sm-9 cols9-center mainOuterDiv mt-5 pt-3'>
                         <div className='row mb-1 goBackBox'>
                             <div className='col-sm-12 py-2'>
                                 <p className='goBack' onClick={this.goToActivity}><i className='fa fa-angle-left'> </i> Go back to activity</p>
@@ -259,6 +266,11 @@ export default class MultipleHours extends Component {
                     </div>
                 </div>
            }
+            </div>
+        }
+            {/* {this.state.isLoading?
+            '':
+            <Footer />} */}
             </div>
     )
   }

@@ -10,26 +10,27 @@ export default class componentName extends Component {
     return (
         <div className='container-fluid bg-dark' style={{ position:"fixed",zIndex:"9999999" }}>
            <div className='row'>
-           <div className='col-12 col-md-3 text-right p-1'>
+           <div className='col-12 col-md-1 text-right p-1'>
+           &nbsp;
              <div className="dropdown">
-                <button className="btn btn-dark " type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {/*<button className="btn btn-dark" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className='fa fa-close'>&nbsp; </i>  Close
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" style={{ padding:"20px" }}>
                     <h1 style={{ fontSize:"15px" }}>Are you sure you want to close?</h1>
                     <p style={{ fontSize:"12px",color:"#768593" }}>You will lose any information that you've filled in.</p>
-                    <div style={{ display:"flex" }}>
+                     <div style={{ display:"flex" }}>
                     <button className='btn btn-default' style={{ width:"100px",marginRight:"5px" }}>
                         Stay
                     </button>
-                    <button className='btn btn-primary'>
+                    <button onClick={()=>this.closePopup} className='btn btn-primary' id="hidePopup">
                         Leave checkout
                     </button>
-                    </div>
-                </div>
+                    </div> 
+                </div>*/}
              </div>
             </div>
-            <div className='col-12 col-md-9 p-1 text-left d-none d-sm-none d-md-block' style={{ borderLeft:"1px solid #FFF" }}>
+            <div className='col-12 col-md-11 p-1 text-left d-none d-sm-none d-md-block' style={{ borderLeft:"1px solid #FFF" }}>
                 <div className="dropdown">
                     <button className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i className='fa fa-lock'>&nbsp; </i>  Secure

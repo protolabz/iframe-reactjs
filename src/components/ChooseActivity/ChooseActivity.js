@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import './ChooseActivity.css';
 import Header from '../header/header';
+import Footer from '../footer/footer';
 import { NavLink } from 'react-router-dom';
 export default class ChooseActivity extends Component {
 
@@ -61,7 +62,7 @@ export default class ChooseActivity extends Component {
       var secondAndThird,firstPro,lists;
       if(firstProduct.length>0){
           firstPro = (
-              <div className='row'>
+              <div className='row mt-5 pt-5'>
             <div className='col-sm-12'>
                 <div className='Overlay fullSection' style={{ backgroundImage: "url('https://res.cloudinary.com/trabo/"+firstProduct[0].resource+"')"}}>
                     <p className='titleText'>{ firstProduct[0].name }</p>
@@ -109,12 +110,13 @@ export default class ChooseActivity extends Component {
         );
     }   
     return (
-      <div className='container-fluid'>
-      {/* {this.state.isLoading?
+      <div>
+{this.state.isLoading?
       '':
-      <Header />} */}
+      <Header />}
+      <div className='container-fluid'>
        {this.state.isLoading?
-            <div className='row'>
+            <div className='row mt-5'>
                 <div className='col-md-1 offset-md-5'>
                     <img className='loading' src='/images/loading.svg' alt='loading'/>
                 </div>
@@ -129,9 +131,15 @@ export default class ChooseActivity extends Component {
                 <div className='row'>
                 {lists}
                 </div>
-            </div>
+            {this.state.isLoading?
+            '':
+            <Footer />}
         </div>
+            </div>
+            
         }
+
+      </div>
       </div>
     )
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import './listBooking.css';
 import { stat } from 'fs';
-import Voucher from '../Vouchers/vouchers'
+import Voucher from '../Vouchers/voucherUrl'
 export default class componentName extends Component {
     state ={
         bookingList:[],

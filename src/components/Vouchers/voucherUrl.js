@@ -4,11 +4,9 @@ import './voucher.css';
 import ListBooking from '../ListBooking/ListBooking';
 import CreditCardInput from 'react-credit-card-input';
 import Modal from 'react-responsive-modal';
-import Header from '../header/header';
-import Footer from '../footer/footer';
 import swal from 'sweetalert';
 import { NavLink } from 'react-router-dom';
-import ScrollIntoView from 'react-scroll-into-view';
+import ScrollIntoView from 'react-scroll-into-view'
 var QRCode = require('qrcode-react');
 const EX_API_KEY = 'xnd_public_development_NImDfL511rH6wMJgKrcdT2PFZdWnpIR8xXOx+Rxg+mHV8LegCQR0hQ==';
 export default class componentName extends Component {
@@ -918,11 +916,7 @@ setActive = (value) => {
     );
     }
     return (
-        <div>
-        {this.state.isLoading?
-        '':
-        <Header />}
-        {this.state.isShowBooking?
+        this.state.isShowBooking?
             // <div className='' >
             <ListBooking
                 userEmail={this.state.userEmail}
@@ -941,10 +935,10 @@ setActive = (value) => {
                 <iframe title="Of" style={{ width:"100%" }} height="450" id="sample-inline-frame" name="sample-inline-frame"> </iframe>
          </Modal>
          
-          <div className='col-md-9 cols9-center mainOuterDiv' >
+          <div className='col-md-9 mt-5 cols9-center mainOuterDiv' >
 
-            <div className='row mb-4 pt-3'>
-                <div className='col-sm-12 mt-5'>
+            <div className='row mb-4'>
+                <div className='col-sm-12'>
                     <a href="#" onClick={this.refreshRoute} className='Select-another-activ'><i className='fa fa-angle-left'> </i> Pick another date</a>
                 </div>
             </div>
@@ -1334,11 +1328,6 @@ setActive = (value) => {
           </div>
           
         </div>
-    }
-        {/* {this.state.isLoading?
-    '':
-    <Footer />} */}
-    </div>
     )
   }
 }
