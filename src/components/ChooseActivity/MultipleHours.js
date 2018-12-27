@@ -169,7 +169,7 @@ export default class MultipleHours extends Component {
                           <span>{item.time} <br/>
                           {
                               item.quota-item.used_quota>0?
-                              <span className='quota-left-multiple'>{item.quota-item.used_quota} left</span>
+                              <span className='quota-left-multiple'>{item.balance} left</span>
                           :''}
                           </span>
                           {
@@ -194,7 +194,7 @@ export default class MultipleHours extends Component {
                           <span>{item.time}<br/>
                           {
                               item.quota-item.used_quota>0?
-                              <span className='quota-left-multiple'>{item.quota-item.used_quota} left</span>
+                              <span className='quota-left-multiple'>{item.balance} left</span>
                           :''}
                           </span>
                           {
