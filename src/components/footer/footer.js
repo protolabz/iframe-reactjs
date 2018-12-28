@@ -10,7 +10,7 @@ export default () => {
               <hr className='footerLine'/>
               </div>
               <div className='col-5 col-md-2'>
-                <img src='/images/trabo2.png' />
+                <img className="logoImage" src='/images/trabo2.png' />
               </div>
             </div>
           </div>
