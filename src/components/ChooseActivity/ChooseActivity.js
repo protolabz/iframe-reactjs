@@ -111,11 +111,13 @@ export default class ChooseActivity extends Component {
     }   
     return (
       <div>
+      {this.state.isLoading?'':
       <Header />
+    }
       <div className='container-fluid'>
        {this.state.isLoading?
-            <div className='row mt-5'>
-                <div className='col-md-1 offset-md-5'>
+            <div className='row'>
+                <div className='col-md-1 offset-md-5 mt-5'>
                     <img className='loading' src='/images/loading.svg' alt='loading'/>
                 </div>
             </div>

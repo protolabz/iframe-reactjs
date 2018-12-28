@@ -717,8 +717,8 @@ export default class componentName extends Component {
                 <iframe title="Of" height="450" style={{ width:"100%" }} id="sample-inline-frame" name="sample-inline-frame"> </iframe>
          </Modal>
          {this.state.isLoading?
-            <div className='row mt-5'>
-                <div className='col-md-1 offset-md-5'>
+            <div className='row'>
+                <div className='col-md-1 offset-md-5 mt-5'>
                     <img className='loading' src='/images/loading.svg' alt='loading'/>
                 </div>
             </div>

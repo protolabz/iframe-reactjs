@@ -4,7 +4,7 @@ export default () => {
   return (
     <div className='container'>
         <div className='row'>
-          <div className='col-sm-9 cols9-center mainOuterDiv mb-4'>
+          <div className='col-sm-12 cols9-center mainOuterDiv mb-4'>
             <div className='row'>
               <div className='col-7 col-md-10 px-0'>
               <hr className='footerLine'/>
