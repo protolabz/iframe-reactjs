@@ -10,7 +10,7 @@ export default class componentName extends Component {
     return (
         <div className='container-fluid border-bottom bg-light' style={{ position:"fixed",zIndex:"9999999" }}>
            <div className='row'>
-           <div className='col-12 col-md-1 text-right p-1'>
+           <div className='col-3 col-md-3 text-right p-1'>
            {/* &nbsp;  */}
            <br/>
            &nbsp;
@@ -32,7 +32,7 @@ export default class componentName extends Component {
                 </div>*/}
              </div>
             </div>
-            <div className='col-12 col-md-11 p-1 text-left' style={{ borderLeft:"1px solid #FFF" }}>
+            <div className='col-9 col-md-9 p-1 text-left' style={{ borderLeft:"1px solid #FFF" }}>
             {/* &nbsp; */}
                 <div className="dropdown d-none d-sm-none d-md-block">
                     <button className="secureButton btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
