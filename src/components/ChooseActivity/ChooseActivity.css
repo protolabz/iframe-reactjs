@@ -653,7 +653,7 @@
     text-transform: capitalize;
   }
   .image-gallery-image{
-    height: 240px;
+    /* height: 240px; */
   }
   .image-gallery-thumbnails-wrapper {
     position: absolute !important;
