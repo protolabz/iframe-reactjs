@@ -38,7 +38,7 @@ export default class componentName extends Component {
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{ width:"25%",padding:"20px" }}>
                     <div style={{ display:"inline-flex" }}>
                     <img src='/images/comodo.png' alt='secure' style={{ width:"73px",height:"40px" }} />
-                    <p style={{ marginBottom:"0px",paddingLeft:"5px",fontSize:"10px" }}>Your info will be transferred securely over a 2048-bit encrypted connection.</p>
+                    <p style={{ marginBottom:"0px",paddingLeft:"5px",fontSize:"10px" }}>Your info will be transferred securely over a SHA-256 encrypted connection.</p>
                     </div>
                     </div>
                 </div>
