@@ -27,6 +27,13 @@ transition: height 1s ease;
     border: 1px solid #8d8d8d;
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
+    font-family: Archivo !important;
+    font-size: 14px !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: normal !important;
 }
 .secureButton:focus{
     outline: 0;
