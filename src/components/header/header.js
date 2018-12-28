@@ -8,9 +8,11 @@ export default class componentName extends Component {
     }
   render() {
     return (
-        <div className='container-fluid bg-dark' style={{ position:"fixed",zIndex:"9999999" }}>
+        <div className='container-fluid border-bottom bg-light' style={{ position:"fixed",zIndex:"9999999" }}>
            <div className='row'>
            <div className='col-12 col-md-1 text-right p-1'>
+           {/* &nbsp;  */}
+           <br/>
            &nbsp;
              <div className="dropdown">
                 {/*<button className="btn btn-dark" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -30,12 +32,13 @@ export default class componentName extends Component {
                 </div>*/}
              </div>
             </div>
-            <div className='col-12 col-md-11 p-1 text-left d-none d-sm-none d-md-block' style={{ borderLeft:"1px solid #FFF" }}>
-                <div className="dropdown">
-                    <button className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div className='col-12 col-md-11 p-1 text-left' style={{ borderLeft:"1px solid #FFF" }}>
+            {/* &nbsp; */}
+                <div className="dropdown d-none d-sm-none d-md-block">
+                    <button className="secureButton btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i className='fa fa-lock'>&nbsp; </i>  Secure
                     </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{ width:"25%",padding:"20px" }}>
+                    <div className="dropdown-menu putArrow" aria-labelledby="dropdownMenuButton" style={{ width:"25%",padding:"20px" }}>
                     <div style={{ display:"inline-flex" }}>
                     <img src='/images/comodo.png' alt='secure' style={{ width:"73px",height:"40px" }} />
                     <p style={{ marginBottom:"0px",paddingLeft:"5px",fontSize:"10px" }}>Your info will be transferred securely over a SHA-256 encrypted connection.</p>

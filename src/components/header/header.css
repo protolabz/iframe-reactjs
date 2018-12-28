@@ -19,3 +19,48 @@ transition: height 1s ease;
 /* body{
     background-color:rgba(0,0,0,0.8) !important;
 } */
+.secureButton{
+    /* width: 91px; */
+    border-radius: 4px;
+    background-color: #8d8d8d;
+    color: #FFF;
+    border: 1px solid #8d8d8d;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+.secureButton:focus{
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(141,141,141, 0.25) !important;
+}
+.putArrow{
+    top: 9px !important;
+    border: solid 1px #d0d0d0 !important;
+}
+.putArrow:before{
+    z-index: -1;
+    position: absolute;
+    top: -12%;
+    left: 18%;
+    margin-left: -10px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: solid 10px #d0d0d0;
+    border-left: solid 10px transparent;
+    border-right: solid 10px transparent;
+    transform: rotate(180deg);
+}
+.putArrow:after{
+    z-index: -1;
+    position: absolute;
+    top: -10%;
+    left: 18%;
+    margin-left: -10px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: solid 10px #FFF;
+    border-left: solid 10px transparent;
+    border-right: solid 10px transparent;
+    transform: rotate(180deg);
+}
