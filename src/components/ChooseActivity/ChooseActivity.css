@@ -29,7 +29,7 @@
     letter-spacing: normal;
     text-align: center;
     color: #ffffff;
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
   }
   .descriptionText {
     /* width: 443px; */
@@ -45,6 +45,8 @@
     letter-spacing: normal;
     text-align: center;
     color: #ffffff;
+    background-color: #00000266;
+    padding: 5px;
   }
   .bookNow {
     width: 106px;
@@ -52,7 +54,8 @@
     font-family: Archivo;
     border-radius: 4px;
     border: solid 1px #eeeeee;
-    background-color: transparent;
+    /* background-color: transparent; */
+    background-color: #00000266;
     color: #eeeeee;
     margin: 12px;
     padding: 7px 16px;
@@ -67,6 +70,7 @@
     cursor:pointer;
     text-decoration: none;
     color:#eeeeee;
+    background-color: #000002b5;
   }
 
   .OverlayTwoCols {
@@ -133,7 +137,11 @@
     padding: 45px 0px;
     background-size: cover;
   }
-
+  .titleText{
+    background-color: #00000266;
+    width: 100%;
+    padding:5px;
+  }
   .titleTextThreeCols {
     /* width: 142px; */
     margin: auto;
@@ -151,6 +159,9 @@
     color: #ffffff;
     display:-webkit-inline-box;
     display: inline-block;
+    background-color: #0000028a;
+    width: 100%;
+    padding: 5px;
   }
   .descriptionTextThreeCols {
     width: 200px;

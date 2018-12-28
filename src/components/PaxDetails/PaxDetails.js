@@ -1077,7 +1077,7 @@ export default class componentName extends Component {
                  {haveStandardPax?
                 <div className='row mt-4'>
                     <div className='col-sm-12 px-0'>
-                        <h1 className='PAX-Details mt-4'>Tickets (Max {this.state.balance_pax})</h1>
+                        <h1 className='PAX-Details mt-4'>TICKETS (MAX {this.state.balance_pax})</h1>
                     </div>
                  </div>
                  :''}
@@ -1095,8 +1095,8 @@ export default class componentName extends Component {
                 :''}
                  {this.state.rawPackage.length>0?
                 <div className='row mt-5'>
-                    <div className='col-sm-12'>
-                    <h2 className='CancelationPax border p-2' style={{ margin:"0px" }}>PACKAGE</h2>
+                    <div className='col-sm-12 px-0'>
+                    <h2 className='CancelationPax py-2' style={{ margin:"0px" }}>PACKAGE</h2>
                     </div>
                 </div>    
                   :''}
@@ -1151,7 +1151,11 @@ export default class componentName extends Component {
                     {CancelationPolicyPackage}
                 </div>
                 :''}
+                <div className='row'>
+                <div className='col-sm-12 p-0'>
                 <h1 className='PAX-Details mb-4 mt-4'>PAX Details</h1>
+                </div>
+                </div>
                 <div className='row'>
                 <div className='col-sm-6 mb-3'>
                 <label className='Name'>NAME <i className='fa fa-asterisk requiredField'></i></label>
