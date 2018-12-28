@@ -111,9 +111,7 @@ export default class ChooseActivity extends Component {
     }   
     return (
       <div>
-{this.state.isLoading?
-      '':
-      <Header />}
+      <Header />
       <div className='container-fluid'>
        {this.state.isLoading?
             <div className='row mt-5'>

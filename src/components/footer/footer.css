@@ -1,0 +1,6 @@
+.footerLine{
+    position: absolute !important;
+    bottom: 0px !important;
+    width: 100% !important;
+    border-top:1px solid #aaaaaa !important;
+}

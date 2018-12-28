@@ -580,9 +580,7 @@ export default class ActivityDetail extends Component {
     // console.log(this.state.boxValHeading);
     return (
         <div>
-        {this.state.isLoading?
-        '':
-        <Header />}
+        <Header />
         {
         this.state.showPaxPage?
             <PaxDetails 

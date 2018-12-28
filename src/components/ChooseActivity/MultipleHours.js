@@ -213,9 +213,7 @@ export default class MultipleHours extends Component {
     )
     return (
         <div>
-        {this.state.isLoading?
-        '':
-        <Header />}
+        <Header />
         {
         this.state.showPaxPage?
         <Paxpage 

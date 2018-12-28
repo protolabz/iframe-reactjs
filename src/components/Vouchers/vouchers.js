@@ -919,9 +919,7 @@ setActive = (value) => {
     }
     return (
         <div>
-        {this.state.isLoading?
-        '':
-        <Header />}
+        <Header />
         {this.state.isShowBooking?
             // <div className='' >
             <ListBooking
