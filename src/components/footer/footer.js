@@ -17,12 +17,12 @@ export default () => {
                       <p className='powered'>powered by</p> 
                     </td>
                     <td rowSpan='2'>
-                    <img className="logoImage" src='/images/locationTrabo.png' />  
+                    <img className="logoImage" src='/images/locationTrabo.png' alt='logo'/>  
                     </td>
                   </tr>
                   <tr>
                     <td>
-                    <img className="logoImage" src='/images/traboText.png' />
+                    <img className="logoImage" src='/images/traboText.png'  alt='logotext'/>
                     </td>
                   </tr>
                   </tbody>
