@@ -11,11 +11,12 @@ export default () => {
               </div>
               <div className='col-7 col-md-3'>
                 <table>
+                  <tbody>
                   <tr>
                     <td>
                       <p className='powered'>powered by</p> 
                     </td>
-                    <td rowspan='2'>
+                    <td rowSpan='2'>
                     <img className="logoImage" src='/images/locationTrabo.png' />  
                     </td>
                   </tr>
@@ -24,6 +25,7 @@ export default () => {
                     <img className="logoImage" src='/images/traboText.png' />
                     </td>
                   </tr>
+                  </tbody>
                 </table>
                 
               </div>
