@@ -6,11 +6,26 @@ export default () => {
         <div className='row'>
           <div className='col-sm-12 cols9-center mainOuterDiv mb-4'>
             <div className='row'>
-              <div className='col-7 col-md-10 px-0'>
+              <div className='col-5 col-md-9 px-0'>
               <hr className='footerLine'/>
               </div>
-              <div className='col-5 col-md-2'>
-                <img className="logoImage" src='/images/trabo2.png' />
+              <div className='col-7 col-md-3'>
+                <table>
+                  <tr>
+                    <td>
+                      <p className='powered'>powered by</p> 
+                    </td>
+                    <td rowspan='2'>
+                    <img className="logoImage" src='/images/locationTrabo.png' />  
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <img className="logoImage" src='/images/traboText.png' />
+                    </td>
+                  </tr>
+                </table>
+                
               </div>
             </div>
           </div>

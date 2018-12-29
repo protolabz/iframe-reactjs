@@ -5,5 +5,27 @@
     border-top:1px solid #aaaaaa !important;
 }
 .logoImage{
-    width:100%;
+    /* width:100%; */
+}
+.powered{
+    font-family: Archivo;
+    font-size: 8px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #222222;
+    margin-bottom: 0px;
+}
+.trabo{
+    font-family: Archivo;
+    font-size: 35px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f06723;
+    margin-bottom: 0px;
 }

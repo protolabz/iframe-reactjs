@@ -8,12 +8,10 @@ export default class componentName extends Component {
     }
   render() {
     return (
-        <div className='container-fluid border-bottom bg-light' style={{ position:"fixed",zIndex:"9999999" }}>
+        <div className='container-fluid border-bottom bg-light' style={{ position:"fixed",zIndex:"9999999",height:"40px" }}>
            <div className='row'>
            <div className='col-3 col-md-3 text-right p-1'>
            {/* &nbsp;  */}
-           <br/>
-           &nbsp;
              <div className="dropdown">
                 {/*<button className="btn btn-dark" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className='fa fa-close'>&nbsp; </i>  Close

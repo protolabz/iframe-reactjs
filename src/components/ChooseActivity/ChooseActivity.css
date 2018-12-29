@@ -12,6 +12,7 @@
     background-color: rgba(0, 0, 0, 0.4);
     padding: 87px 0px;
     background-size: cover;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.46);
   }
 
 
@@ -45,7 +46,7 @@
     letter-spacing: normal;
     text-align: center;
     color: #ffffff;
-    background-color: #00000266;
+    /* background-color: #00000266; */
     padding: 5px;
   }
   .bookNow {
@@ -55,7 +56,7 @@
     border-radius: 4px;
     border: solid 1px #eeeeee;
     /* background-color: transparent; */
-    background-color: #00000266;
+    /* background-color: #00000266; */
     color: #eeeeee;
     margin: 12px;
     padding: 7px 16px;
@@ -80,6 +81,7 @@
     background-color: rgba(0, 0, 0, 0.4);
     padding: 27px 0px;
     background-size: cover;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.46);
   }
   .titleTextTwoCols {
     /* width: 149px; */
@@ -136,12 +138,13 @@
     background-color: rgba(0, 0, 0, 0.4);
     padding: 45px 0px;
     background-size: cover;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.46);
   }
-  .titleText{
+  /* .titleText{
     background-color: #00000266;
     width: 100%;
     padding:5px;
-  }
+  } */
   .titleTextThreeCols {
     /* width: 142px; */
     margin: auto;
@@ -159,9 +162,9 @@
     color: #ffffff;
     display:-webkit-inline-box;
     display: inline-block;
-    background-color: #0000028a;
-    width: 100%;
-    padding: 5px;
+    /* background-color: #0000028a; */
+    /* width: 100%; */
+    /* padding: 5px; */
   }
   .descriptionTextThreeCols {
     width: 200px;
