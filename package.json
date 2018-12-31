@@ -78,6 +78,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
+
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -132,5 +133,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "uglify-js-brunch": "^2.10.0"
   }
 }
