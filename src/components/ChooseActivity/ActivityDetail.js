@@ -179,6 +179,7 @@ export default class ActivityDetail extends Component {
     handleMouseHover = (day) =>{
         let abs = day.toLocaleDateString("en-US").replace(/[/]/g, "-");
         let {holidaysRows} =this.state;
+       
         let selectedDate;
         abs = abs.split('-');
         let days,month,year;
@@ -188,10 +189,14 @@ export default class ActivityDetail extends Component {
             if(days<10){
                 days = 0+''+days;
             }
+            if(month<10){
+                month = 0+''+month;
+            }
             let FullDate = year+'-'+month+'-'+days;
             function checkDate(dateVal){
                 for(let i = 0; i<=holidaysRows.length-1; i++){
                     selectedDate = holidaysRows[i].start.date;
+                    // console.log(selectedDate+' '+holidaysRows[i].summary)
                     if(selectedDate===dateVal){
                         return (
                           {

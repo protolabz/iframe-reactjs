@@ -134,8 +134,8 @@ export default class ChooseActivity extends Component {
             {this.state.isLoading?
             '':
             <Footer />}
-        </div>
             </div>
+        </div>
             
         }
 
