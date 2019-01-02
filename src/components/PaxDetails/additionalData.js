@@ -24,7 +24,6 @@ class AdditionalData extends Component {
         //     finQuota = SecondVal;
         // }
         finQuota = this.state.balance_additional;
-        this.props.myFun(id.id,count,id.balance_additional);
         if(finQuota<=0){
             count = 0;
             this.setState({
@@ -37,6 +36,7 @@ class AdditionalData extends Component {
             })
         }
         this.setState({value:count});
+        this.props.myFun(id.id,count,id.balance_additional);
     
     }
 
@@ -53,6 +53,7 @@ class AdditionalData extends Component {
         }
 
         this.setState({value:count});
+
         this.props.decrement(id.id,count,id.max_per_booking)
     }
 
