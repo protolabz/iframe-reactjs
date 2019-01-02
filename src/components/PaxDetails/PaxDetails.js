@@ -130,6 +130,7 @@ export default class componentName extends Component {
   }
 
   componentWillMount(){
+      console.log("well")
       let timeVal = this.props.timeValue;
       timeVal = timeVal.replace(/-/g,' ');
     axios({
