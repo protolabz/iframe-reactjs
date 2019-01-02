@@ -75,9 +75,9 @@ export default class componentName extends Component {
                     </div>
                     <div className='col-5 text-right'>
                     {x.due>0?
-                        <h4 className="totalText">PAID (<span className='totalPaidRed'>{x.status_name}</span>)</h4>
+                        <h4 className="totalText"><span className='totalPaidRed'>{x.status_name}</span></h4>
                         :
-                        <h4 className="totalText">PAID (<span className='totalPaidGreen'>{x.status_name}</span>)</h4>
+                        <h4 className="totalText"><span className='totalPaidGreen'>{x.status_name}</span></h4>
                         }
                         <h4 className='totalAmt'>IDR {formatThousands(x.paid_amount)}</h4>
                         {x.due>0?
