@@ -691,10 +691,21 @@ export default class componentName extends Component {
                  data:dataProm
                })
                .then((res) => {
-                   this.setState({
-                       total_frontend:res.data.response.total,
-                       promoAmount:res.data.response.promo_amount
-                   })
+                   if(res.data.diagnostic.status===200){
+                       this.setState({
+                           total_frontend:res.data.response.total,
+                           promoAmount:res.data.response.promo_amount
+                       })
+                   }
+                   else{
+                    swal({
+                        title: res.data.diagnostic.error,
+                        text: res.data.diagnostic.error_msgs,
+                        icon: "warning",
+                        button: true,
+                        dangerMode: true,
+                      })
+                   }
                })
          }
 
