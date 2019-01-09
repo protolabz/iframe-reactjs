@@ -384,15 +384,13 @@ export default class ActivityDetail extends Component {
     if(dates.length>0){
         for(let i = 0; i<=dates.length-1; i++){
             d = dates[i].from.replace(/-/g, "/");
-            console.log(d)
             sDays.push(new Date(d));
         }
-        console.log(sDays);
     }
 
     if(holidaysRows.length>0){
         for(let i = 0; i<=holidaysRows.length-1; i++){
-            hol =  holidaysRows[i].start.date.replace(/-/g, ", ");
+            hol =  holidaysRows[i].start.date.replace(/-/g, "/");
             hDays.push(new Date(hol));
             if(holidaysRows[i].start.date<=fullYear+'-12-31' && holidaysRows[i].start.date>lastYear+'-12-31'){
                 hNames.push({date:holidaysRows[i].start.date,holidays:holidaysRows[i].summary})
@@ -741,7 +739,6 @@ export default class ActivityDetail extends Component {
                             :''}
                         <div className='col-sm-12 d-xs-block d-sm-block d-md-none'>
                         <p className='pickDate'>PICK A DATE</p>
-                            {console.log(sDays)}
                         <DayPicker 
                             initialMonth={new Date()} 
                             fromMonth={new Date()}
