@@ -37,7 +37,7 @@ class AdditionalPax extends Component {
             console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
         }
         else{
-            count= parseInt(count) + 1;
+            count= parseInt(count) + parseInt(1);
             console.log('else1 count = count+1: '+count);
         }
         if(count>maxPackage){
@@ -49,7 +49,7 @@ class AdditionalPax extends Component {
         //     count =data.minimum;
         // }
         // else{
-            count= parseInt(count) +1;
+            count= parseInt(count) + parseInt(1);
            console.log('else2 count = count+1: '+count);
         // }
        }
