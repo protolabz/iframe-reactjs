@@ -152,16 +152,11 @@ export default class ActivityDetail extends Component {
             }
             FullDate = year+'-'+days+'-'+month;
         }
-        // if((verOffset=nAgt.indexOf("Safari"))!==-1) {
-        //
-        //     }
 
-            console.log(' Yer '+year+'-'+month+'-'+days);
+
             function checkDate(dateVal){
                 for(let i = 0; i<=dates.length-1; i++){
                     d = dates[i].from;
-                    // console.log("Date is: "+d);
-                    console.log("Date"+d+ "==="+dateVal);
                     if(d===dateVal){
                         return true;
                     }
