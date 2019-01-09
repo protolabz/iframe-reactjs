@@ -116,7 +116,7 @@ export default class ActivityDetail extends Component {
     }
 
     handleDayClick = (day) =>{
-        console.log(day)
+        console.log("Function called");
         let abs = day.toLocaleDateString("en-ID").replace(/[/]/g, "-");
         let dateFormat = day.toGMTString();
         let dts = (dateFormat.split(' '));
@@ -142,8 +142,11 @@ export default class ActivityDetail extends Component {
             }
             let FullDate = year+'-'+month+'-'+days;
             function checkDate(dateVal){
+                console.log("Inner function");
                 for(let i = 0; i<=dates.length-1; i++){
                     d = dates[i].from;
+                    console.log("Date is: "+d);
+                    console.log("Date"+d+ "==="+dateVal);
                     if(d===dateVal){
                         return true;
                     }
@@ -154,7 +157,6 @@ export default class ActivityDetail extends Component {
                 params:this.props.match.params.id
             }
             if(checkDate(FullDate)===true){
-                console.log(FullDate);
             axios({
                 method: 'get',
                 url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.id}?date=${FullDate}`,
