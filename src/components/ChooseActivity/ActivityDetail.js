@@ -149,9 +149,6 @@ export default class ActivityDetail extends Component {
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         if(isSafari) {
-            days = abs[1];
-            month = abs[0];
-            year = abs[2];
             if(days<10){
                 days = days.substr(1);
             }
@@ -164,7 +161,7 @@ export default class ActivityDetail extends Component {
         //
         //     }
             let FullDate = year+'-'+month+'-'+days;
-            console.log(FullDate)
+            console.log(' Yer '+year+'-'+month+'-'+days);
             function checkDate(dateVal){
                 for(let i = 0; i<=dates.length-1; i++){
                     d = dates[i].from;
