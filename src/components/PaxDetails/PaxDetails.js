@@ -265,7 +265,7 @@ export default class componentName extends Component {
         });
   }
   incrementCounterPax = (name,data,count) => {
-    console.log(name)
+    console.log("Main Page: "+count);
       this.handleCountValuesIncrement(name,data,count);
     var addValuesData = [...this.state.standardPax];
         if(addValuesData.findIndex(x=>x.name===name)>=0){
@@ -1124,7 +1124,7 @@ export default class componentName extends Component {
                     this.state.currency?
                     a.map((item,i) => (
                         // <div className='row' key = {i}>
-                        <div className='col-sm-12'>
+                        <div className='col-sm-12' key={item.name+""+i}>
                         <h5 className='Meals mt-4 p-2 border' style={{ margin:"0px" }}>{item.name}</h5>
                         {/* </div> */}
                         {
