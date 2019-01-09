@@ -116,6 +116,7 @@ export default class ActivityDetail extends Component {
     }
 
     handleDayClick = (day) =>{
+        console.log(day)
         let abs = day.toLocaleDateString("en-ID").replace(/[/]/g, "-");
         let dateFormat = day.toGMTString();
         let dts = (dateFormat.split(' '));
@@ -153,6 +154,7 @@ export default class ActivityDetail extends Component {
                 params:this.props.match.params.id
             }
             if(checkDate(FullDate)===true){
+                console.log(FullDate);
             axios({
                 method: 'get',
                 url: `https://api.trabo.co/partner/activity/detail/${this.props.match.params.id}?date=${FullDate}`,
