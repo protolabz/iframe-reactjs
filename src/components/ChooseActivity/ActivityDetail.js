@@ -149,8 +149,16 @@ export default class ActivityDetail extends Component {
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         // if(isSafari) {
-        //     days = days.substr(1);
-        //     month = month.substr(1);
+        //     days = abs[1];
+        //     month = abs[0];
+        //     year = abs[2];
+        //     if(days>=10){
+        //         days = days.substr(1);
+        //     }
+        //     if(month>=10){
+        //         month = month.substr(1);
+        //     }
+        //
         // }
         // if((verOffset=nAgt.indexOf("Safari"))!==-1) {
         //
