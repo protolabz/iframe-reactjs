@@ -383,10 +383,11 @@ export default class ActivityDetail extends Component {
     var d;
     if(dates.length>0){
         for(let i = 0; i<=dates.length-1; i++){
-            d = dates[i].from.replace(/-/g, ", ");
+            d = dates[i].from.replace(/-/g, "/");
             console.log(d)
             sDays.push(new Date(d));
         }
+        console.log(sDays);
     }
 
     if(holidaysRows.length>0){
