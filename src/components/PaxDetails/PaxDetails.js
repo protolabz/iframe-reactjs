@@ -265,6 +265,7 @@ export default class componentName extends Component {
         });
   }
   incrementCounterPax = (name,data,count) => {
+      console.log(data);
       this.handleCountValuesIncrement(name,data,count);
     var addValuesData = [...this.state.standardPax];
         if(addValuesData.findIndex(x=>x.name===name)>=0){
