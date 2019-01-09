@@ -164,10 +164,11 @@ export default class ActivityDetail extends Component {
         //
         //     }
             let FullDate = year+'-'+month+'-'+days;
+            console.log(FullDate)
             function checkDate(dateVal){
                 for(let i = 0; i<=dates.length-1; i++){
                     d = dates[i].from;
-                    console.log("Date is: "+d);
+                    // console.log("Date is: "+d);
                     console.log("Date"+d+ "==="+dateVal);
                     if(d===dateVal){
                         return true;
