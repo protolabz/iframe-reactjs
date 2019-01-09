@@ -43,8 +43,8 @@
       <file leaf-file-name="additionalPax.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+            <state relative-caret-position="434">
+              <caret line="55" column="26" lean-forward="true" selection-start-line="55" selection-start-column="26" selection-end-line="55" selection-end-column="26" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -169,12 +169,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1547015403576</updated>
-      <workItem from="1547015409727" duration="13753000" />
+      <workItem from="1547015409727" duration="14299000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13753000" />
+    <option name="totallyTimeSpent" value="14299000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="680" extended-state="6" />
@@ -185,7 +185,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.5046555" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.0" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20029785" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
@@ -249,8 +249,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+        <state relative-caret-position="434">
+          <caret line="55" column="26" lean-forward="true" selection-start-line="55" selection-start-column="26" selection-end-line="55" selection-end-column="26" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
