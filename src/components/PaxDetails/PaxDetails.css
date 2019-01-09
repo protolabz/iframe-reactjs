@@ -187,6 +187,7 @@
   border:none !important;
   height:30px !important;
   text-align: center;
+  overflow: hidden !important;
 }
 .additoinalTextBox:focus{
   box-shadow:none !important;
