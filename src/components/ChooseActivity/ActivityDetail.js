@@ -125,12 +125,6 @@ export default class ActivityDetail extends Component {
         mm = dts[2];
         yy = dts[3];
         dday = dts[0];
-        var nVer = navigator.appVersion;
-        var nAgt = navigator.userAgent;
-        var browserName  = navigator.appName;
-        var fullVersion  = ''+parseFloat(navigator.appVersion);
-        var majorVersion = parseInt(navigator.appVersion,10);
-        var nameOffset,verOffset,ix;
 
         dateFormat = dday+ " " +dd+ " " +mm+ " " +yy;
         let {dates} =this.state;
@@ -146,6 +140,7 @@ export default class ActivityDetail extends Component {
             if(month<10){
                 month = "0"+month;
             }
+        let FullDate = FullDate = year+'-'+month+'-'+days;
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         if(isSafari) {
@@ -155,12 +150,12 @@ export default class ActivityDetail extends Component {
             if(month<10){
                 month = month.substr(1);
             }
-
+            FullDate = year+'-'+days+'-'+month;
         }
         // if((verOffset=nAgt.indexOf("Safari"))!==-1) {
         //
         //     }
-            let FullDate = year+'-'+month+'-'+days;
+
             console.log(' Yer '+year+'-'+month+'-'+days);
             function checkDate(dateVal){
                 for(let i = 0; i<=dates.length-1; i++){
