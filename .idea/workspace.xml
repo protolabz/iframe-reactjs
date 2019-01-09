@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9046f509-70b4-4eaa-a663-684f98bcdb27" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/PaxDetails/PaxDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PaxDetails/PaxDetails.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -29,11 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaxDetails.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PaxDetails.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/PaxDetails.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="267" column="20" selection-start-line="267" selection-start-column="20" selection-end-line="267" selection-end-column="20" />
+            <state relative-caret-position="136">
+              <caret line="270" column="22" lean-forward="true" selection-start-line="270" selection-start-column="22" selection-end-line="270" selection-end-column="22" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -41,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="additionalPax.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="additionalPax.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
+            <state relative-caret-position="51">
+              <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -74,8 +73,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/components/PaxDetails/PaxDetails.css" />
         <option value="$PROJECT_DIR$/src/components/ChooseActivity/ActivityDetail.js" />
-        <option value="$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js" />
         <option value="$PROJECT_DIR$/src/components/PaxDetails/PaxDetails.js" />
+        <option value="$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js" />
       </list>
     </option>
   </component>
@@ -170,12 +169,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1547015403576</updated>
-      <workItem from="1547015409727" duration="13566000" />
+      <workItem from="1547015409727" duration="13753000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13566000" />
+    <option name="totallyTimeSpent" value="13753000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="680" extended-state="6" />
@@ -186,9 +185,9 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" weight="0.5046555" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.5046555" />
       <window_info anchor="bottom" id="TypeScript" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20029785" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20029785" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -238,22 +237,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js">
+    <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/PaxDetails.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
+        <state relative-caret-position="136">
+          <caret line="270" column="22" lean-forward="true" selection-start-line="270" selection-start-column="22" selection-end-line="270" selection-end-column="22" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/PaxDetails.js">
+    <entry file="file://$PROJECT_DIR$/src/components/PaxDetails/additionalPax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="267" column="20" selection-start-line="267" selection-start-column="20" selection-end-line="267" selection-end-column="20" />
+        <state relative-caret-position="51">
+          <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
