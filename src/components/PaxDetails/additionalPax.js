@@ -49,7 +49,7 @@ class AdditionalPax extends Component {
             count= count +1;
         // }
        }
-       
+       cosnole.log(count);
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
