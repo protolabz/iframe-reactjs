@@ -11,7 +11,7 @@ class AdditionalPax extends Component {
         maxQuota:this.props.balance_pax,
         min:this.props.min,
         max:this.props.max,
-        testState:"Test"
+        testState:0
     }
     handleIncreement = (name,data)  => { 
         // console.log(data);
@@ -44,7 +44,7 @@ class AdditionalPax extends Component {
         var SecondVal = this.state.maxPerBook; 
             this.setState({
                 value:count,
-                testState:"Worked"
+                testState:this.state.testState+1
             });
             this.props.myFun(name,data,count);
             // this.props.countValuesIncre();
