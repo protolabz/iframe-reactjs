@@ -34,16 +34,16 @@ class AdditionalPax extends Component {
         var maxPackage = this.props.balance_package;
         if(data.minimum>0 && count===0){
             count =data.minimum;
-            console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
+            // console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
         }
         else{
             count = count + 1;
             // console.log(count = count + 1);
-            console.log(count );
+            // console.log(count );
         }
         if(count>maxPackage){
             count = maxPackage;
-            console.log('if(2'+count+'>'+maxPackage+')')
+            // console.log('if(2'+count+'>'+maxPackage+')')
         }
        }else{
         // if(data.minimum>0 && count==0){
@@ -51,7 +51,7 @@ class AdditionalPax extends Component {
         // }
         // else{
             count= count + 1;
-           console.log('else2 count = count+1: '+count);
+        //    console.log('else2 count = count+1: '+count);
         // }
        }
        

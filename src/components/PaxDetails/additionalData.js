@@ -24,25 +24,37 @@ class AdditionalData extends Component {
         //     finQuota = SecondVal;
         // }
         finQuota = this.state.balance_additional;
-        if(finQuota<=0){
-            count = 0;
-            this.setState({
-                disablebutton:true
-            })
-        }
-        if(this.state.value===finQuota - 1){
-            this.setState({
-                disablebutton:true
-            })
-        }
+
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
             setTimeout(() => {
+                if(finQuota<=0){
+                    count = 0;
+                    this.setState({
+                        disablebutton:true
+                    })
+                }
+                if(this.state.value===finQuota - 1){
+                    this.setState({
+                        disablebutton:true
+                    })
+                }
                this.setState({value:count});
                this.props.myFun(id.id,count,id.balance_additional);
             },0)
         }
         else{
+            if(finQuota<=0){
+                count = 0;
+                this.setState({
+                    disablebutton:true
+                })
+            }
+            if(this.state.value===finQuota - 1){
+                this.setState({
+                    disablebutton:true
+                })
+            }
             this.setState({value:count});
             this.props.myFun(id.id,count,id.balance_additional);
         }
