@@ -24,27 +24,27 @@ class AdditionalPax extends Component {
         if(data.minimum>0 && this.state.value===0){
             count =data.minimum;
             this.setState({
-                value:data.minimum,
+                value:data.minimum
             });
         }
         else{
             this.setState({
-                value:this.state.value + 1,
+                value:this.state.value + 1
             });
         }
         if(this.state.value>maxPackage){
             count = maxPackage;
             this.setState({
-                value:maxPackage -1,
+                value:maxPackage -1
             });
         }
        }else{
             count= count + 1;
             this.setState({
-                value:this.state.value + 1,
+                value:this.state.value + 1
             });
        }
-    //    console.log(count);
+       console.log("State is: " this.state.value);
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
