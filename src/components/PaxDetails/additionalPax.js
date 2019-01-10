@@ -21,45 +21,39 @@ class AdditionalPax extends Component {
        if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
         maxQutVal = this.props.balance_pax;
         var maxPackage = this.props.balance_package;
-        if(data.minimum>0 && count===0){
+        if(data.minimum>0 && this.state.value===0){
             count =data.minimum;
             this.setState({
                 value:data.minimum,
             });
-            console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
         }
         else{
             this.setState({
                 value:this.state.value + 1,
             });
-           
         }
-        if(count>maxPackage){
+        if(this.state.value>maxPackage){
             count = maxPackage;
             this.setState({
-                value:maxPackage,
+                value:maxPackage -1,
             });
-            console.log('if(2'+count+'>'+maxPackage+')')
         }
        }else{
             count= count + 1;
             this.setState({
                 value:this.state.value + 1,
             });
-           console.log('else2 count = count+1: '+count);
        }
-       console.log(count);
+    //    console.log(count);
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
-            this.setState({
-                value:count,
-                testState:this.state.testState+1
-            });
-            this.props.myFun(name,data,count);
-            // this.props.countValuesIncre();
-            console.log("State: " +this.state.value);
-            console.log("Test State: " +this.state.testState);
+            // this.setState({
+            //     value:count,
+            //     testState:this.state.testState+1
+            // });
+            this.props.myFun(name,data,parseInt(this.state.value)+1);
+
     }
 
     handleDecreement = (name,data)  => {    
