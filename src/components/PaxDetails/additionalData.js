@@ -35,8 +35,17 @@ class AdditionalData extends Component {
                 disablebutton:true
             })
         }
-        this.setState({value:count});
-        this.props.myFun(id.id,count,id.balance_additional);
+        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if(isSafari) {
+            setTimeout(() => {
+               this.setState({value:count});
+               this.props.myFun(id.id,count,id.balance_additional);
+            },0)
+        }
+        else{
+            this.setState({value:count});
+            this.props.myFun(id.id,count,id.balance_additional);
+        }
     
     }
 
