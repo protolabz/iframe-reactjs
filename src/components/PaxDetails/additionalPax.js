@@ -31,21 +31,21 @@ class AdditionalPax extends Component {
         else{
             this.setState({
                 value:this.state.value + 1,
-                testState:this.testState.value + 1
+                testState:this.state.testState + 1
             });
         }
         if(this.state.value>maxPackage){
             count = maxPackage;
             this.setState({
                 value:maxPackage -1,
-                testState:this.testState.value + 1
+                testState:this.state.testState + 1
             });
         }
        }else{
             count= count + 1;
             this.setState({
                 value:this.state.value + 1,
-                testState:this.testState.value + 1
+                testState:this.state.testState + 1
             });
        }
        console.log("State is: " +this.state.value);
