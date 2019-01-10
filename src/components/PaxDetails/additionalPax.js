@@ -66,7 +66,7 @@ class AdditionalPax extends Component {
                 });
                 this.props.myFun(name,data,count);
                 console.log("Safari Count=>> "+count);
-            },5000)
+            },3000)
         }else{
             this.setState({
                 value:count
