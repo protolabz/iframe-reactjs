@@ -15,7 +15,7 @@ class AdditionalPax extends Component {
     }
     handleIncreement = (name,data)  => { 
         // console.log(data);
-        // debugger;
+        debugger;
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        let count = this.state.value;
@@ -49,11 +49,15 @@ class AdditionalPax extends Component {
         // var finQuota;
         // var FirstVal = this.state.quota - this.state.usedQuota;
         // var SecondVal = this.state.maxPerBook; 
+        setTimeout(() => {
+            console.log("wait");
             this.setState({
                 value:parseInt(this.state.value) + 1,
                 test:parseInt(this.state.test) + 1
             });
             this.props.myFun(name,data,count);
+          }, 3000);
+
             // this.props.countValuesIncre();
             console.log("Final Count=> "+ count);
             console.log("Final State Count=> "+ this.state.value);
