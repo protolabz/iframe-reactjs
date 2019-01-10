@@ -44,7 +44,7 @@ class AdditionalPax extends Component {
                 value:this.state.value + 1
             });
        }
-       console.log("State is: " this.state.value);
+       console.log("State is: " +this.state.value);
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
