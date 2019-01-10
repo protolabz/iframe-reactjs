@@ -50,7 +50,7 @@ class AdditionalPax extends Component {
         // var FirstVal = this.state.quota - this.state.usedQuota;
         // var SecondVal = this.state.maxPerBook; 
             this.setState({
-                value:parseInt(this.state.count) + 1,
+                value:parseInt(this.state.value) + 1,
                 test:parseInt(this.state.test) + 1
             });
             this.props.myFun(name,data,count);
