@@ -51,6 +51,7 @@ class AdditionalPax extends Component {
         // var SecondVal = this.state.maxPerBook; 
         setTimeout(() => {
             console.log("wait");
+            console.log(this.state.value);
             this.setState({
                 value:parseInt(this.state.value) + 1,
                 test:parseInt(this.state.test) + 1
