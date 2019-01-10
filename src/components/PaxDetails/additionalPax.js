@@ -38,22 +38,18 @@ class AdditionalPax extends Component {
         }
         else{
             count = count + 1;
-            console.log('else1 count = count+1: '+count);
+            // console.log(count = count + 1);
+            console.log(count );
         }
         if(count>maxPackage){
             count = maxPackage;
             console.log('if(2'+count+'>'+maxPackage+')')
         }
        }else{
-        // if(data.minimum>0 && count==0){
-        //     count =data.minimum;
-        // }
-        // else{
             count= count + 1;
            console.log('else2 count = count+1: '+count);
-        // }
        }
-       console.log(count);
+
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
@@ -62,6 +58,7 @@ class AdditionalPax extends Component {
             });
             this.props.myFun(name,data,count);
             // this.props.countValuesIncre();
+            console.log("State: " +this.state.value)
     }
 
     handleDecreement = (name,data)  => {    
