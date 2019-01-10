@@ -68,7 +68,9 @@ class AdditionalPax extends Component {
         this.props.decrement(name,data,count);
         this.props.countValuesDecre();
     }
-
+    componentWillReceiveProps(nextProps) {
+      console.log(nextProps)
+    }
     formatThousands =(n, dp) => {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
         while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
