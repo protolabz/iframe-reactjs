@@ -52,6 +52,7 @@ class AdditionalPax extends Component {
             });
             this.props.myFun(name,data,count);
             // this.props.countValuesIncre();
+            debugger;
     }
 
     handleDecreement = (name,data)  => {    
