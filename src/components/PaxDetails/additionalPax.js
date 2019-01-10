@@ -18,7 +18,7 @@ class AdditionalPax extends Component {
         debugger;
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
-       var count = this.state.value;
+       let count = this.state.value;
        if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
 
         maxQutVal = this.props.balance_pax;
@@ -28,7 +28,7 @@ class AdditionalPax extends Component {
             console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
         }
         else{
-            count = count + 1;
+            count = parseInt(count) + 1;
             // console.log(count = count + 1);
             console.log("Else1 count=> " +count);
         }
@@ -41,14 +41,14 @@ class AdditionalPax extends Component {
         //     count =data.minimum;
         // }
         // else{
-            count= count + 1;
+            count= parseInt(count) + 1;
            console.log('else2 count = count+1: '+count);
         // }
        }
   
-        var finQuota;
-        var FirstVal = this.state.quota - this.state.usedQuota;
-        var SecondVal = this.state.maxPerBook; 
+        // var finQuota;
+        // var FirstVal = this.state.quota - this.state.usedQuota;
+        // var SecondVal = this.state.maxPerBook; 
             this.setState({
                 value:count,
                 test:parseInt(this.state.test) + 1
@@ -56,6 +56,7 @@ class AdditionalPax extends Component {
             this.props.myFun(name,data,count);
             // this.props.countValuesIncre();
             console.log("Final Count=> "+ count);
+            console.log("Final State Count=> "+ this.state.value);
             console.log("Test Count=> "+ this.state.test);
 
     }
