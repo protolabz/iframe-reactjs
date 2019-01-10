@@ -58,13 +58,23 @@ class AdditionalPax extends Component {
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
-        setTimeout(() => {
+        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if(isSafari) {
+            setTimeout(() => {
+                this.setState({
+                    value:count
+                });
+                this.props.myFun(name,data,count);
+                console.log("Safari Count=>> "+count);
+            },5000)
+        }else{
             this.setState({
                 value:count
             });
             this.props.myFun(name,data,count);
-            console.log(count);
-        },5000)
+            console.log("Chrome Count=>> "+count);
+        }
+        
             
             // this.props.countValuesIncre();
     }
