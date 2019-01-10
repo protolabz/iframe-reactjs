@@ -33,7 +33,7 @@ class AdditionalPax extends Component {
         else{
             count = count + 1;
             this.setState(prevState => ({
-                value : count
+                value : prevState.value + 1
                }), function() {
                 console.log(this.state.value);
                })
@@ -56,7 +56,7 @@ class AdditionalPax extends Component {
         // else{
             count= count + 1;
             this.setState(prevState => ({
-                value : count
+                value : prevState + 1
                }), function() {
                 console.log(this.state.value);
                })
