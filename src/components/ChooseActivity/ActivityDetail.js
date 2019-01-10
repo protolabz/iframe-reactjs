@@ -116,7 +116,7 @@ export default class ActivityDetail extends Component {
     }
 
     handleDayClick = (day) =>{
-        console.log("Function called");
+        // console.log("Function called");
         let abs = day.toLocaleDateString("en-ID").replace(/[/]/g, "-");
         let dateFormat = day.toGMTString();
         let dts = (dateFormat.split(' '));
