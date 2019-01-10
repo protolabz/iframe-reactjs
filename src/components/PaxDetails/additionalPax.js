@@ -49,7 +49,7 @@ class AdditionalPax extends Component {
             this.props.myFun(name,data,count);
             // this.props.countValuesIncre();
             console.log("State: " +this.state.value);
-            console.log("Test State: " this.state.testState);
+            console.log("Test State: " +this.state.testState);
     }
 
     handleDecreement = (name,data)  => {    
