@@ -28,7 +28,7 @@ class AdditionalPax extends Component {
         else{
             count = count + 1;
             // console.log(count = count + 1);
-            console.log(count );
+           
         }
         if(count>maxPackage){
             count = maxPackage;
@@ -38,7 +38,7 @@ class AdditionalPax extends Component {
             count= count + 1;
            console.log('else2 count = count+1: '+count);
        }
-
+       console.log(count);
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
