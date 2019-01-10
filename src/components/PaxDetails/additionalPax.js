@@ -23,19 +23,29 @@ class AdditionalPax extends Component {
         var maxPackage = this.props.balance_package;
         if(data.minimum>0 && count===0){
             count =data.minimum;
+            this.setState({
+                value:data.minimum,
+            });
             console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
         }
         else{
-            count = count + 1;
-            // console.log(count = count + 1);
+            this.setState({
+                value:this.state.value + 1,
+            });
            
         }
         if(count>maxPackage){
             count = maxPackage;
+            this.setState({
+                value:maxPackage,
+            });
             console.log('if(2'+count+'>'+maxPackage+')')
         }
        }else{
             count= count + 1;
+            this.setState({
+                value:this.state.value + 1,
+            });
            console.log('else2 count = count+1: '+count);
        }
        console.log(count);
