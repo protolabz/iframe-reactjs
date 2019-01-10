@@ -19,50 +19,58 @@ class AdditionalPax extends Component {
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        let count = this.state.value;
-    //    if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
+       if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
 
-    //     maxQutVal = this.props.balance_pax;
-    //     var maxPackage = this.props.balance_package;
-    //     if(data.minimum>0 && count===0){
-    //         count =data.minimum;
-    //         console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
-    //     }
-    //     else{
-    //         count = parseInt(count) + 1;
-    //         // console.log(count = count + 1);
-    //         console.log("Else1 count=> " +count);
-    //     }
-    //     if(count>maxPackage){
-    //         count = maxPackage;
-    //         console.log('if(2'+count+'>'+maxPackage+')')
-    //     }
-    //    }else{
-    //     // if(data.minimum>0 && count==0){
-    //     //     count =data.minimum;
-    //     // }
-    //     // else{
-    //         count= parseInt(count) + 1;
-    //        console.log('else2 count = count+1: '+count);
-    //     // }
-    //    }
+        maxQutVal = this.props.balance_pax;
+        var maxPackage = this.props.balance_package;
+        if(data.minimum>0 && count===0){
+            count =data.minimum;
+            console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
+        }
+        else{
+            count = parseInt(count) + 1;
+            // console.log(count = count + 1);
+            console.log("Else1 count=> " +count);
+        }
+        if(count>maxPackage){
+            count = maxPackage;
+            console.log('if(2'+count+'>'+maxPackage+')')
+        }
+       }else{
+        // if(data.minimum>0 && count==0){
+        //     count =data.minimum;
+        // }
+        // else{
+            count= parseInt(count) + 1;
+           console.log('else2 count = count+1: '+count);
+        // }
+       }
   
         // var finQuota;
         // var FirstVal = this.state.quota - this.state.usedQuota;
         // var SecondVal = this.state.maxPerBook; 
-        setTimeout(() => {
-            console.log("wait");
-            console.log(this.state.value);
-            this.setState({
-                value:parseInt(this.state.value) + 1
-            });
+        // setTimeout(() => {
+        //     console.log("wait");
+        //     console.log(this.state.value);
+        //     this.setState({
+        //         value:parseInt(this.state.value) + 1
+        //     });
 
-            console.log(this.state.value);
-            console.log("Final Count=> "+ count);
-            console.log("Final State Count=> "+ this.state.value);
-            console.log("Test Count=> "+ this.state.test);
-            // this.props.myFun(name,data,count);
-          }, 3000);
-
+        //     console.log(this.state.value);
+        //     console.log("Final Count=> "+ count);
+        //     console.log("Final State Count=> "+ this.state.value);
+        //     console.log("Test Count=> "+ this.state.test);
+        //     // this.props.myFun(name,data,count);
+        //   }, 3000);
+        //   this.setState({value: parseInt(this.state.value) + 1}, () => {
+        //     this.callAsync().catch(e => {
+        //         console.log(e);
+        //     });
+        // });
+        this.setState(function(prevState, props){
+            return {value: prevState.value = count}
+         });
+         console.log("Final State Count=> "+ this.state.value);
             // this.props.countValuesIncre();
             
 
