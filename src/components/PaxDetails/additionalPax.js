@@ -52,10 +52,10 @@ class AdditionalPax extends Component {
         setTimeout(() => {
             console.log("wait");
             this.setState({
-                value:parseInt(this.state.value) + 1,
+                value:parseInt(count),
                 test:parseInt(this.state.test) + 1
             });
-            this.props.myFun(name,data,count);
+            // this.props.myFun(name,data,count);
           }, 3000);
 
             // this.props.countValuesIncre();
