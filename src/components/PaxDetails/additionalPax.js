@@ -56,7 +56,7 @@ class AdditionalPax extends Component {
             this.props.myFun(name,data,count);
             // this.props.countValuesIncre();
             console.log("Final Count=> "+ count);
-            console.log("Test Count=> "+ count);
+            console.log("Test Count=> "+ this.state.test);
 
     }
 
