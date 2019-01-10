@@ -66,7 +66,7 @@ class AdditionalPax extends Component {
                 });
                 this.props.myFun(name,data,count);
                 console.log("Safari Count=>> "+count);
-            },2000)
+            },1000)
         }else{
             this.setState({
                 value:count
@@ -86,7 +86,7 @@ class AdditionalPax extends Component {
         var count = this.state.value;
         count= count -1;
         if(data.minimum>0 && count<data.minimum){
-            count =0;
+            count = 0;
             
         }else{
             if(count<1){
