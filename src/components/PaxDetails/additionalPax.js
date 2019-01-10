@@ -18,35 +18,31 @@ class AdditionalPax extends Component {
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;
        if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
-
+        // if(maxPerBook<data.maximum){
+        //     val2 = maxPerBook;
+        // }
+        // else{
+        //     val2 = data.maximum;
+        // }
+        // if(val1<val2){
+        //     maxQutVal = val1;
+        // }
+        // else{
+        //     maxQutVal = val2;
+        // }
         maxQutVal = this.props.balance_pax;
         var maxPackage = this.props.balance_package;
         if(data.minimum>0 && count===0){
             count =data.minimum;
-            this.setState(prevState => ({
-                value : count
-               }), function() {
-                console.log(this.state.value);
-               })
             console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
         }
         else{
             count = count + 1;
-            this.setState(prevState => ({
-                value : prevState.value + 1
-               }), function() {
-                console.log(this.state.value);
-               })
             // console.log(count = count + 1);
-            console.log("Else1 count=> " +count);
+            console.log(count );
         }
         if(count>maxPackage){
             count = maxPackage;
-            this.setState(prevState => ({
-                value : count
-               }), function() {
-                console.log(this.state.value);
-               })
             console.log('if(2'+count+'>'+maxPackage+')')
         }
        }else{
@@ -55,24 +51,22 @@ class AdditionalPax extends Component {
         // }
         // else{
             count= count + 1;
-            this.setState(prevState => ({
-                value : prevState + 1
-               }), function() {
-                console.log(this.state.value);
-               })
            console.log('else2 count = count+1: '+count);
         // }
        }
-       console.log("Final Count=> "+ count);
+       
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
-            // this.setState({
-            //     value:count,
-            // });
+        setTimeout(() => {
+            this.setState({
+                value:count
+            });
             this.props.myFun(name,data,count);
+            console.log(count);
+        },5000)
+            
             // this.props.countValuesIncre();
-   
     }
 
     handleDecreement = (name,data)  => {    
