@@ -22,40 +22,26 @@ class AdditionalPax extends Component {
         var maxPackage = this.props.balance_package;
         if(data.minimum>0 && count===0){
             count =data.minimum;
-            this.setState({
-                value:count
-            });
             console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
         }
         else{
             count = count + 1;
-            this.setState({
-                value:count
-            });
             // console.log(count = count + 1);
             console.log(count );
         }
         if(count>maxPackage){
             count = maxPackage;
-            this.setState({
-                value:count
-            });
             console.log('if(2'+count+'>'+maxPackage+')')
         }
        }else{
             count= count + 1;
-            this.setState({
-                value:count
-            });
            console.log('else2 count = count+1: '+count);
        }
 
         var finQuota;
         var FirstVal = this.state.quota - this.state.usedQuota;
         var SecondVal = this.state.maxPerBook; 
-            // this.setState({
-            //     value:count
-            // });
+            this.setState({value:count});
             this.props.myFun(name,data,count);
             // this.props.countValuesIncre();
             console.log("State: " +this.state.value)
