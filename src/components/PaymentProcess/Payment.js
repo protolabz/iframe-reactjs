@@ -66,7 +66,6 @@ export default class componentName extends Component {
               data:data
             })
             .then((res) => {
-                console.log(res);
                 if(res.data.diagnostic.status===400){
                     this.setState({
                         isExpired:true,
@@ -168,7 +167,7 @@ export default class componentName extends Component {
                   data:dataAlfa
                 })
                 .then((res) => {
-                    console.log("AlfaMart: ",res);
+
                     if(res.data.diagnostic.status===400){
                         this.setState({
                             alfaMartData:false
@@ -285,6 +284,7 @@ export default class componentName extends Component {
                   data:data
                 })
                 .then((res) => {
+                    console.log(res)
                     if(res.data.diagnostic.status===200){
                         swal({
                             title: "Success",
@@ -581,12 +581,10 @@ export default class componentName extends Component {
   render() {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
-        let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
-        let ForTime;
-        if(expiryDate){
-            ForTime =new Date(expiryDate);
-        }
-        console.log(ForTime);
+
+      let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
+      console.log("EXPDT: "+expiryDate);
+      let ForTime = new Date(expiryDate);
       let ForDate = new Date(expiryDate).toISOString().slice(0,10);
       ForDate = new Date(ForDate).toGMTString();
         let dts = (ForDate.split(' '));
