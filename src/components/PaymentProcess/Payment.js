@@ -589,26 +589,29 @@ export default class componentName extends Component {
     //         expiryDate = 
     //     }
     //   }
-      let ForTime = new Date(expiryDate);
-      console.log("EXPDT: "+ForTime);
-      let ForDate = new Date(expiryDate).toISOString().slice(0,10);
-      ForDate = new Date(ForDate).toGMTString();
-        let dts = (ForDate.split(' '));
-        var dd = dts[1];
-        var mm = dts[2];
-        var yy = dts[3];
-        var dday = dts[0];
-        let preDate = dday+ " " +dd+ " " +mm+ " " +yy;
-        var h =	ForTime.getHours() % 12 || 12;
-        var m =   ForTime.getMinutes();
-        var mid = '';
-        if(h < 12){
-        mid="AM";
+     
+    if(expiryDate){
+        let ForTime = new Date(expiryDate);
+        console.log("EXPDT: "+ForTime);
+            let ForDate = new Date(expiryDate).toISOString();
+            ForDate = new Date(ForDate).toGMTString();
+            let dts = (ForDate.split(' '));
+            var dd = dts[1];
+            var mm = dts[2];
+            var yy = dts[3];
+            var dday = dts[0];
+            let preDate = dday+ " " +dd+ " " +mm+ " " +yy;
+            var h =	ForTime.getHours() % 12 || 12;
+            var m =   ForTime.getMinutes();
+            var mid = '';
+            if(h < 12){
+            mid="AM";
+            }
+            else{
+            mid = "PM"
+            }
+            normalTime = h+":"+m+" "+mid;
         }
-        else{
-        mid = "PM"
-        }
-        normalTime = h+":"+m+" "+mid;
         let accMandiri,nameMandiri,accBri,nameBri,accBni,nameBni;
         if(detMandiri){
         accMandiri = detMandiri.bank_account_number;
