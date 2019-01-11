@@ -12,6 +12,28 @@ class AdditionalPax extends Component {
         min:this.props.min,
         max:this.props.max
     }
+
+
+    handleDecreement = (name,data)  => {    
+        this.setState({
+            disablebutton:false
+        })
+        var count = this.state.value;
+        count= count -1;
+        if(data.minimum>0 && count<data.minimum){
+            count = 0;
+            
+        }else{
+            if(count<1){
+                count = 0
+            } 
+        }
+        
+        this.setState({value:count});
+        this.props.decrement(name,data,count);
+        this.props.countValuesDecre();
+    }
+
     handleIncreement = (name,data)  => { 
         // console.log(data);
        let {quota,usedQuota,maxPerBook} =this.state;
@@ -79,25 +101,6 @@ class AdditionalPax extends Component {
             // this.props.countValuesIncre();
     }
 
-    handleDecreement = (name,data)  => {    
-        this.setState({
-            disablebutton:false
-        })
-        var count = this.state.value;
-        count= count -1;
-        if(data.minimum>0 && count<data.minimum){
-            count = 0;
-            
-        }else{
-            if(count<1){
-                count = 0
-            } 
-        }
-        
-        this.setState({value:count});
-        this.props.decrement(name,data,count);
-        this.props.countValuesDecre();
-    }
 
     formatThousands =(n, dp) => {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
