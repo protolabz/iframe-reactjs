@@ -583,7 +583,7 @@ export default class componentName extends Component {
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
         let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
         let ForTime;
-        if(ForTime){
+        if(expiryDate){
             ForTime =new Date(expiryDate);
         }
         console.log(ForTime);
