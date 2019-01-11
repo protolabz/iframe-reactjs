@@ -585,6 +585,7 @@ export default class componentName extends Component {
       let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
       let ForTime = new Date(expiryDate);
       console.log("ForTime: "+ForTime);
+      console.log("Date: "+expiryDate);
       let ForDate = new Date(expiryDate).toISOString().slice(0,10);
       ForDate = new Date(ForDate).toGMTString();
         let dts = (ForDate.split(' '));
