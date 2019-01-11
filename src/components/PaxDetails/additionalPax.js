@@ -135,7 +135,27 @@ class AdditionalPax extends Component {
 
     }
 
-
+    handleDecreement1 = (name,data)  => { 
+     
+        console.log("Decrement Called   2: "+this.state.value);
+        this.setState({
+            disablebutton:false
+        })
+        var count = this.state.value;
+        count= count -1;
+        if(data.minimum>0 && count<data.minimum){
+            count = 0;
+            
+        }else{
+            if(count<1){
+                count = 0
+            } 
+        }
+        
+        this.setState({value:count});
+        this.props.decrement(name,data,count);
+        this.props.countValuesDecre();
+    }
     
     
 
@@ -178,7 +198,7 @@ class AdditionalPax extends Component {
             <label style={{ display:"flex" }} className='mt-2'>
             {
                 this.state.safari ? 
-                <button>For safari</button>
+                <button id="subs" onClick ={(one) => this.handleDecreement1(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
                 :
                 <button id="subs" onClick ={(one) => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
             }
