@@ -583,8 +583,14 @@ export default class componentName extends Component {
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
 
       let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
-      console.log("EXPDT: "+expiryDate);
+    //   var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    //   if(isSafari) {
+    //     if(expiryDate){
+    //         expiryDate = 
+    //     }
+    //   }
       let ForTime = new Date(expiryDate);
+      console.log("EXPDT: "+ForTime);
       let ForDate = new Date(expiryDate).toISOString().slice(0,10);
       ForDate = new Date(ForDate).toGMTString();
         let dts = (ForDate.split(' '));
