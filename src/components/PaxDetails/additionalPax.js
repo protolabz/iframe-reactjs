@@ -23,7 +23,38 @@ class AdditionalPax extends Component {
         }
     }
     handleIncreement1 = (name,data)  => { 
-        console.log("Called");
+        console.log("increment Called: "+this.state.value);
+        // console.log(data);
+       let {quota,usedQuota,maxPerBook} =this.state;
+       let val1 = quota-usedQuota,val2,maxQutVal=0;
+       var count = this.state.value;
+       if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
+        maxQutVal = this.props.balance_pax;
+        var maxPackage = this.props.balance_package;
+        if(data.minimum>0 && count===0){
+            count =data.minimum;
+            // console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
+        }
+        else{
+            count = count + 1;
+        }
+        if(count>maxPackage){
+            count = maxPackage;
+        }
+       }else{
+            count= count + 1;
+       }
+       
+        var finQuota;
+        var FirstVal = this.state.quota - this.state.usedQuota;
+        var SecondVal = this.state.maxPerBook; 
+        setTimeout(() => {
+            this.setState({
+                value:count
+            });
+            this.props.myFun(name,data,count);
+            console.log("Safari Count=>> "+count);
+        },0)
     }
     handleIncreement = (name,data)  => { 
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -117,10 +148,11 @@ class AdditionalPax extends Component {
     }
 
     handleDecreement = (name,data)  => { 
-        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        if(isSafari) {
-            return 0;
-        }   
+        // var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        // if(isSafari) {
+        //     return 0;
+        // }   
+        console.log("Decr");
         this.setState({
             disablebutton:false
         })
