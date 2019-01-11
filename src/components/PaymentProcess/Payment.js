@@ -582,37 +582,27 @@ export default class componentName extends Component {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
 
-      let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet,ForDate,dts,dd,mm,yy,
-      dday,preDate,h,m,mid,ForTime;
-    //   var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    //   if(isSafari) {
-    //     if(expiryDate){
-    //         expiryDate = 
-    //     }
-    //   }
-     
-    if(expiryDate){
-        ForTime = new Date(expiryDate);
-        console.log("EXPDT: "+ForTime);
-             ForDate = new Date(expiryDate).toISOString();
-            ForDate = new Date(ForDate).toGMTString();
-             dts = (ForDate.split(' '));
-             dd = dts[1];
-             mm = dts[2];
-             yy = dts[3];
-             dday = dts[0];
-             preDate = dday+ " " +dd+ " " +mm+ " " +yy;
-             h =	ForTime.getHours() % 12 || 12;
-             m =   ForTime.getMinutes();
-             mid = '';
-            if(h < 12){
-            mid="AM";
-            }
-            else{
-            mid = "PM"
-            }
-            normalTime = h+":"+m+" "+mid;
+      let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
+      let ForTime = new Date(expiryDate);
+      console.log("ForTime: "+ForTime);
+      let ForDate = new Date(expiryDate).toISOString().slice(0,10);
+      ForDate = new Date(ForDate).toGMTString();
+        let dts = (ForDate.split(' '));
+        var dd = dts[1];
+        var mm = dts[2];
+        var yy = dts[3];
+        var dday = dts[0];
+        let preDate = dday+ " " +dd+ " " +mm+ " " +yy;
+        var h =	ForTime.getHours() % 12 || 12;
+        var m =   ForTime.getMinutes();
+        var mid = '';
+        if(h < 12){
+        mid="AM";
         }
+        else{
+        mid = "PM"
+        }
+        normalTime = h+":"+m+" "+mid;
         let accMandiri,nameMandiri,accBri,nameBri,accBni,nameBni;
         if(detMandiri){
         accMandiri = detMandiri.bank_account_number;
