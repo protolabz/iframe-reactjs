@@ -582,7 +582,10 @@ export default class componentName extends Component {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
         let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
-        let ForTime = new Date(expiryDate);
+        let ForTime;
+        if(ForTime){
+            ForTime =new Date(expiryDate);
+        }
         console.log(ForTime);
       let ForDate = new Date(expiryDate).toISOString().slice(0,10);
       ForDate = new Date(ForDate).toGMTString();
