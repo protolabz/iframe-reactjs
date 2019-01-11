@@ -14,6 +14,7 @@ class AdditionalPax extends Component {
     }
     handleIncreement = (name,data)  => { 
         // console.log(data);
+        if(!this.state.disablebutton){
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;
@@ -60,9 +61,6 @@ class AdditionalPax extends Component {
         var SecondVal = this.state.maxPerBook; 
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
-            if(count>this.state.count){
-                count = count +1;
-            }
             setTimeout(() => {
                 this.setState({
                     value:count
@@ -78,7 +76,9 @@ class AdditionalPax extends Component {
             // console.log("Chrome Count=>> "+count);
         }
         
-            
+    }else{
+        console.log("Disabled");
+    }
             // this.props.countValuesIncre();
     }
 
