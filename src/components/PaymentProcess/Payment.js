@@ -66,6 +66,7 @@ export default class componentName extends Component {
               data:data
             })
             .then((res) => {
+                console.log(res);
                 if(res.data.diagnostic.status===400){
                     this.setState({
                         isExpired:true,
@@ -167,7 +168,7 @@ export default class componentName extends Component {
                   data:dataAlfa
                 })
                 .then((res) => {
-
+                    console.log("AlfaMart: ",res);
                     if(res.data.diagnostic.status===400){
                         this.setState({
                             alfaMartData:false
@@ -284,7 +285,6 @@ export default class componentName extends Component {
                   data:data
                 })
                 .then((res) => {
-                    console.log(res)
                     if(res.data.diagnostic.status===200){
                         swal({
                             title: "Success",
