@@ -51,7 +51,7 @@ export default class ActivityDetail extends Component {
     componentWillMount(){
         // console.log(this.props.match.params.token);
         var Dates = '2019-01-12 18:38:20';
-        Dates = Dates.replace(/[/]/g, "-");
+        Dates = Dates.replace(/[-]/g, "/");
         let ForTime = new Date(Dates);
         console.log(ForTime);
 
