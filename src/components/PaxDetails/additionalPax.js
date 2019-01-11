@@ -14,11 +14,22 @@ class AdditionalPax extends Component {
     }
     handleIncreement = (name,data)  => { 
         // console.log(data);
-       if(!this.state.disablebutton){
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;
        if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
+        // if(maxPerBook<data.maximum){
+        //     val2 = maxPerBook;
+        // }
+        // else{
+        //     val2 = data.maximum;
+        // }
+        // if(val1<val2){
+        //     maxQutVal = val1;
+        // }
+        // else{
+        //     maxQutVal = val2;
+        // }
         maxQutVal = this.props.balance_pax;
         var maxPackage = this.props.balance_package;
         if(data.minimum>0 && count===0){
@@ -64,14 +75,12 @@ class AdditionalPax extends Component {
             // console.log("Chrome Count=>> "+count);
         }
         
-    }else{
-        console.log("Disabled");
-    }
+            
             // this.props.countValuesIncre();
     }
 
     handleDecreement = (name,data)  => {  
-        console.log("Decrement==> "+this.state.value);  
+        console.log("Decrement Called =>> " +this.state.count);  
         this.setState({
             disablebutton:false
         })
