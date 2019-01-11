@@ -582,7 +582,8 @@ export default class componentName extends Component {
       let {detMandiri,detBri,detBni,mandiriAtm,mandiriIban,briAtm,briIban,bniAtm,bniIban,
         briMba,bniMba,expiryDate,expiry,aflaDetails,alfaPayCode,alfaPayName} = this.state;
 
-      let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet;
+      let mandiriA,mandiriI,briA,briI,bniA,bniI,briM,bniM,normalTime,alfaDet,ForDate,dts,dd,mm,yy,
+      dday,preDate,h,m,mid,ForTime;
     //   var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     //   if(isSafari) {
     //     if(expiryDate){
@@ -591,19 +592,19 @@ export default class componentName extends Component {
     //   }
      
     if(expiryDate){
-        let ForTime = new Date(expiryDate);
+        ForTime = new Date(expiryDate);
         console.log("EXPDT: "+ForTime);
-            let ForDate = new Date(expiryDate).toISOString();
+             ForDate = new Date(expiryDate).toISOString();
             ForDate = new Date(ForDate).toGMTString();
-            let dts = (ForDate.split(' '));
-            var dd = dts[1];
-            var mm = dts[2];
-            var yy = dts[3];
-            var dday = dts[0];
-            let preDate = dday+ " " +dd+ " " +mm+ " " +yy;
-            var h =	ForTime.getHours() % 12 || 12;
-            var m =   ForTime.getMinutes();
-            var mid = '';
+             dts = (ForDate.split(' '));
+             dd = dts[1];
+             mm = dts[2];
+             yy = dts[3];
+             dday = dts[0];
+             preDate = dday+ " " +dd+ " " +mm+ " " +yy;
+             h =	ForTime.getHours() % 12 || 12;
+             m =   ForTime.getMinutes();
+             mid = '';
             if(h < 12){
             mid="AM";
             }
