@@ -14,7 +14,7 @@ class AdditionalPax extends Component {
     }
     handleIncreement = (name,data)  => { 
         // console.log(data);
-        if(!this.state.disablebutton){
+       if(!this.state.disablebutton){
        let {quota,usedQuota,maxPerBook} =this.state;
        let val1 = quota-usedQuota,val2,maxQutVal=0;
        var count = this.state.value;
@@ -82,7 +82,8 @@ class AdditionalPax extends Component {
             // this.props.countValuesIncre();
     }
 
-    handleDecreement = (name,data)  => {    
+    handleDecreement = (name,data)  => {  
+        console.log("Decrement Called");  
         this.setState({
             disablebutton:false
         })
