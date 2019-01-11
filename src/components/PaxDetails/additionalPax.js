@@ -79,26 +79,26 @@ class AdditionalPax extends Component {
             // this.props.countValuesIncre();
     }
 
-    handleDecreement = (name,data)  => {  
-        console.log("Decrement Called =>> " +this.state.value);  
-        this.setState({
-            disablebutton:false
-        })
-        var count = this.state.value;
-        count= count -1;
-        if(data.minimum>0 && count<data.minimum){
-            count = 0;
+    // handleDecreement = (name,data)  => {  
+    //     console.log("Decrement Called =>> " +this.state.count);  
+    //     this.setState({
+    //         disablebutton:false
+    //     })
+    //     var count = this.state.value;
+    //     count= count -1;
+    //     if(data.minimum>0 && count<data.minimum){
+    //         count = 0;
             
-        }else{
-            if(count<1){
-                count = 0
-            } 
-        }
+    //     }else{
+    //         if(count<1){
+    //             count = 0
+    //         } 
+    //     }
         
-        this.setState({value:count});
-        this.props.decrement(name,data,count);
-        this.props.countValuesDecre();
-    }
+    //     this.setState({value:count});
+    //     this.props.decrement(name,data,count);
+    //     this.props.countValuesDecre();
+    // }
 
     formatThousands =(n, dp) => {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
