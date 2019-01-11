@@ -129,7 +129,11 @@ class AdditionalPax extends Component {
     
     
 
-    handleDecreement = (name,data)  => {    
+    handleDecreement = (name,data)  => { 
+        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if(isSafari) {
+            return 0;
+        }   
         console.log("Decrement Called   1: "+this.state.value);
         this.setState({
             disablebutton:false
