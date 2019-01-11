@@ -60,6 +60,7 @@ class AdditionalPax extends Component {
         var SecondVal = this.state.maxPerBook; 
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
+            console.log("increment Called: "+this.state.value);
             setTimeout(() => {
                 this.setState({
                     value:count
@@ -80,6 +81,7 @@ class AdditionalPax extends Component {
     }
 
     handleDecreement = (name,data)  => {    
+        console.log("Decrement Called: "+this.state.value);
         this.setState({
             disablebutton:false
         })
@@ -111,9 +113,9 @@ class AdditionalPax extends Component {
             <div className={"row mx-0 " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
             <div className={'col-sm-3 border '+(this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':'p-2')}>
             <label style={{ display:"flex" }} className='mt-2'>
-            <button id="subs" onClick ={this.handleDecreement.bind(this,this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
+            <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
             <input type="text" name={this.props.it.pax_type} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" readOnly={true}/>&nbsp;
-            <button type="button" onClick={this.handleIncreement.bind(this,this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button>
+            <button type="button" onClick={()=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button>
             </label>
             </div>
             <div className='col-sm-9 border p-2'>
