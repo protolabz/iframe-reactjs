@@ -172,6 +172,32 @@ class AdditionalPax extends Component {
         this.props.countValuesDecre();
     }
 
+
+    handleDecreement1 = (name,data)  => { 
+        // var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        // if(isSafari) {
+        //     return 0;
+        // }   
+        console.log("Decr1");
+        this.setState({
+            disablebutton:false
+        })
+        var count = this.state.value;
+        count= count -1;
+        if(data.minimum>0 && count<data.minimum){
+            count = 0;
+            
+        }else{
+            if(count<1){
+                count = 0
+            } 
+        }
+        
+        this.setState({value:count});
+        this.props.decrement(name,data,count);
+        this.props.countValuesDecre();
+    }
+
     formatThousands =(n, dp) => {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
         while ( (i -= 3) > 0 ) { r = ',' + s.substr(i, 3) + r; }
@@ -184,8 +210,12 @@ class AdditionalPax extends Component {
             <div className={"row mx-0 " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
             <div className={'col-sm-3 border '+(this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':'p-2')}>
             <label style={{ display:"flex" }} className='mt-2'>
+            {
+            this.state.safari ?
                 <button id="subs" onClick ={(one) => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
-           
+                :
+                <button id="subs" onClick ={(one) => this.handleDecreement1(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
+            }
             <input type="text" name={this.props.it.pax_type} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" readOnly={true}/>&nbsp;
             {
             this.state.safari ?
