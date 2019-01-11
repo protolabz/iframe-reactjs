@@ -65,7 +65,7 @@ class AdditionalPax extends Component {
                     value:count
                 });
                 this.props.myFun(name,data,count);
-                console.log("Safari Count=>> "+count);
+                // console.log("Safari Count=>> "+count);
             },0)
         }else{
             this.setState({
@@ -79,26 +79,25 @@ class AdditionalPax extends Component {
             // this.props.countValuesIncre();
     }
 
-    // handleDecreement = (name,data)  => {  
-    //     console.log("Decrement Called =>> " +this.state.count);  
-    //     this.setState({
-    //         disablebutton:false
-    //     })
-    //     var count = this.state.value;
-    //     count= count -1;
-    //     if(data.minimum>0 && count<data.minimum){
-    //         count = 0;
+    handleDecreement = (name,data)  => {    
+        this.setState({
+            disablebutton:false
+        })
+        var count = this.state.value;
+        count= count -1;
+        if(data.minimum>0 && count<data.minimum){
+            count = 0;
             
-    //     }else{
-    //         if(count<1){
-    //             count = 0
-    //         } 
-    //     }
+        }else{
+            if(count<1){
+                count = 0
+            } 
+        }
         
-    //     this.setState({value:count});
-    //     this.props.decrement(name,data,count);
-    //     this.props.countValuesDecre();
-    // }
+        this.setState({value:count});
+        this.props.decrement(name,data,count);
+        this.props.countValuesDecre();
+    }
 
     formatThousands =(n, dp) => {
         var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
@@ -112,9 +111,9 @@ class AdditionalPax extends Component {
             <div className={"row mx-0 " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
             <div className={'col-sm-3 border '+(this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':'p-2')}>
             <label style={{ display:"flex" }} className='mt-2'>
-            {/* <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button> */}
+            <button id="subs" onClick ={this.handleDecreement.bind(this,this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
             <input type="text" name={this.props.it.pax_type} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" readOnly={true}/>&nbsp;
-            <button type="button" onClick={()=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button>
+            <button type="button" onClick={this.handleIncreement.bind(this,this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button>
             </label>
             </div>
             <div className='col-sm-9 border p-2'>
