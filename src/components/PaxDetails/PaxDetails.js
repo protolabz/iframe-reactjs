@@ -809,6 +809,7 @@ export default class componentName extends Component {
                     "pax_details":paxData
                   }
               }
+              console.log("Pax Details:",dataProceeed);
               if(total_frontend<1){
                 this.setState({
                     zeroAmount:true
