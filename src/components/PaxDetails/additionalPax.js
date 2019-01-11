@@ -83,10 +83,11 @@ class AdditionalPax extends Component {
     }
 
     handleDecreement = (name,data,type)  => {  
-        console.log(type);
+
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
             if(type==="decrement"){
+                console.log(type);
                 this.setState({
                     disablebutton:false
                 })
