@@ -80,7 +80,7 @@ class AdditionalPax extends Component {
     }
 
     handleDecreement = (name,data)  => {  
-        console.log("Decrement Called =>> " +this.state.count);  
+        console.log("Decrement Called =>> " +this.state.value);  
         this.setState({
             disablebutton:false
         })
