@@ -13,48 +13,73 @@ class AdditionalPax extends Component {
         max:this.props.max
     }
     handleIncreement = (name,data)  => { 
-        console.log("incr");
-    //    let {quota,usedQuota,maxPerBook} =this.state;
-    //    let val1 = quota-usedQuota,val2,maxQutVal=0;
-    //    var count = this.state.value;
-    //    if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
-    //     maxQutVal = this.props.balance_pax;
-    //     var maxPackage = this.props.balance_package;
-    //     if(data.minimum>0 && count===0){
-    //         count =data.minimum;
-    //     }
-    //     else{
-    //         count = count + 1;
-    //     }
-    //     if(count>maxPackage){
-    //         count = maxPackage;
-    //     }
-    //    }else{
-    //         count= count + 1;
-    //    }
+        // console.log(data);
+       let {quota,usedQuota,maxPerBook} =this.state;
+       let val1 = quota-usedQuota,val2,maxQutVal=0;
+       var count = this.state.value;
+       if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
+        // if(maxPerBook<data.maximum){
+        //     val2 = maxPerBook;
+        // }
+        // else{
+        //     val2 = data.maximum;
+        // }
+        // if(val1<val2){
+        //     maxQutVal = val1;
+        // }
+        // else{
+        //     maxQutVal = val2;
+        // }
+        maxQutVal = this.props.balance_pax;
+        var maxPackage = this.props.balance_package;
+        if(data.minimum>0 && count===0){
+            count =data.minimum;
+            // console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
+        }
+        else{
+            count = count + 1;
+            // console.log(count = count + 1);
+            // console.log(count );
+        }
+        if(count>maxPackage){
+            count = maxPackage;
+            // console.log('if(2'+count+'>'+maxPackage+')')
+        }
+       }else{
+        // if(data.minimum>0 && count==0){
+        //     count =data.minimum;
+        // }
+        // else{
+            count= count + 1;
+        //    console.log('else2 count = count+1: '+count);
+        // }
+       }
        
-    //     var finQuota;
-    //     var FirstVal = this.state.quota - this.state.usedQuota;
-    //     var SecondVal = this.state.maxPerBook; 
-    //     var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    //     if(isSafari) {
-    //         setTimeout(() => {
-    //             this.setState({
-    //                 value:count
-    //             });
-    //             this.props.myFun(name,data,count);
-    //         },0)
-    //     }else{
-    //         this.setState({
-    //             value:count
-    //         });
-    //         this.props.myFun(name,data,count);
-    //     }
-
+        var finQuota;
+        var FirstVal = this.state.quota - this.state.usedQuota;
+        var SecondVal = this.state.maxPerBook; 
+        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if(isSafari) {
+            setTimeout(() => {
+                this.setState({
+                    value:count
+                });
+                this.props.myFun(name,data,count);
+                // console.log("Safari Count=>> "+count);
+            },0)
+        }else{
+            this.setState({
+                value:count
+            });
+            this.props.myFun(name,data,count);
+            // console.log("Chrome Count=>> "+count);
+        }
+        
+            
+            // this.props.countValuesIncre();
     }
 
-    handleDecreement = (name,data)  => { 
-        console.log("Decrement");   
+    handleDecreement = (name,data)  => {    
         this.setState({
             disablebutton:false
         })
@@ -86,9 +111,11 @@ class AdditionalPax extends Component {
             <div className={"row mx-0 " +(this.props.isPaxInvalid? "isPaxInvalid":'')}>
             <div className={'col-sm-3 border '+(this.props.it.pax_type==='ADULT' || this.props.it.pax_type==='CHILD' || this.props.it.pax_type==='INFANT'?'':'p-2')}>
             <label style={{ display:"flex" }} className='mt-2'>
-            <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
+            {/* <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button> */}
+            <button id="subs" onClick ={ () => this.handleDecreement(this.props.it.pax_type,this.props.it)} >M</button>
             <input type="text" name={this.props.it.pax_type} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" readOnly={true}/>&nbsp;
-            <button type="button" onClick={()=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button>
+            {/* <button type="button" onClick={()=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button> */}
+            <button type="button" onClick={()=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} >A</button>
             </label>
             </div>
             <div className='col-sm-9 border p-2'>
