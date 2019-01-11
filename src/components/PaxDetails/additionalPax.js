@@ -22,7 +22,9 @@ class AdditionalPax extends Component {
             })
         }
     }
-
+    handleIncreement1 = (name,data)  => { 
+        console.log("Called");
+    }
     handleIncreement = (name,data)  => { 
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
@@ -32,18 +34,6 @@ class AdditionalPax extends Component {
            let val1 = quota-usedQuota,val2,maxQutVal=0;
            var count = this.state.value;
            if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
-            // if(maxPerBook<data.maximum){
-            //     val2 = maxPerBook;
-            // }
-            // else{
-            //     val2 = data.maximum;
-            // }
-            // if(val1<val2){
-            //     maxQutVal = val1;
-            // }
-            // else{
-            //     maxQutVal = val2;
-            // }
             maxQutVal = this.props.balance_pax;
             var maxPackage = this.props.balance_package;
             if(data.minimum>0 && count===0){
@@ -52,21 +42,12 @@ class AdditionalPax extends Component {
             }
             else{
                 count = count + 1;
-                // console.log(count = count + 1);
-                // console.log(count );
             }
             if(count>maxPackage){
                 count = maxPackage;
-                // console.log('if(2'+count+'>'+maxPackage+')')
             }
            }else{
-            // if(data.minimum>0 && count==0){
-            //     count =data.minimum;
-            // }
-            // else{
                 count= count + 1;
-            //    console.log('else2 count = count+1: '+count);
-            // }
            }
            
             var finQuota;
@@ -135,36 +116,11 @@ class AdditionalPax extends Component {
 
     }
 
-    handleDecreement1 = (name,data)  => { 
-     
-        console.log("Decrement Called   2: "+this.state.value);
-        this.setState({
-            disablebutton:false
-        })
-        var count = this.state.value;
-        count= count -1;
-        if(data.minimum>0 && count<data.minimum){
-            count = 0;
-            
-        }else{
-            if(count<1){
-                count = 0
-            } 
-        }
-        
-        this.setState({value:count});
-        this.props.decrement(name,data,count);
-        this.props.countValuesDecre();
-    }
-    
-    
-
     handleDecreement = (name,data)  => { 
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
             return 0;
         }   
-        console.log("Decrement Called   1: "+this.state.value);
         this.setState({
             disablebutton:false
         })
@@ -198,14 +154,20 @@ class AdditionalPax extends Component {
             <label style={{ display:"flex" }} className='mt-2'>
             {
                 this.state.safari ? 
-                <button id="subs" onClick ={(one) => this.handleDecreement1(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
+                <button>For</button>
                 :
                 <button id="subs" onClick ={(one) => this.handleDecreement(this.props.it.pax_type,this.props.it)} className="pull-left btnMinus"><i className='fa fa-minus'></i></button>
             }
             
             
             <input type="text" name={this.props.it.pax_type} value={this.state.value} className="additoinalTextBox form-control pull-left" id="noOfRoom" readOnly={true}/>&nbsp;
-            <button type="button" onClick={(two)=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button>
+            {
+            this.state.safari ?
+            <button type="button" onClick={(two)=>this.handleIncreement1(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'>s</i></button>
+            :
+            <button type="button" onClick={(two)=>this.handleIncreement(this.props.it.pax_type,this.props.it)} id="adds" disabled ={this.props.standardPaxDisable} className="btnPlus" ><i className='fa fa-plus'></i></button> 
+            }
+            
             </label>
             </div>
             <div className='col-sm-9 border p-2'>
