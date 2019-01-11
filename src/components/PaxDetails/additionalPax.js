@@ -60,6 +60,9 @@ class AdditionalPax extends Component {
         var SecondVal = this.state.maxPerBook; 
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
+            if(count>this.state.count){
+                count = count +1;
+            }
             setTimeout(() => {
                 this.setState({
                     value:count
@@ -68,10 +71,10 @@ class AdditionalPax extends Component {
                 console.log("Safari Count=>> "+count);
             },0)
         }else{
-            // this.setState({
-            //     value:count
-            // });
-            // this.props.myFun(name,data,count);
+            this.setState({
+                value:count
+            });
+            this.props.myFun(name,data,count);
             // console.log("Chrome Count=>> "+count);
         }
         
