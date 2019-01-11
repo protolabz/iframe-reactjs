@@ -12,76 +12,125 @@ class AdditionalPax extends Component {
         min:this.props.min,
         max:this.props.max
     }
+
     handleIncreement = (name,data)  => { 
-        // console.log(data);
-       let {quota,usedQuota,maxPerBook} =this.state;
-       let val1 = quota-usedQuota,val2,maxQutVal=0;
-       var count = this.state.value;
-       if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
-        // if(maxPerBook<data.maximum){
-        //     val2 = maxPerBook;
-        // }
-        // else{
-        //     val2 = data.maximum;
-        // }
-        // if(val1<val2){
-        //     maxQutVal = val1;
-        // }
-        // else{
-        //     maxQutVal = val2;
-        // }
-        maxQutVal = this.props.balance_pax;
-        var maxPackage = this.props.balance_package;
-        if(data.minimum>0 && count===0){
-            count =data.minimum;
-            // console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
-        }
-        else{
-            count = count + 1;
-            // console.log(count = count + 1);
-            // console.log(count );
-        }
-        if(count>maxPackage){
-            count = maxPackage;
-            // console.log('if(2'+count+'>'+maxPackage+')')
-        }
-       }else{
-        // if(data.minimum>0 && count==0){
-        //     count =data.minimum;
-        // }
-        // else{
-            count= count + 1;
-        //    console.log('else2 count = count+1: '+count);
-        // }
-       }
-       
-        var finQuota;
-        var FirstVal = this.state.quota - this.state.usedQuota;
-        var SecondVal = this.state.maxPerBook; 
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if(isSafari) {
             console.log("increment Called: "+this.state.value);
+            // console.log(data);
+           let {quota,usedQuota,maxPerBook} =this.state;
+           let val1 = quota-usedQuota,val2,maxQutVal=0;
+           var count = this.state.value;
+           if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
+            // if(maxPerBook<data.maximum){
+            //     val2 = maxPerBook;
+            // }
+            // else{
+            //     val2 = data.maximum;
+            // }
+            // if(val1<val2){
+            //     maxQutVal = val1;
+            // }
+            // else{
+            //     maxQutVal = val2;
+            // }
+            maxQutVal = this.props.balance_pax;
+            var maxPackage = this.props.balance_package;
+            if(data.minimum>0 && count===0){
+                count =data.minimum;
+                // console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
+            }
+            else{
+                count = count + 1;
+                // console.log(count = count + 1);
+                // console.log(count );
+            }
+            if(count>maxPackage){
+                count = maxPackage;
+                // console.log('if(2'+count+'>'+maxPackage+')')
+            }
+           }else{
+            // if(data.minimum>0 && count==0){
+            //     count =data.minimum;
+            // }
+            // else{
+                count= count + 1;
+            //    console.log('else2 count = count+1: '+count);
+            // }
+           }
+           
+            var finQuota;
+            var FirstVal = this.state.quota - this.state.usedQuota;
+            var SecondVal = this.state.maxPerBook; 
             setTimeout(() => {
                 this.setState({
                     value:count
                 });
-                // this.props.myFun(name,data,count);
-                // console.log("Safari Count=>> "+count);
+                this.props.myFun(name,data,count);
+                console.log("Safari Count=>> "+count);
             },0)
         }else{
+            console.log("increment Called: "+this.state.value);
+            // console.log(data);
+           let {quota,usedQuota,maxPerBook} =this.state;
+           let val1 = quota-usedQuota,val2,maxQutVal=0;
+           var count = this.state.value;
+           if(data.pax_type!=='ADULT' || data.pax_type!=='CHILD' || data.pax_type!=='INFANT'){
+            // if(maxPerBook<data.maximum){
+            //     val2 = maxPerBook;
+            // }
+            // else{
+            //     val2 = data.maximum;
+            // }
+            // if(val1<val2){
+            //     maxQutVal = val1;
+            // }
+            // else{
+            //     maxQutVal = val2;
+            // }
+            maxQutVal = this.props.balance_pax;
+            var maxPackage = this.props.balance_package;
+            if(data.minimum>0 && count===0){
+                count =data.minimum;
+                // console.log('if1('+data.minimum>0 +'&&'+ count===0+')');
+            }
+            else{
+                count = count + 1;
+                // console.log(count = count + 1);
+                // console.log(count );
+            }
+            if(count>maxPackage){
+                count = maxPackage;
+                // console.log('if(2'+count+'>'+maxPackage+')')
+            }
+           }else{
+            // if(data.minimum>0 && count==0){
+            //     count =data.minimum;
+            // }
+            // else{
+                count= count + 1;
+            //    console.log('else2 count = count+1: '+count);
+            // }
+           }
+           
+            var finQuota;
+            var FirstVal = this.state.quota - this.state.usedQuota;
+            var SecondVal = this.state.maxPerBook; 
             this.setState({
                 value:count
             });
             this.props.myFun(name,data,count);
             // console.log("Chrome Count=>> "+count);
         }
-        
-            
-            // this.props.countValuesIncre();
+
     }
 
+
+    
+    
+
     handleDecreement = (name,data)  => {    
-        console.log("Decrement Called: "+this.state.value);
+        console.log("Decrement Called   1: "+this.state.value);
         this.setState({
             disablebutton:false
         })
