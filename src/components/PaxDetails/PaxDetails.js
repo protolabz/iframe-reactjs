@@ -783,7 +783,8 @@ export default class componentName extends Component {
                         service:res.data.service,
                         total_frontend:res.data.total_frontend,
                         minimum_deposit:res.data.minimum_deposit,
-                        total_frontend_count:res.data.total_frontend_count
+                        total_frontend_count:res.data.total_frontend_count,
+                        promoAmount:res.data.promo_amount
                     })
                     var elmnt = document.getElementById("PromoBlock");
                     elmnt.scrollIntoView();
