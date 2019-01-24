@@ -663,23 +663,99 @@ export default class componentName extends Component {
          })
      }
      applyPromoCode =() =>{
-         var promo = this.state.promoCode;
-         if(promo===0){
-             this.setState({promoE:true})
-         }
-         else{
-            var dataProm =
-            {
-               "token":this.props.token,
-            //    "product_code": "A-09213790",
-               "product_code": this.state.productCode,
-               // "promo_code" : "MUSIAMO",
-               "promo_code":promo,
-               // "date" : "2018-12-01",
-               "date": this.props.date,
-               // "customer_code" : "a01-001a",
-               "amount" : this.state.total_frontend
-             }
+        var promo = this.state.promoCode;
+        if(promo===0){
+            this.setState({promoE:true})
+        }
+        else{
+            let {name,email,productCode,date,operation_time,phone_code,phone,refferal,paxDetailsName,
+                standardPax,additional_description,addProductsValue1,boxValue,selectValue,
+                commentBox,product,isRequiredBox,isRequiredSelect,quota,used_quota,max_per_booking,
+                addProductsValueQuota} =this.state;
+                // let packg = this.state.package;
+                let packg;
+                let pkg =[];
+            
+    
+                let adult=0,children=0,other=0,prodadd;
+                if(addProductsValue1.length>0){
+                    prodadd = addProductsValue1;
+                }
+                else{
+                    prodadd = this.state.rawAddPR
+                }
+                
+                standardPax.map(x=>{
+                    if(x.name==='ADULT'){
+                        adult=x.qty;    
+                    }
+                    if(x.name==='CHILD'){
+                        children=x.qty;
+                    }
+                    if(x.name==='INFANT'){
+                        other=x.qty;
+                    }
+                    if(x.name==='ADULT' || x.name==='CHILD' || x.name==='INFANT'){
+                        
+                    }else{
+                        pkg.push({id:x.id,qty:x.qty})
+                    }
+                })
+                if(pkg.length>1){
+                    pkg = pkg.slice(1);
+                    packg = pkg;
+                }
+                else{
+                    packg = this.state.packageValues;
+                }
+                //Validations Related to Pax
+                if(name!=null && email!=null && phone!=null && phone_code!=null && isRequiredBox!=false && isRequiredSelect!=false){
+                    let quotaDiff = quota - used_quota,finalQuota;
+                    let tUsedQuota =0;
+                        if(max_per_booking<quotaDiff){
+                            finalQuota = max_per_booking;
+                        }
+                        else{
+                            finalQuota = quotaDiff;
+                        }
+                    if(addProductsValueQuota.length>1){
+                        for(let i=0;i<=addProductsValueQuota.length-1;i++){
+                            if(addProductsValueQuota[i].value>addProductsValueQuota[i].max_per_booking){
+                                this.setState({quotaE:true});
+                                // console.log(addProductsValueQuota[i].value+">"+addProductsValueQuota[i].max_per_booking);
+                                    }
+                                }
+                            }
+                                tUsedQuota = parseInt(adult)+parseInt(children)+parseInt(other);
+                                    const pack = this.state.packageValues;
+                                    var packageQ = 0; 
+                                    for(let p = 0; p<pack.length; p++){
+                                        packageQ = packageQ + parseInt(pack[p].qty);
+                                    }
+                                      tUsedQuota = parseInt(tUsedQuota) + parseInt(packageQ); 
+                                                                    
+                        
+                        if(tUsedQuota>finalQuota){
+                        this.setState({standardPaxE:true})
+                        }
+                        else{
+                            // addProductsValue1.splice(0,1);
+                            this.setState({reqiredE:false})
+                            var databook = {
+                                "token":"aadsfasdf",
+                                "date":date,
+                                "product_id":product.product_id,
+                                "product_code":productCode,
+                                // "product_code":"A-09213790",
+                                "additional":prodadd,
+                                "package":packg,
+                                "adult":adult,
+                                "children":children,
+                                "toddlers":other,
+                                "user_code":"10",
+                                "promo_code":promo
+                           }
+                           databook = JSON.stringify(databook);
             axios({
                method: 'post',
                url: `https://api.trabo.co/partner/activity/promo`,
@@ -688,28 +764,35 @@ export default class componentName extends Component {
                    "Accept" : "application/json",
                    "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQxNjk0ZjljMzkzZDJmMzRlOTkwNzViMGUyOWI4MWJlZjYwMmNmOTVlYzA2ZGZkOWNkZGVlMzNmYmJjZGMzOGEyZDk5MzhmNzc1ODlkYTFlIn0.eyJhdWQiOiI4IiwianRpIjoiNDE2OTRmOWMzOTNkMmYzNGU5OTA3NWIwZTI5YjgxYmVmNjAyY2Y5NWVjMDZkZmQ5Y2RkZWUzM2ZiYmNkYzM4YTJkOTkzOGY3NzU4OWRhMWUiLCJpYXQiOjE1MzQ3NDgxNjEsIm5iZiI6MTUzNDc0ODE2MSwiZXhwIjoxNTk3OTA2NTYxLCJzdWIiOiIxMCIsInNjb3BlcyI6W119.PTJDSvnkPoCmfR19HF5JFf7IZik8JqZg0CNTCUaiDmaXZqx8QTyTjktH2MUgG6TUQC1kDlUKscIW6yDkEOFfr2HgvFKvsmj09qjrk06L0ClaQax3uoPaMVo88DD3ucruWAw34yrRi9DXAZTWm4KpgaSBv3bnuMSUlLK496XXrkBUY6rDKOk2GT9f5qPYmZLG-rl1CTv3Yvz7CjXFO5AJasWKGvnx7YCE8bRSt3jw-DUClyT4AzB24VorD_02wxz00vcTffApdWuv7-3LMq-mhk5m8E3NJH_6zBsP_knGUVihXleScmopPeinaMToNo9mUFMSVTSUV4jAHHWwetoCrFzLpIoTSNUfUPQUay902g8icPMh8qMFYMUB0GDh0iIm7jkFCxuhSzYFc3IeSpZ9y-_SIVrA3Ayc5d4rV4aluvK22xDsc-9eCcqJ76ANpZSPRULd5eQ6hQuSORuF0brg-VzC-kjkr34Z2OAS416-PCtZ6VFxqhab6HhuHYUGlNj9Rz13WJWJjYG8F_p3TdphjaIkHEEWu14-5jjFReYa4Eb0y5mJuqxKMGgvjALUAewG40T6dA10Lyq8YZrLRB6Fy2L7JyF0sPHdmFDJoQW9ZDLDGXmvJ2feLQDcuxDWMT1XQaAmLdBek3q3AR2Edx1DQB7852TC9mvk5ZkjAlTfe04"
                  },
-                 data:dataProm
+                 data:databook
                })
                .then((res) => {
-                   if(res.data.diagnostic.status===200){
-                       this.setState({
-                           total_frontend:res.data.response.total,
-                           promoAmount:res.data.response.promo_amount
-                       })
-                   }
-                   else{
-                    swal({
-                        title: res.data.diagnostic.error,
-                        text: res.data.diagnostic.error_msgs,
-                        icon: "warning",
-                        button: true,
-                        dangerMode: true,
-                      })
-                   }
-               })
+                if(res.data.status){
+                    this.setState({bookingE:true})
+                }
+                else{
+                    this.setState({
+                        promoResponse:true,
+                        product_code:res.data.product_code,
+                        sub_total_pax:res.data.sub_total_pax,
+                        sub_total_package:res.data.sub_total_package,
+                        sub_total_additions:res.data.sub_total_additions,
+                        sub_total_frontend:res.data.sub_total_frontend,
+                        discount:res.data.discount,
+                        commission:res.data.commission,
+                        service:res.data.service,
+                        total_frontend:res.data.total_frontend,
+                        minimum_deposit:res.data.minimum_deposit,
+                        total_frontend_count:res.data.total_frontend_count
+                    })
+                    var elmnt = document.getElementById("PromoBlock");
+                    elmnt.scrollIntoView();
+                }
+            })
          }
-
-     }
+       }
+    }
+   }
 
      handleProceedToPay =() =>{
        let {name,email,date,operation_time,phone_code,phone,refferal,
