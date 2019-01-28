@@ -90,7 +90,7 @@ export default class componentName extends Component {
      rawAddPR:null,
      rawPackage:null,
      commentBox:'No Comment',
-     promoCode:0,
+     promoCode:'',
      promoAmount:0,
      //Errors
     //  quotaE:false,
@@ -126,7 +126,7 @@ export default class componentName extends Component {
      total_frontend_count:'',
      standardPaxDisable:false,
      isPaxInvalid:false,
-     textValuePax:null
+     textValuePax:null,
   }
 
   componentWillMount(){
@@ -614,6 +614,7 @@ export default class componentName extends Component {
                           data:databook
                         })
                         .then((res) => {
+                            console.log(res);
                             if(res.data.status){
                                 this.setState({bookingE:true})
                             }
@@ -630,7 +631,9 @@ export default class componentName extends Component {
                                     service:res.data.service,
                                     total_frontend:res.data.total_frontend,
                                     minimum_deposit:res.data.minimum_deposit,
-                                    total_frontend_count:res.data.total_frontend_count
+                                    total_frontend_count:res.data.total_frontend_count,
+                                    promoCode:res.data.promo_code,
+                                    promoAmount:res.data.promo_amount,
                                 })
                                 var elmnt = document.getElementById("PromoBlock");
                                 elmnt.scrollIntoView();
@@ -1349,7 +1352,7 @@ export default class componentName extends Component {
                         </div> 
                         <div className='row'>
                             <div className='col-sm-9'>
-                                <input type='text' name='promocode' onChange={this.handlePromo} className='promoTextBox form-control' />
+                                <input type='text' name='promocode' value={this.state.promoCode} onChange={this.handlePromo} className='promoTextBox form-control' />
                             </div>
                             <div className='col-sm-3'>
                                 <button className='applyPromoBtn' onClick={this.applyPromoCode}>Apply Code</button>
